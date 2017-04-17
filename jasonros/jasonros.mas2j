@@ -1,0 +1,12 @@
+MAS jasonros {
+
+	infrastructure: Centralised
+
+	agents:
+		//test;
+		publisher_agent;
+		subscriber_agent;
+
+	aslSourcePath:
+		"src/asl";
+}

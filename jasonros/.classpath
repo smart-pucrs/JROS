@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="*.asl" kind="src" path="src/asl"/>
+	<classpathentry kind="src" path="jros"/>
+	<classpathentry kind="src" path="src/java"/>
+	<classpathentry kind="lib" path="/home/iancalaca/jason/libs/jason-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/apache_xmlrpc_client-0.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/apache_xmlrpc_common-0.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/apache_xmlrpc_server-0.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/com.springsource.org.apache.commons.codec-1.3.0.jar"/>
+	<classpathentry kind="lib" path="lib/com.springsource.org.apache.commons.httpclient-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/com.springsource.org.apache.commons.io-1.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/com.springsource.org.apache.commons.lang-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/com.springsource.org.apache.commons.logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/com.springsource.org.apache.commons.net-2.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-pool-1.6.jar"/>
+	<classpathentry kind="lib" path="lib/dnsjava-2.1.8.jar"/>
+	<classpathentry kind="lib" path="lib/geometry_msgs-1.12.5.jar"/>
+	<classpathentry kind="lib" path="lib/guava-19.0.jar"/>
+	<classpathentry kind="lib" path="lib/hanse_msgs-0.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/message_generation-0.3.0.jar"/>
+	<classpathentry kind="lib" path="lib/netty-3.2.10.Final.jar"/>
+	<classpathentry kind="lib" path="lib/rosgraph_msgs-1.11.2.jar"/>
+	<classpathentry kind="lib" path="lib/rosjava-0.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/sensor_msgs-1.12.5.jar"/>
+	<classpathentry kind="lib" path="lib/std_msgs-0.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/ws-commons-util-1.0.2.jar"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>
