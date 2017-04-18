@@ -1,24 +1,20 @@
+package jros.internal;
 
 import org.ros.node.NodeMainExecutor;
 import org.ros.node.NodeConfiguration;
-import org.ros.internal.node.client.MasterClient;
 import org.ros.internal.node.client.SlaveClient;
-import org.ros.internal.node.xmlrpc.XmlRpcTimeoutException;
-import org.ros.master.client.MasterStateClient;
 import org.ros.namespace.GraphName;
 import org.ros.node.DefaultNodeMainExecutor;
-
-import java.net.ConnectException;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ROSConnection{
 	
 	private JasonTalker publisherNode;
 	private JasonListener subscriberNode;
 	private ArrayList<String> nCheckList = new ArrayList<String>();
-	private HashMap<String, String> subTopics = new HashMap<String, String>();
+	//private HashMap<String, String> subTopics = new HashMap<String, String>();
+	private ArrayList<DataClass> subTopics = new ArrayList<DataClass>();
 	private ArrayList<DataClass> pubTopics = new ArrayList<DataClass>();
 	private NodeMainExecutor nodeMainExecutor = DefaultNodeMainExecutor.newDefault();
 	private NodeConfiguration nodeConfiguration;
@@ -66,6 +62,11 @@ public class ROSConnection{
 		return false;
 	}
 	
+	public boolean genericPub(String topicName, String msgType, String className){
+		
+		return true;
+	}
+	
 	public boolean createPubNode(String nodeName, long pRate) throws InterruptedException{
 		publisherNode = new JasonTalker(nodeName, pubTopics, pRate, this);
 		if(publisherNode != null){
@@ -83,8 +84,11 @@ public class ROSConnection{
 		return false;
 	}
 	
+	
+	
 	public boolean addSubTopic(String topicName, String msgType){
-		subTopics.put(topicName, msgType);
+		//subTopics.put(topicName, msgType);
+		subTopics.add(new DataClass(topicName, msgType,null));
 		return true;
 	}
 	

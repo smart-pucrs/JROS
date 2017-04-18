@@ -1,33 +1,23 @@
+package jros.internal;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
-
-//import org.ros.message.MessageListener;
+//import java.util.HashMap;
+//import java.util.Set;
 import org.ros.namespace.GraphName;
 import org.ros.node.AbstractNodeMain;
 import org.ros.node.ConnectedNode;
 import org.ros.node.Node;
-//import org.ros.node.topic.Subscriber;
-//import std_msgs.Float32;
-//import hanse_msgs.Ampere;
-/*import hanse_msgs.ScanningSonar;
-import geometry_msgs.Vector3Stamped;
-import geometry_msgs.PoseStamped;
-import geometry_msgs.PointStamped;
-import sensor_msgs.Imu;
-import sensor_msgs.Temperature;
-import sensor_msgs.FluidPressure;
-import sensor_msgs.Image;
-*/
+
 public class JasonListener extends AbstractNodeMain {
 	
-	private HashMap<String, String> subTopics;
+	//private HashMap<String, String> subTopics;
+	private ArrayList<DataClass> subTopics;
 	private ArrayList<SubscriberObject> subList = new ArrayList<SubscriberObject>();
 	private String nodeName;
 	private ROSConnection rosconn;
 	
-	public JasonListener(String nodeName, HashMap<String, String> subTopics, ROSConnection rosconn){
+	//public JasonListener(String nodeName, HashMap<String, String> subTopics, ROSConnection rosconn){
+	public JasonListener(String nodeName, ArrayList<DataClass> subTopics, ROSConnection rosconn){
 		this.subTopics = subTopics;
 		this.nodeName = nodeName;
 		this.rosconn = rosconn;
@@ -88,9 +78,9 @@ public class JasonListener extends AbstractNodeMain {
 	
 	@Override
 	public void onStart(ConnectedNode connectedNode){
-		Set<String> subKeys = subTopics.keySet();
-		for(String subKey : subKeys){
-			SubscriberObject sub = new SubscriberObject(connectedNode, nodeName, subKey, subTopics.get(subKey), rosconn);
+		//Set<String> subKeys = subTopics.keySet();
+		for(DataClass d : subTopics){
+			SubscriberObject sub = new SubscriberObject(connectedNode, nodeName, d.getTopicName(), d.getMsgType(), rosconn);
 			subList.add(sub);
 		}
 	}

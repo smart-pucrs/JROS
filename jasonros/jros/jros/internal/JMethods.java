@@ -1,5 +1,6 @@
 package jros.internal;
 
+
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import jason.asSemantics.Agent;
@@ -16,9 +17,9 @@ private static ConcurrentHashMap<Agent,ROSConnection> agMap = new ConcurrentHash
 		return rc.rosConfig(rosIP, rosPort);
 	}
 	
-	public static boolean genericPub(Agent ag, String topicName, String msgType, String className) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+	public static boolean addPubGenericTopic(Agent ag, String topicName, String msgType, String className) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		ROSConnection rc = agMap.get(ag);
-		return rc.genericPub(topicName, msgType, className);
+		return rc.addPubGenericTopic(topicName, msgType, className);
 	}
 	
 	public static boolean createSubNode(Agent ag, String nodeName) throws InterruptedException{

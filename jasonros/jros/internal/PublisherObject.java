@@ -1,6 +1,4 @@
-
-import java.util.ArrayList;
-import java.util.HashMap;
+package jros.internal;
 
 import org.ros.concurrent.CancellableLoop;
 import org.ros.namespace.GraphName;
@@ -10,7 +8,6 @@ import org.ros.node.topic.Publisher;
 
 public class PublisherObject extends AbstractNodeMain{
 	private String nodeName;
-	//TODO:tratar dados numericos do jason
 	public PublisherObject(ConnectedNode connectedNode, String nodeName, String topicName, String msgType, Object data, long pRate, ROSConnection rosconn) throws InterruptedException{
 		this.nodeName = nodeName;
 		switch(msgType){
@@ -21,7 +18,6 @@ public class PublisherObject extends AbstractNodeMain{
 				protected void loop() throws InterruptedException {
 					std_msgs.String msg = pubNode.newMessage();
 					msg.setData((String)data);
-					//msg.setData((String)pubList.get(topicName).get(msgType));
 					pubNode.publish(msg);
 					Thread.sleep(pRate);
 				}

@@ -1,18 +1,14 @@
-public class DataClass{
+package jros.internal;
+public class SDataClass{
 	String topicName;
 	String msgType;
 	Object data;
-	public DataClass(String topicName, String msgType, Object data){
+	public SDataClass(String topicName, Object data){
 		this.topicName = topicName;
-		this.msgType = msgType;
 		this.data = data;
 	}
-	
 	public String getTopicName(){
 		return topicName;
-	}
-	public String getMsgType(){
-		return msgType;
 	}
 	public Object getData(){
 		return data;

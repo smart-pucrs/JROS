@@ -1,5 +1,6 @@
 package jros.internal;
 
+
 import java.util.ArrayList;
 import org.ros.namespace.GraphName;
 import org.ros.node.AbstractNodeMain;
@@ -7,12 +8,12 @@ import org.ros.node.ConnectedNode;
 
 public class JasonTalker extends AbstractNodeMain {
 	
-	private ArrayList<DataClass> pubTopics;
+	private ArrayList<Object> pubTopics;
 	private String nodeName;
 	private long pRate;
 	private ROSConnection rosconn;
 	
-	public JasonTalker(String nodeName, ArrayList<DataClass> pubTopics, long pRate, ROSConnection rosconn){
+	public JasonTalker(String nodeName, ArrayList<Object> pubTopics, long pRate, ROSConnection rosconn){
 		this.nodeName = nodeName;
 		this.pubTopics = pubTopics;
 		this.rosconn = rosconn;
@@ -23,14 +24,14 @@ public class JasonTalker extends AbstractNodeMain {
 		return nodeName;
 	}
 	
-	public ArrayList<DataClass> getPubList(){
+	public ArrayList<Object> getPubList(){
 		return pubTopics;
 	}
 	
 	public boolean setTopicData(String topicName, Object data){
-		for(DataClass d : pubTopics){
-			if(d.getTopicName().equals(topicName)){
-				d.setData(data);
+		for(Object o : pubTopics){
+			if(((DataClass)o).getTopicName().equals(topicName)){
+				((DataClass)o).setData(data);
 				return true;
 			}
 		}
@@ -44,12 +45,9 @@ public class JasonTalker extends AbstractNodeMain {
 	
 	@Override
 	public void onStart(final ConnectedNode connectedNode) {		
-		for(DataClass d : pubTopics){
-			String topicName = d.getTopicName();
-			String msgType = d.getMsgType();
-			Object data = d.getData();
+		for(Object d : pubTopics){
 			try {
-				new PublisherObject(connectedNode, nodeName, topicName, msgType, data, pRate, rosconn);
+				new PublisherObject(connectedNode, nodeName, d, pRate, rosconn);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

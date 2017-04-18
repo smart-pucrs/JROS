@@ -1,14 +1,9 @@
+package jros.internal;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
-
-//import org.ros.concurrent.CancellableLoop;
 import org.ros.namespace.GraphName;
 import org.ros.node.AbstractNodeMain;
 import org.ros.node.ConnectedNode;
-//import org.ros.node.topic.Publisher;
-//import hanse_msgs.sollSpeed;
 
 public class JasonTalker extends AbstractNodeMain {
 	

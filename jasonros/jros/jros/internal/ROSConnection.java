@@ -1,5 +1,6 @@
 package jros.internal;
 
+
 import org.ros.node.NodeMainExecutor;
 import org.ros.node.NodeConfiguration;
 import org.ros.internal.node.client.SlaveClient;
@@ -15,7 +16,7 @@ public class ROSConnection{
 	private ArrayList<String> nCheckList = new ArrayList<String>();
 	//private HashMap<String, String> subTopics = new HashMap<String, String>();
 	private ArrayList<DataClass> subTopics = new ArrayList<DataClass>();
-	private ArrayList<DataClass> pubTopics = new ArrayList<DataClass>();
+	private ArrayList<Object> pubTopics = new ArrayList<Object>();
 	private NodeMainExecutor nodeMainExecutor = DefaultNodeMainExecutor.newDefault();
 	private NodeConfiguration nodeConfiguration;
 	private ArrayList<JasonTalker> talkerList = new ArrayList<JasonTalker>();
@@ -62,11 +63,6 @@ public class ROSConnection{
 		return false;
 	}
 	
-	public boolean genericPub(String topicName, String msgType, String className){
-		
-		return true;
-	}
-	
 	public boolean createPubNode(String nodeName, long pRate) throws InterruptedException{
 		publisherNode = new JasonTalker(nodeName, pubTopics, pRate, this);
 		if(publisherNode != null){
@@ -75,7 +71,7 @@ public class ROSConnection{
 				while(!nCheckList.contains(nodeName)) Thread.sleep(10);
 				nCheckList.remove(nodeName);
 				talkerList.add(publisherNode);
-				pubTopics = new ArrayList<DataClass>();
+				pubTopics = new ArrayList<Object>();
 				return true;
 			}catch(RuntimeException e){
 				System.out.println("Connection error!");
@@ -96,6 +92,10 @@ public class ROSConnection{
 		return pubTopics.add(new DataClass(topicName,msgType,data));
 	}
 	
+	public boolean addPubGenericTopic(String topicName, String msgType, String className){
+		return pubTopics.add(new GDataClass(topicName,msgType,className));
+	}
+	
 	public boolean subExists(){
 		return !(subscriberNode == null);
 	}
@@ -107,9 +107,9 @@ public class ROSConnection{
 	public boolean pubExists(String topicName){
 		if(pubExists())
 			for(JasonTalker t : talkerList){
-				ArrayList<DataClass> l = t.getPubList();
-				for(DataClass d : l)
-					if(d.getTopicName().equals(topicName))
+				ArrayList<Object> l = t.getPubList();
+				for(Object o : l)
+					if(((DataClass)o).getTopicName().equals(topicName))
 						return true;
 			}
 		return false;

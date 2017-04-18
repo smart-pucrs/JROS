@@ -1,3 +1,4 @@
+package jros.internal;
 
 import java.util.ArrayList;
 //import java.util.HashMap;
@@ -11,36 +12,10 @@ import org.ros.node.topic.Subscriber;
 
 
 public class SubscriberObject extends AbstractNodeMain{
-	class SDataClass{
-		private long timeStamp;
-		private String topicName;
-		private Object data;
-		public SDataClass(String topicName, Object data, long timeStamp){
-			this.timeStamp = timeStamp;
-			this.topicName = topicName;
-			this.data = data;
-		}
-		public Object getData(){
-			return data;
-		}
-		public long getTime(){
-			return timeStamp;
-		}
-		public String getTopic(){
-			return topicName;
-		}
-	}
 	private String nodeName;
 	private String topicName;
 	private ArrayList<SDataClass> subData = new ArrayList<SDataClass>();
-	private long timeStamp = 0;
-	/*public Object getTopicData(String topicName){
-		//return subData.get(topicName);
-	}*/
-	
-	/*public boolean topicExists(String topicName){
-		return subData.containsKey(topicName);
-	}*/
+	//private long timeStamp = 0;
 	
 	public String getTopicName(){
 		return topicName;
@@ -49,7 +24,7 @@ public class SubscriberObject extends AbstractNodeMain{
 	public SDataClass getLastStateObj(String topicName){
 		for(int i = subData.size()-1; i >= 0; i--){
 			SDataClass dc = subData.get(i);
-			if(dc.getTopic().equals(topicName))
+			if(dc.getTopicName().equals(topicName))
 				return dc;
 		}
 		return null;
@@ -58,7 +33,7 @@ public class SubscriberObject extends AbstractNodeMain{
 	public Object getLastStateData(String topicName){
 		for(int i = subData.size()-1; i >= 0; i--){
 			SDataClass dc = subData.get(i);
-			if(dc.getTopic().equals(topicName))
+			if(dc.getTopicName().equals(topicName))
 				return dc.getData();
 		}
 		return null;
@@ -71,7 +46,7 @@ public class SubscriberObject extends AbstractNodeMain{
 	public SDataClass getFirstStateObj(String topicName){
 		for(int i = 0; i < subData.size(); i++){
 			SDataClass dc = subData.get(i);
-			if(dc.getTopic().equals(topicName))
+			if(dc.getTopicName().equals(topicName))
 				return dc;
 		}
 		return null;
@@ -80,7 +55,7 @@ public class SubscriberObject extends AbstractNodeMain{
 	public Object getFirstStateData(String topicName){
 		for(int i = 0; i < subData.size(); i++){
 			SDataClass dc = subData.get(i);
-			if(dc.getTopic().equals(topicName))
+			if(dc.getTopicName().equals(topicName))
 				return dc.getData();
 		}
 		return null;
@@ -88,7 +63,7 @@ public class SubscriberObject extends AbstractNodeMain{
 	
 	public boolean searchExactState(String topicName, Object state){//<---------TODO:converter data
 		for(SDataClass dc : subData){
-			if(dc.getTopic().equals(topicName)){
+			if(dc.getTopicName().equals(topicName)){
 				Object data = dc.getData();
 				if(data instanceof Integer){
 					int iData = ((Double)state).intValue(); 
@@ -113,7 +88,7 @@ public class SubscriberObject extends AbstractNodeMain{
 	
 	public boolean searchLessThanState(String topicName, Object state){
 		for(SDataClass dc : subData)
-			if(dc.getTopic().equals(topicName)){
+			if(dc.getTopicName().equals(topicName)){
 				Object data = dc.getData();
 				if(data instanceof Integer)
 					if(((Integer)dc.getData()).intValue() < ((Double)state).intValue())
@@ -130,7 +105,7 @@ public class SubscriberObject extends AbstractNodeMain{
 	
 	public boolean searchBiggerThanState(String topicName, Object state){
 		for(SDataClass dc : subData)
-			if(dc.getTopic().equals(topicName)){
+			if(dc.getTopicName().equals(topicName)){
 				Object data = dc.getData();
 				if(data instanceof Integer)
 					if(((Integer)dc.getData()).intValue() > ((Double)state).intValue())
@@ -157,15 +132,15 @@ public class SubscriberObject extends AbstractNodeMain{
 			subNode.addMessageListener(new MessageListener<std_msgs.String>() {     
 				@Override
 				public void onNewMessage(std_msgs.String message) {
-					timeStamp++;
+					//timeStamp++;
 					SDataClass dc;
 					if(subData.isEmpty()){
-						dc = new SDataClass(topicName, message.getData(),timeStamp);
+						dc = new SDataClass(topicName, message.getData());
 						subData.add(dc);
 					}else{
 						Object lastObj = (Object)subData.get(subData.size()-1).getData();
 						if(!lastObj.equals(message.getData())){
-							dc = new SDataClass(topicName, message.getData(),timeStamp);
+							dc = new SDataClass(topicName, message.getData());
 							subData.add(dc);
 						}
 					}
@@ -182,15 +157,15 @@ public class SubscriberObject extends AbstractNodeMain{
 			subNode.addMessageListener(new MessageListener<hanse_msgs.sollSpeed>() {     
 				@Override
 				public void onNewMessage(hanse_msgs.sollSpeed message) {
-					timeStamp++;
+					//timeStamp++;
 					SDataClass dc;
 					if(subData.isEmpty()){
-						dc = new SDataClass(topicName, message.getData(),timeStamp);
+						dc = new SDataClass(topicName, message.getData());
 						subData.add(dc);
 					}else{
 						Object lastObj = (Object)subData.get(subData.size()-1).getData();
 						if(!lastObj.equals(message.getData())){
-							dc = new SDataClass(topicName, message.getData(),timeStamp);
+							dc = new SDataClass(topicName, message.getData());
 							subData.add(dc);
 						}
 					}
@@ -227,15 +202,15 @@ public class SubscriberObject extends AbstractNodeMain{
 			subNode.addMessageListener(new MessageListener<std_msgs.Int32>() {     
 				@Override
 				public void onNewMessage(std_msgs.Int32 message) {
-					timeStamp++;
+					//timeStamp++;
 					SDataClass dc;
 					if(subData.isEmpty()){
-						dc = new SDataClass(topicName, message.getData(),timeStamp);
+						dc = new SDataClass(topicName, message.getData());
 						subData.add(dc);
 					}else{
 						Object lastObj = (Object)subData.get(subData.size()-1).getData();
 						if(!lastObj.equals(message.getData())){
-							dc = new SDataClass(topicName, message.getData(),timeStamp);
+							dc = new SDataClass(topicName, message.getData());
 							subData.add(dc);
 						}
 					}
@@ -259,15 +234,15 @@ public class SubscriberObject extends AbstractNodeMain{
 			subNode.addMessageListener(new MessageListener<std_msgs.Float32>() {     
 				@Override
 				public void onNewMessage(std_msgs.Float32 message) {
-					timeStamp++;
+					//timeStamp++;
 					SDataClass dc;
 					if(subData.isEmpty()){
-						dc = new SDataClass(topicName, message.getData(),timeStamp);
+						dc = new SDataClass(topicName, message.getData());
 						subData.add(dc);
 					}else{
 						Object lastObj = (Object)subData.get(subData.size()-1).getData();
 						if(!lastObj.equals(message.getData())){
-							dc = new SDataClass(topicName, message.getData(),timeStamp);
+							dc = new SDataClass(topicName, message.getData());
 							subData.add(dc);
 						}
 					}

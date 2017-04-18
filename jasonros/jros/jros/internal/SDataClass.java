@@ -1,4 +1,6 @@
 package jros.internal;
+
+
 public class SDataClass{
 	String topicName;
 	String msgType;
