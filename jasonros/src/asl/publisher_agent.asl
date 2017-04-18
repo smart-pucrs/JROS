@@ -12,6 +12,7 @@
 		!addPubTopicT2;
 		!addPubTopicT3;
 		!addPubTopicT4;
+		!addPubGeneric;
 		!pubOnTopics.
 -!connectto(IP, Port)
 	<-	.print("Connection error. Trying again...");
@@ -25,5 +26,7 @@
 	<- jros.addPubTopic("/topics/t3","std_msgs/String","Topic 3 :D").
 +!addPubTopicT4
 	<- jros.addPubTopic("/topics/t4","std_msgs/Float32",123.45).
++!addPubGeneric
+	<- jros.addPubGenericTopic("/topics/t5", "sensor_msgs/Temperature", "TestGenericPub").
 +!pubOnTopics
 	<- jros.createPubNode("jason/pubnode",500).

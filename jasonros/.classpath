@@ -27,5 +27,6 @@
 	<classpathentry kind="lib" path="lib/sensor_msgs-1.12.5.jar"/>
 	<classpathentry kind="lib" path="lib/std_msgs-0.5.10.jar"/>
 	<classpathentry kind="lib" path="lib/ws-commons-util-1.0.2.jar"/>
+	<classpathentry kind="lib" path="src/java/sensor_msgs-1.10.2.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
