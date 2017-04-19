@@ -15,7 +15,7 @@ public class ROSConnection{
 	private JasonListener subscriberNode;
 	private ArrayList<String> nCheckList = new ArrayList<String>();
 	//private HashMap<String, String> subTopics = new HashMap<String, String>();
-	private ArrayList<DataClass> subTopics = new ArrayList<DataClass>();
+	private ArrayList<Object> subTopics = new ArrayList<Object>();
 	private ArrayList<Object> pubTopics = new ArrayList<Object>();
 	private NodeMainExecutor nodeMainExecutor = DefaultNodeMainExecutor.newDefault();
 	private NodeConfiguration nodeConfiguration;
@@ -85,6 +85,12 @@ public class ROSConnection{
 	public boolean addSubTopic(String topicName, String msgType){
 		//subTopics.put(topicName, msgType);
 		subTopics.add(new DataClass(topicName, msgType,null));
+		return true;
+	}
+	
+	public boolean addSubGenericTopic(String topicName, String msgType, String className){
+		//subTopics.put(topicName, msgType);
+		subTopics.add(new GDataClass(topicName, msgType,className));
 		return true;
 	}
 	

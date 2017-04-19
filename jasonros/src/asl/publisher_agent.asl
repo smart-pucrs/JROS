@@ -1,7 +1,3 @@
-// Agent publisher_agent in project jasonros
-
-/* Initial beliefs and rules */
-
 /* Initial goals */
 !connectto("127.0.0.1","11311").
 

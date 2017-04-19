@@ -22,6 +22,11 @@ private static ConcurrentHashMap<Agent,ROSConnection> agMap = new ConcurrentHash
 		return rc.addPubGenericTopic(topicName, msgType, className);
 	}
 	
+	public static boolean addSubGenericTopic(Agent ag, String topicName, String msgType, String className) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+		ROSConnection rc = agMap.get(ag);
+		return rc.addSubGenericTopic(topicName, msgType, className);
+	}
+	
 	public static boolean createSubNode(Agent ag, String nodeName) throws InterruptedException{
 		ROSConnection rc = agMap.get(ag);
 		return rc.createSubNode(nodeName);

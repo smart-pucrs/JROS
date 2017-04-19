@@ -12,13 +12,13 @@ import org.ros.node.Node;
 public class JasonListener extends AbstractNodeMain {
 	
 	//private HashMap<String, String> subTopics;
-	private ArrayList<DataClass> subTopics;
+	private ArrayList<Object> subTopics;
 	private ArrayList<SubscriberObject> subList = new ArrayList<SubscriberObject>();
 	private String nodeName;
 	private ROSConnection rosconn;
 	
 	//public JasonListener(String nodeName, HashMap<String, String> subTopics, ROSConnection rosconn){
-	public JasonListener(String nodeName, ArrayList<DataClass> subTopics, ROSConnection rosconn){
+	public JasonListener(String nodeName, ArrayList<Object> subTopics, ROSConnection rosconn){
 		this.subTopics = subTopics;
 		this.nodeName = nodeName;
 		this.rosconn = rosconn;
@@ -80,8 +80,8 @@ public class JasonListener extends AbstractNodeMain {
 	@Override
 	public void onStart(ConnectedNode connectedNode){
 		//Set<String> subKeys = subTopics.keySet();
-		for(DataClass d : subTopics){
-			SubscriberObject sub = new SubscriberObject(connectedNode, nodeName, d.getTopicName(), d.getMsgType(), rosconn);
+		for(Object d : subTopics){
+			SubscriberObject sub = new SubscriberObject(connectedNode, nodeName, d , rosconn);
 			subList.add(sub);
 		}
 	}

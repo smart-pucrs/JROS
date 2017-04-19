@@ -123,145 +123,160 @@ public class SubscriberObject extends AbstractNodeMain{
 	
 	//msgtype ex:"std_msgs/String"
 	//Usar TreeMap ao inves de HashMap
-	public SubscriberObject(ConnectedNode connectedNode, String nodeName, String topicName, String msgType, ROSConnection rosconn){
+	public SubscriberObject(ConnectedNode connectedNode, String nodeName, Object topic, ROSConnection rosconn){
 		this.nodeName = nodeName;
-		this.topicName = topicName;
-		//if(!rosconn.nodeExists(nodeName))
-		switch(msgType){
-		case "std_msgs/String":{
-			Subscriber<std_msgs.String> subNode = connectedNode.newSubscriber(topicName, msgType);
-			subNode.addMessageListener(new MessageListener<std_msgs.String>() {     
-				@Override
-				public void onNewMessage(std_msgs.String message) {
-					//timeStamp++;
-					SDataClass dc;
-					if(subData.isEmpty()){
-						dc = new SDataClass(topicName, message.getData());
-						subData.add(dc);
-					}else{
-						Object lastObj = (Object)subData.get(subData.size()-1).getData();
-						if(!lastObj.equals(message.getData())){
+		//String topicName;
+		String msgType;
+		if(topic instanceof GDataClass){
+			this.topicName = ((GDataClass)topic).getTopicName();
+			msgType = ((GDataClass)topic).getMsgType();
+			String className = ((GDataClass)topic).getClassName();
+			try {
+				Object genClass = Class.forName(className).newInstance();
+				((GenericSub)genClass).subProc(connectedNode, topicName, msgType);
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}else{
+			this.topicName = ((DataClass)topic).getTopicName();
+			msgType = ((DataClass)topic).getMsgType();
+			//if(!rosconn.nodeExists(nodeName))
+			switch(msgType){
+			case "std_msgs/String":{
+				Subscriber<std_msgs.String> subNode = connectedNode.newSubscriber(topicName, msgType);
+				subNode.addMessageListener(new MessageListener<std_msgs.String>() {     
+					@Override
+					public void onNewMessage(std_msgs.String message) {
+						//timeStamp++;
+						SDataClass dc;
+						if(subData.isEmpty()){
 							dc = new SDataClass(topicName, message.getData());
 							subData.add(dc);
+						}else{
+							Object lastObj = (Object)subData.get(subData.size()-1).getData();
+							if(!lastObj.equals(message.getData())){
+								dc = new SDataClass(topicName, message.getData());
+								subData.add(dc);
+							}
 						}
+						//subData.put(topicName, message.getData());
+						//System.out.println(subData.size());
+						//System.out.println(searchState(topicName,"abc"));
+						//System.out.println(getLastStateObj(topicName).getData().toString());
 					}
-					//subData.put(topicName, message.getData());
-					//System.out.println(subData.size());
-					//System.out.println(searchState(topicName,"abc"));
-					//System.out.println(getLastStateObj(topicName).getData().toString());
-				}
-			});
-		}
-		break;
-		case "hanse_msgs/sollSpeed":{
-			Subscriber<hanse_msgs.sollSpeed> subNode = connectedNode.newSubscriber(topicName, msgType);
-			subNode.addMessageListener(new MessageListener<hanse_msgs.sollSpeed>() {     
-				@Override
-				public void onNewMessage(hanse_msgs.sollSpeed message) {
-					//timeStamp++;
-					SDataClass dc;
-					if(subData.isEmpty()){
-						dc = new SDataClass(topicName, message.getData());
-						subData.add(dc);
-					}else{
-						Object lastObj = (Object)subData.get(subData.size()-1).getData();
-						if(!lastObj.equals(message.getData())){
+				});
+			}
+			break;
+			case "hanse_msgs/sollSpeed":{
+				Subscriber<hanse_msgs.sollSpeed> subNode = connectedNode.newSubscriber(topicName, msgType);
+				subNode.addMessageListener(new MessageListener<hanse_msgs.sollSpeed>() {     
+					@Override
+					public void onNewMessage(hanse_msgs.sollSpeed message) {
+						//timeStamp++;
+						SDataClass dc;
+						if(subData.isEmpty()){
 							dc = new SDataClass(topicName, message.getData());
 							subData.add(dc);
+						}else{
+							Object lastObj = (Object)subData.get(subData.size()-1).getData();
+							if(!lastObj.equals(message.getData())){
+								dc = new SDataClass(topicName, message.getData());
+								subData.add(dc);
+							}
 						}
+						//subData.put(topicName, message.getData());
+						//System.out.println(subData.size());
+						//System.out.println(searchState(topicName,"abc"));
+						//System.out.println(getLastStateObj(topicName).getData().toString());
 					}
-					//subData.put(topicName, message.getData());
-					//System.out.println(subData.size());
-					//System.out.println(searchState(topicName,"abc"));
-					//System.out.println(getLastStateObj(topicName).getData().toString());
-				}
-			});
-		}
-		break;
-		case "std_msgs/Int8":{
-			Subscriber<std_msgs.Int8> subNode = connectedNode.newSubscriber(topicName, msgType);
-			subNode.addMessageListener(new MessageListener<std_msgs.Int8>() {     
-				@Override
-				public void onNewMessage(std_msgs.Int8 message) {
-					//subData.put(topicName, message.getData());
-				}
-			});
-		}
-		break;
-		case "std_msgs/Int16":{
-			Subscriber<std_msgs.Int16> subNode = connectedNode.newSubscriber(topicName, msgType);
-			subNode.addMessageListener(new MessageListener<std_msgs.Int16>() {     
-				@Override
-				public void onNewMessage(std_msgs.Int16 message) {
-					//subData.put(topicName, message.getData());
-				}
-			});
-		}
-		break;
-		case "std_msgs/Int32":{
-			Subscriber<std_msgs.Int32> subNode = connectedNode.newSubscriber(topicName, msgType);
-			subNode.addMessageListener(new MessageListener<std_msgs.Int32>() {     
-				@Override
-				public void onNewMessage(std_msgs.Int32 message) {
-					//timeStamp++;
-					SDataClass dc;
-					if(subData.isEmpty()){
-						dc = new SDataClass(topicName, message.getData());
-						subData.add(dc);
-					}else{
-						Object lastObj = (Object)subData.get(subData.size()-1).getData();
-						if(!lastObj.equals(message.getData())){
+				});
+			}
+			break;
+			case "std_msgs/Int8":{
+				Subscriber<std_msgs.Int8> subNode = connectedNode.newSubscriber(topicName, msgType);
+				subNode.addMessageListener(new MessageListener<std_msgs.Int8>() {     
+					@Override
+					public void onNewMessage(std_msgs.Int8 message) {
+						//subData.put(topicName, message.getData());
+					}
+				});
+			}
+			break;
+			case "std_msgs/Int16":{
+				Subscriber<std_msgs.Int16> subNode = connectedNode.newSubscriber(topicName, msgType);
+				subNode.addMessageListener(new MessageListener<std_msgs.Int16>() {     
+					@Override
+					public void onNewMessage(std_msgs.Int16 message) {
+						//subData.put(topicName, message.getData());
+					}
+				});
+			}
+			break;
+			case "std_msgs/Int32":{
+				Subscriber<std_msgs.Int32> subNode = connectedNode.newSubscriber(topicName, msgType);
+				subNode.addMessageListener(new MessageListener<std_msgs.Int32>() {     
+					@Override
+					public void onNewMessage(std_msgs.Int32 message) {
+						//timeStamp++;
+						SDataClass dc;
+						if(subData.isEmpty()){
 							dc = new SDataClass(topicName, message.getData());
 							subData.add(dc);
+						}else{
+							Object lastObj = (Object)subData.get(subData.size()-1).getData();
+							if(!lastObj.equals(message.getData())){
+								dc = new SDataClass(topicName, message.getData());
+								subData.add(dc);
+							}
 						}
 					}
-				}
-			});
-			//rosconn.addToCheckList(nodeName);
-		}
-		break;
-		case "std_msgs/Int64":{
-			Subscriber<std_msgs.Int64> subNode = connectedNode.newSubscriber(topicName, msgType);
-			subNode.addMessageListener(new MessageListener<std_msgs.Int64>() {     
-				@Override
-				public void onNewMessage(std_msgs.Int64 message) {
-					//subData.put(topicName, message.getData());
-				}
-			});
-		}
-		break;
-		case "std_msgs/Float32":{
-			Subscriber<std_msgs.Float32> subNode = connectedNode.newSubscriber(topicName, msgType);
-			subNode.addMessageListener(new MessageListener<std_msgs.Float32>() {     
-				@Override
-				public void onNewMessage(std_msgs.Float32 message) {
-					//timeStamp++;
-					SDataClass dc;
-					if(subData.isEmpty()){
-						dc = new SDataClass(topicName, message.getData());
-						subData.add(dc);
-					}else{
-						Object lastObj = (Object)subData.get(subData.size()-1).getData();
-						if(!lastObj.equals(message.getData())){
+				});
+				//rosconn.addToCheckList(nodeName);
+			}
+			break;
+			case "std_msgs/Int64":{
+				Subscriber<std_msgs.Int64> subNode = connectedNode.newSubscriber(topicName, msgType);
+				subNode.addMessageListener(new MessageListener<std_msgs.Int64>() {     
+					@Override
+					public void onNewMessage(std_msgs.Int64 message) {
+						//subData.put(topicName, message.getData());
+					}
+				});
+			}
+			break;
+			case "std_msgs/Float32":{
+				Subscriber<std_msgs.Float32> subNode = connectedNode.newSubscriber(topicName, msgType);
+				subNode.addMessageListener(new MessageListener<std_msgs.Float32>() {     
+					@Override
+					public void onNewMessage(std_msgs.Float32 message) {
+						//timeStamp++;
+						SDataClass dc;
+						if(subData.isEmpty()){
 							dc = new SDataClass(topicName, message.getData());
 							subData.add(dc);
+						}else{
+							Object lastObj = (Object)subData.get(subData.size()-1).getData();
+							if(!lastObj.equals(message.getData())){
+								dc = new SDataClass(topicName, message.getData());
+								subData.add(dc);
+							}
 						}
 					}
-				}
-			});
-		}
-		break;
-		case "std_msgs/Float64":{
-			Subscriber<std_msgs.Float64> subNode = connectedNode.newSubscriber(topicName, msgType);
-			subNode.addMessageListener(new MessageListener<std_msgs.Float64>() {     
-				@Override
-				public void onNewMessage(std_msgs.Float64 message) {
-					//subData.put(topicName, message.getData());
-				}
-			});
-		}
-		}
-		rosconn.addToCheckList(nodeName);
+				});
+			}
+			break;
+			case "std_msgs/Float64":{
+				Subscriber<std_msgs.Float64> subNode = connectedNode.newSubscriber(topicName, msgType);
+				subNode.addMessageListener(new MessageListener<std_msgs.Float64>() {     
+					@Override
+					public void onNewMessage(std_msgs.Float64 message) {
+						//subData.put(topicName, message.getData());
+					}
+				});
+			}
+			}
+			rosconn.addToCheckList(nodeName);
+	}
 	}
 
 	@Override

@@ -1,7 +1,3 @@
-// Agent sample_agent in project jasonros
-
-/* Initial beliefs and rules */
-
 /* Initial goals */
 //!connectto("186.34.5.1","11311").
 !connectto("127.0.0.1","11311").
@@ -13,6 +9,7 @@
 		!addTopicT2;
 		!addTopicT3;
 		!addTopicT4;
+		!addTopicT5;
 		!subToTopics.
 -!connectto(IP, Port)
 	<-	.print("Connection error. Trying again...");
@@ -26,6 +23,8 @@
 	<- 	jros.addSubTopic("/topics/t3","std_msgs/String").
 +!addTopicT4
 	<- 	jros.addSubTopic("/topics/t4","std_msgs/Float32").
++!addTopicT5
+	<- 	jros.addSubGenericTopic("/topics/t5","sensor_msgs/Temperature","TestGenericSub").
 +!subToTopics
 	<- 	jros.createSubNode("jason/subnode");
 		!getSubData.
