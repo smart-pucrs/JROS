@@ -24,7 +24,7 @@
 +!addTopicT4
 	<- 	jros.addSubTopic("/topics/t4","std_msgs/Float32").
 +!addTopicT5
-	<- 	jros.addSubGenericTopic("/topics/t5","sensor_msgs/Temperature","TestGenericSub").
+	<- 	jros.addSubGenericTopic("/jtopics/action","jason_msgs/action","TestGenericSub").
 +!subToTopics
 	<- 	jros.createSubNode("jason/subnode");
 		!getSubData.

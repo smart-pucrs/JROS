@@ -8,11 +8,14 @@ import org.ros.namespace.GraphName;
 import org.ros.node.DefaultNodeMainExecutor;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ROSConnection{
 	
 	private JasonTalker publisherNode;
+	private ActionTalker jasonPNode;
 	private JasonListener subscriberNode;
+	private PerceptionListener jasonSNode;
 	private ArrayList<String> nCheckList = new ArrayList<String>();
 	//private HashMap<String, String> subTopics = new HashMap<String, String>();
 	private ArrayList<Object> subTopics = new ArrayList<Object>();
@@ -22,7 +25,7 @@ public class ROSConnection{
 	private ArrayList<JasonTalker> talkerList = new ArrayList<JasonTalker>();
 	URI masteruri;
 	
-	public boolean rosConfig(String rosIP, String rosPort){
+	public boolean rosConfig(String rosIP, String rosPort) throws InterruptedException{
 		masteruri = URI.create("http://"+rosIP+":"+rosPort);
 		nodeConfiguration = NodeConfiguration.newPublic(rosIP, masteruri);
 		return checkConn();
@@ -46,36 +49,76 @@ public class ROSConnection{
 		return nCheckList;
 	}
 	
+	private boolean createSubNodeP(String nodeName) throws InterruptedException{
+		try{
+			subscriberNode = new JasonListener(nodeName, subTopics, this);
+			nodeMainExecutor.execute(subscriberNode, nodeConfiguration);
+			while(!nCheckList.contains(nodeName)) Thread.sleep(10);
+			nCheckList.remove(nodeName);
+			System.out.println("ROSConnection: subNode created.");
+			return true;
+		}catch(RuntimeException e){
+			System.out.println("Connection error!");
+		}
+		return false;
+	}
+	
 	public boolean createSubNode(String nodeName) throws InterruptedException{
 		if(subscriberNode == null){
-			try{
-				subscriberNode = new JasonListener(nodeName, subTopics, this);
-				nodeMainExecutor.execute(subscriberNode, nodeConfiguration);
-				while(!nCheckList.contains(nodeName)) Thread.sleep(10);
-				nCheckList.remove(nodeName);
-				System.out.println("ROSConnection: subNode created.");
-				return true;
-			}catch(RuntimeException e){
-				System.out.println("Connection error!");
-			}
+			return createSubNodeP(nodeName);
 		}else
 			System.out.println("An subscriber node already exists!");
 		return false;
 	}
 	
+	private boolean createPubNodeP(String nodeName, long pRate) throws InterruptedException{
+		try{
+			nodeMainExecutor.execute(publisherNode, nodeConfiguration);
+			while(!nCheckList.contains(nodeName)) Thread.sleep(10);
+			nCheckList.remove(nodeName);
+			talkerList.add(publisherNode);
+			pubTopics = new ArrayList<Object>();
+			return true;
+		}catch(RuntimeException e){
+			System.out.println("Connection error!");
+		}
+		return false;
+	}
+	
+	private boolean createJasonPubNode(String agName, String action, List<String> parameters,long pRate){
+		try{
+			jasonPNode = new ActionTalker(agName,action,parameters,pRate);
+			nodeMainExecutor.execute(jasonPNode, nodeConfiguration);
+			return true;
+		}catch(RuntimeException e){
+			System.out.println("Connection error!");
+		}
+		return false;
+	}
+	
+	private boolean createJasonSubNode(){
+		try{
+			jasonSNode = new PerceptionListener();
+			nodeMainExecutor.execute(jasonSNode, nodeConfiguration);
+			return true;
+		}catch(RuntimeException e){
+			System.out.println("Connection error!");
+		}
+		return false;
+	}
+	
+	public boolean sendGenericAction(String agName, String action, List<String> parameters) throws InterruptedException{
+		if(jasonPNode == null)
+			return createJasonPubNode(agName,action,parameters,500);
+		else
+			jasonPNode.setNewAction(agName, action, parameters);
+		return true;
+	}
+	
 	public boolean createPubNode(String nodeName, long pRate) throws InterruptedException{
 		publisherNode = new JasonTalker(nodeName, pubTopics, pRate, this);
 		if(publisherNode != null){
-			try{
-				nodeMainExecutor.execute(publisherNode, nodeConfiguration);
-				while(!nCheckList.contains(nodeName)) Thread.sleep(10);
-				nCheckList.remove(nodeName);
-				talkerList.add(publisherNode);
-				pubTopics = new ArrayList<Object>();
-				return true;
-			}catch(RuntimeException e){
-				System.out.println("Connection error!");
-			}
+			return createPubNodeP(nodeName, pRate);
 		}
 		return false;
 	}

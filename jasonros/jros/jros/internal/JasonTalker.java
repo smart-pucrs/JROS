@@ -44,7 +44,8 @@ public class JasonTalker extends AbstractNodeMain {
 	}
 	
 	@Override
-	public void onStart(final ConnectedNode connectedNode) {		
+	public void onStart(final ConnectedNode connectedNode) {	
+		System.out.println("OnStart JasonTalker");
 		for(Object d : pubTopics){
 			try {
 				new PublisherObject(connectedNode, nodeName, d, pRate, rosconn);

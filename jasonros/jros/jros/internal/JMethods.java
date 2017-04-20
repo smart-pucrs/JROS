@@ -2,6 +2,7 @@ package jros.internal;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import jason.asSemantics.Agent;
 
@@ -25,6 +26,11 @@ private static ConcurrentHashMap<Agent,ROSConnection> agMap = new ConcurrentHash
 	public static boolean addSubGenericTopic(Agent ag, String topicName, String msgType, String className) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		ROSConnection rc = agMap.get(ag);
 		return rc.addSubGenericTopic(topicName, msgType, className);
+	}
+	
+	public static boolean genericAction(Agent ag, String action, List<String> parameters) throws InterruptedException{
+		ROSConnection rc = agMap.get(ag);
+		return rc.sendGenericAction(ag.toString(), action, parameters);
 	}
 	
 	public static boolean createSubNode(Agent ag, String nodeName) throws InterruptedException{

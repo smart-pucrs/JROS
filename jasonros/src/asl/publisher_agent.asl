@@ -23,6 +23,8 @@
 +!addPubTopicT4
 	<- jros.addPubTopic("/topics/t4","std_msgs/Float32",123.45).
 +!addPubGeneric
-	<- jros.addPubGenericTopic("/topics/t5", "sensor_msgs/Temperature", "TestGenericPub").
+	<- jros.genericAction("move",10,20,30);
+		.wait(3000);
+		jros.genericAction("say","hi!").
 +!pubOnTopics
 	<- jros.createPubNode("jason/pubnode",500).
