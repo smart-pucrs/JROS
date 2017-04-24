@@ -2,6 +2,11 @@ package jros.internal;
 
 
 import org.ros.node.NodeMainExecutor;
+
+import jason.asSemantics.Agent;
+import jason.asSemantics.Unifier;
+import jason.asSyntax.Term;
+
 import org.ros.node.NodeConfiguration;
 import org.ros.internal.node.client.SlaveClient;
 import org.ros.namespace.GraphName;
@@ -96,9 +101,9 @@ public class ROSConnection{
 		return false;
 	}
 	
-	private boolean createJasonSubNode(){
+	private boolean createJasonSubNode(Agent ag){
 		try{
-			jasonSNode = new PerceptionListener();
+			jasonSNode = new PerceptionListener(ag);
 			nodeMainExecutor.execute(jasonSNode, nodeConfiguration);
 			return true;
 		}catch(RuntimeException e){
@@ -112,6 +117,12 @@ public class ROSConnection{
 			return createJasonPubNode(agName,action,parameters,500);
 		else
 			jasonPNode.setNewAction(agName, action, parameters);
+		return true;
+	}
+	
+	public boolean listenPerceptions(Agent ag){
+		if(jasonSNode == null)
+			return createJasonSubNode(ag);
 		return true;
 	}
 	
@@ -131,9 +142,9 @@ public class ROSConnection{
 		return true;
 	}
 	
-	public boolean addSubGenericTopic(String topicName, String msgType, String className){
+	public boolean addSubGenericTopic(String topicName, String msgType, String className, Unifier un, Term[] terms){
 		//subTopics.put(topicName, msgType);
-		subTopics.add(new GDataClass(topicName, msgType,className));
+		subTopics.add(new GDataClass(topicName, msgType,className,un,terms));
 		return true;
 	}
 	
@@ -141,8 +152,8 @@ public class ROSConnection{
 		return pubTopics.add(new DataClass(topicName,msgType,data));
 	}
 	
-	public boolean addPubGenericTopic(String topicName, String msgType, String className){
-		return pubTopics.add(new GDataClass(topicName,msgType,className));
+	public boolean addPubGenericTopic(String topicName, String msgType, String className, Unifier un, Term[] terms){
+		return pubTopics.add(new GDataClass(topicName,msgType,className,un,terms));
 	}
 	
 	public boolean subExists(){

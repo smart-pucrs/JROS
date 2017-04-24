@@ -24,7 +24,6 @@
 	<- jros.addPubTopic("/topics/t4","std_msgs/Float32",123.45).
 +!addPubGeneric
 	<- jros.genericAction("move",10,20,30);
-		.wait(3000);
-		jros.genericAction("say","hi!").
+		jros.addPubGenericTopic("/jtopics/perception","jason_msgs/perception","TestGenericPub").
 +!pubOnTopics
 	<- jros.createPubNode("jason/pubnode",500).

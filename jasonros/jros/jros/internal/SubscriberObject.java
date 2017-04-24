@@ -11,6 +11,9 @@ import org.ros.node.ConnectedNode;
 //import org.ros.node.Node;
 import org.ros.node.topic.Subscriber;
 
+import jason.asSemantics.Unifier;
+import jason.asSyntax.Term;
+
 
 public class SubscriberObject extends AbstractNodeMain{
 	private String nodeName;
@@ -131,9 +134,11 @@ public class SubscriberObject extends AbstractNodeMain{
 			this.topicName = ((GDataClass)topic).getTopicName();
 			msgType = ((GDataClass)topic).getMsgType();
 			String className = ((GDataClass)topic).getClassName();
+			Unifier un = ((GDataClass)topic).getUnifier();
+			Term[] terms = ((GDataClass)topic).getTerms();
 			try {
 				Object genClass = Class.forName(className).newInstance();
-				((GenericSub)genClass).subProc(connectedNode, topicName, msgType);
+				((GenericSub)genClass).subProc(connectedNode, topicName, msgType, un, terms);
 			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 				e.printStackTrace();
 			}

@@ -6,24 +6,21 @@ import java.util.List;
 import org.ros.concurrent.CancellableLoop;
 import org.ros.node.ConnectedNode;
 import org.ros.node.topic.Publisher;
+
+import jason.asSemantics.Unifier;
+import jason.asSyntax.Term;
 import jros.internal.GenericPub;
 
 
 public class TestGenericPub extends GenericPub{
 	@Override
-	public void pubProc(ConnectedNode connectedNode,  String topicName,  String msgType){
-		Publisher<jason_msgs.action> pubNode = connectedNode.newPublisher(topicName, msgType);
+	public void pubProc(ConnectedNode connectedNode,  String topicName,  String msgType, Unifier un, Term[] terms){
+		Publisher<jason_msgs.perception> pubNode = connectedNode.newPublisher(topicName, msgType);
 		connectedNode.executeCancellableLoop(new CancellableLoop() {
 			@Override
 			protected void loop() throws InterruptedException {
-				jason_msgs.action msg = pubNode.newMessage();
-				List<String> p = new ArrayList<String>();
-				p.add("x");
-				p.add("y");
-				p.add("z");
-				msg.setAction("move");
-				msg.setAgent("pub agent");
-				msg.setParameters(p);
+				jason_msgs.perception msg = pubNode.newMessage();
+				msg.setPerception("testP");
 				pubNode.publish(msg);
 				Thread.sleep(1000);
 			}

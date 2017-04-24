@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import jason.asSemantics.Agent;
+import jason.asSemantics.Unifier;
+import jason.asSyntax.Term;
 
 public class JMethods {
 private static ConcurrentHashMap<Agent,ROSConnection> agMap = new ConcurrentHashMap<Agent,ROSConnection>();
@@ -18,14 +20,19 @@ private static ConcurrentHashMap<Agent,ROSConnection> agMap = new ConcurrentHash
 		return rc.rosConfig(rosIP, rosPort);
 	}
 	
-	public static boolean addPubGenericTopic(Agent ag, String topicName, String msgType, String className) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+	public static boolean addPubGenericTopic(Agent ag, String topicName, String msgType, String className, Unifier un, Term[] terms) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		ROSConnection rc = agMap.get(ag);
-		return rc.addPubGenericTopic(topicName, msgType, className);
+		return rc.addPubGenericTopic(topicName, msgType, className, un, terms);
 	}
 	
-	public static boolean addSubGenericTopic(Agent ag, String topicName, String msgType, String className) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+	public static boolean addSubGenericTopic(Agent ag, String topicName, String msgType, String className, Unifier un, Term[] terms) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		ROSConnection rc = agMap.get(ag);
-		return rc.addSubGenericTopic(topicName, msgType, className);
+		return rc.addSubGenericTopic(topicName, msgType, className, un, terms);
+	}
+	
+	public static boolean listenPerceptions(Agent ag){
+		ROSConnection rc = agMap.get(ag);
+		return rc.listenPerceptions(ag);
 	}
 	
 	public static boolean genericAction(Agent ag, String action, List<String> parameters) throws InterruptedException{

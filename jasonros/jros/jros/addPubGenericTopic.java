@@ -13,6 +13,6 @@ public class addPubGenericTopic extends DefaultInternalAction{
 		String topicName = ((StringTerm)terms[0]).getString();
 		String msgType = ((StringTerm)terms[1]).getString();
 		String className = ((StringTerm)terms[2]).getString();
-		return JMethods.addPubGenericTopic(ts.getAg(), topicName, msgType, className);
+		return JMethods.addPubGenericTopic(ts.getAg(), topicName, msgType, className, un, terms);
 	}
 }

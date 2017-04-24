@@ -7,6 +7,9 @@ import org.ros.node.AbstractNodeMain;
 import org.ros.node.ConnectedNode;
 import org.ros.node.topic.Publisher;
 
+import jason.asSemantics.Unifier;
+import jason.asSyntax.Term;
+
 public class PublisherObject extends AbstractNodeMain{
 	private String nodeName;
 	public PublisherObject(ConnectedNode connectedNode, String nodeName, Object topic, long pRate, ROSConnection rosconn) throws InterruptedException{
@@ -18,10 +21,12 @@ public class PublisherObject extends AbstractNodeMain{
 			topicName = ((GDataClass)topic).getTopicName();
 			msgType = ((GDataClass)topic).getMsgType();
 			data = null;
+			Unifier un  = ((GDataClass)topic).getUnifier();
+			Term[] terms = ((GDataClass)topic).getTerms();
 			String className = ((GDataClass)topic).getClassName();
 			try {
 				Object genClass = Class.forName(className).newInstance();
-				((GenericPub)genClass).pubProc(connectedNode, topicName, msgType);
+				((GenericPub)genClass).pubProc(connectedNode, topicName, msgType, un, terms);
 			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 				e.printStackTrace();
 			}

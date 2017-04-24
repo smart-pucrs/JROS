@@ -42,7 +42,6 @@ public class ActionTalker extends AbstractNodeMain{
 			protected void loop() throws InterruptedException{
 				jason_msgs.action actionMsg = actionPub.newMessage();
 				actionMsg.setAction(action);
-				actionMsg.setAgent(agName);
 				actionMsg.setParameters(parameters);
 				actionPub.publish(actionMsg);
 				Thread.sleep(pRate);

@@ -2,11 +2,14 @@
 import org.ros.message.MessageListener;
 import org.ros.node.ConnectedNode;
 import org.ros.node.topic.Subscriber;
+
+import jason.asSemantics.Unifier;
+import jason.asSyntax.Term;
 import jros.internal.GenericSub;
 
 public class TestGenericSub extends GenericSub{
 	@Override
-	public void subProc(ConnectedNode connectedNode, String topicName, String msgType) {
+	public void subProc(ConnectedNode connectedNode, String topicName, String msgType, Unifier un, Term[] terms) {
 		System.out.println("----subProc----");
 		Subscriber<jason_msgs.action> subNode = connectedNode.newSubscriber(topicName, msgType);
 		subNode.addMessageListener(new MessageListener<jason_msgs.action>() {     
