@@ -101,9 +101,9 @@ public class ROSConnection{
 		return false;
 	}
 	
-	private boolean createJasonSubNode(Agent ag){
+	private boolean createJasonSubNode(Agent ag, String rcvFrom){
 		try{
-			jasonSNode = new PerceptionListener(ag);
+			jasonSNode = new PerceptionListener(ag, rcvFrom);
 			nodeMainExecutor.execute(jasonSNode, nodeConfiguration);
 			return true;
 		}catch(RuntimeException e){
@@ -112,7 +112,7 @@ public class ROSConnection{
 		return false;
 	}
 	
-	public boolean sendGenericAction(String agName, String action, List<String> parameters) throws InterruptedException{
+	public boolean sendAction(String agName, String action, List<String> parameters) throws InterruptedException{
 		if(jasonPNode == null)
 			return createJasonPubNode(agName,action,parameters,500);
 		else
@@ -120,9 +120,9 @@ public class ROSConnection{
 		return true;
 	}
 	
-	public boolean listenPerceptions(Agent ag){
+	public boolean listenPerceptions(Agent ag, String rcvFrom){
 		if(jasonSNode == null)
-			return createJasonSubNode(ag);
+			return createJasonSubNode(ag,rcvFrom);
 		return true;
 	}
 	

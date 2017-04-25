@@ -11,7 +11,7 @@ import jason.asSyntax.StringTerm;
 import jason.asSyntax.Term;
 import jros.internal.JMethods;
 
-public class genericAction extends DefaultInternalAction{
+public class sendAction extends DefaultInternalAction{
 	@Override
 	public Object execute(TransitionSystem ts, Unifier un, Term[] terms) throws Exception {
 		String action = ((StringTerm)terms[0]).getString();
@@ -23,6 +23,6 @@ public class genericAction extends DefaultInternalAction{
 			}else
 				parameters.add(((StringTerm)terms[i]).getString());
 		}
-		return JMethods.genericAction(ts.getAg(), action, parameters);
+		return JMethods.sendAction(ts.getAg(), action, parameters);
 	}
 }

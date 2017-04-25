@@ -30,14 +30,14 @@ private static ConcurrentHashMap<Agent,ROSConnection> agMap = new ConcurrentHash
 		return rc.addSubGenericTopic(topicName, msgType, className, un, terms);
 	}
 	
-	public static boolean listenPerceptions(Agent ag){
+	public static boolean listenPerceptions(Agent ag, String rcvFrom){
 		ROSConnection rc = agMap.get(ag);
-		return rc.listenPerceptions(ag);
+		return rc.listenPerceptions(ag,rcvFrom);
 	}
 	
-	public static boolean genericAction(Agent ag, String action, List<String> parameters) throws InterruptedException{
+	public static boolean sendAction(Agent ag, String action, List<String> parameters) throws InterruptedException{
 		ROSConnection rc = agMap.get(ag);
-		return rc.sendGenericAction(ag.toString(), action, parameters);
+		return rc.sendAction(ag.toString(), action, parameters);
 	}
 	
 	public static boolean createSubNode(Agent ag, String nodeName) throws InterruptedException{

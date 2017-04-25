@@ -13,13 +13,15 @@ import jason_msgs.perception;
 
 public class PerceptionListener extends AbstractNodeMain{
 	private Agent ag;
+	private String rcvFrom;
 	@Override
 	public GraphName getDefaultNodeName() {
 		return GraphName.of("Jason/subNode");
 	}
 	
-	public PerceptionListener(Agent ag){
+	public PerceptionListener(Agent ag, String rcvFrom){
 		this.ag = ag;
+		this.rcvFrom = rcvFrom;
 	}
 	
 	@Override
@@ -28,11 +30,13 @@ public class PerceptionListener extends AbstractNodeMain{
 		perceptionSub.addMessageListener(new MessageListener<jason_msgs.perception>() {
 			@Override
 			public void onNewMessage(jason_msgs.perception message) {
-				Literal l = Literal.parseLiteral(message.getPerception());
-				try {
-					ag.addBel(l);
-				} catch (RevisionFailedException e) {
-					e.printStackTrace();
+				if(message.getAgent().equals(rcvFrom) || rcvFrom == null){
+					Literal l = Literal.parseLiteral(message.getPerception());
+					try {
+						ag.addBel(l);
+					} catch (RevisionFailedException e) {
+						e.printStackTrace();
+					}
 				}
 			} 
 		});

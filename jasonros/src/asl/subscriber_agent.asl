@@ -33,8 +33,8 @@
 		jros.getTopicData("/topics/t2", B);
 		jros.getTopicData("/topics/t3", C);
 		jros.getTopicData("/topics/t4", D);
-		jros.listenPerceptions;
-		.wait({+testP});
+		//jros.listenPerceptions;
+		//.wait({+testP});
 		.print("Topic 1:", A);
 		.print("Topic 2:", B);
 		.print("Topic 3:", C);

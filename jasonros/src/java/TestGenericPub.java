@@ -22,7 +22,7 @@ public class TestGenericPub extends GenericPub{
 				jason_msgs.perception msg = pubNode.newMessage();
 				msg.setPerception("testP");
 				pubNode.publish(msg);
-				Thread.sleep(1000);
+				cancel();
 			}
 		});
 	}

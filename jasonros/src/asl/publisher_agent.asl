@@ -23,7 +23,7 @@
 +!addPubTopicT4
 	<- jros.addPubTopic("/topics/t4","std_msgs/Float32",123.45).
 +!addPubGeneric
-	<- jros.genericAction("move",10,20,30);
-		jros.addPubGenericTopic("/jtopics/perception","jason_msgs/perception","TestGenericPub").
+	<- jros.sendAction("move",10.4,29.45,-3.67).
+		//jros.addPubGenericTopic("/jtopics/perception","jason_msgs/perception","TestGenericPub").
 +!pubOnTopics
 	<- jros.createPubNode("jason/pubnode",500).
