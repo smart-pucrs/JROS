@@ -4,7 +4,7 @@
 	<classpathentry excluding="*.asl" kind="src" path="src/asl"/>
 	<classpathentry kind="src" path="jros"/>
 	<classpathentry kind="src" path="src/java"/>
-	<classpathentry kind="lib" path="/home/iancalaca/jason/libs/jason-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/jason-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/apache_xmlrpc_client-0.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/apache_xmlrpc_common-0.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/apache_xmlrpc_server-0.3.2.jar"/>

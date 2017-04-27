@@ -1,0 +1,9 @@
+/bin
+/bin/
+/jasonros/bin
+/JaCaMo/bin/
+*.raw
+*.log
+*~
+*.bk
+e_r_r_o_r.txt
