@@ -1,0 +1,2 @@
+jroslib:jrostest
+-DCATKIN_DEVEL_PREFIX=/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/install -G Unix Makefiles

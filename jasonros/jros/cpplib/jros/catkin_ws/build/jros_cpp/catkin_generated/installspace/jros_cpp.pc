@@ -1,0 +1,8 @@
+prefix=/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/install
+
+Name: jros_cpp
+Description: Description of jros_cpp
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/install/lib 
+Requires: 

@@ -1,0 +1,57 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec999461106/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec999461106.dir/build.make CMakeFiles/cmTryCompileExec999461106.dir/build
+make[1]: Entering directory '/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec999461106.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec999461106.dir/CheckSymbolExists.c.o   -c /home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec999461106
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec999461106.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec999461106.dir/CheckSymbolExists.c.o  -o cmTryCompileExec999461106 -rdynamic 
+CMakeFiles/cmTryCompileExec999461106.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTryCompileExec999461106.dir/build.make:88: recipe for target 'cmTryCompileExec999461106' failed
+make[1]: *** [cmTryCompileExec999461106] Error 1
+make[1]: Leaving directory '/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/build/CMakeFiles/CMakeTmp'
+Makefile:117: recipe for target 'cmTryCompileExec999461106/fast' failed
+make: *** [cmTryCompileExec999461106/fast] Error 2
+
+File /home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec417711306/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec417711306.dir/build.make CMakeFiles/cmTryCompileExec417711306.dir/build
+make[1]: Entering directory '/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec417711306.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec417711306.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.2/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec417711306
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec417711306.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec417711306.dir/CheckFunctionExists.c.o  -o cmTryCompileExec417711306 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTryCompileExec417711306.dir/build.make:88: recipe for target 'cmTryCompileExec417711306' failed
+make[1]: Leaving directory '/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec417711306] Error 1
+Makefile:117: recipe for target 'cmTryCompileExec417711306/fast' failed
+make: *** [cmTryCompileExec417711306/fast] Error 2
+
+
