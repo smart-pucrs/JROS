@@ -1,56 +1,63 @@
 #include <string>
 #include <iostream>
 #include "ros/ros.h"
+#include <ros/callback_queue.h>
 #include "std_msgs/String.h"
+#include <boost/thread.hpp>
 
 using namespace std;
-
+int jargc;
+char **jargv;
+string recvMsg;
+string pubMsg;
+boost::thread *psubThread;
+boost::thread *ppubThread;
 class JROS{
   public:
-    int init(int argc, char **argv);
-    int sendConfirmation(std::string action);
-    int recvAction(void);
-  private:
-    string actName;
+    JROS(int argc, char **argv);
+    void callbackFunc(const std_msgs::String::ConstPtr& message);
+    std::string getAction(void);
+    void sendConfirmation(std::string action);
 };
 
-void callbackFunc(const std_msgs::String::ConstPtr& message){
-  cout << message->data.c_str() << endl;
+void JROS::callbackFunc(const std_msgs::String::ConstPtr& message){
+  recvMsg = message->data;
 }
 
-int JROS::init(int argc, char **argv){
-  ros::init(argc,argv,"jasoncpp");
-  cout << "chamou init" << endl;
-  ros::NodeHandle n1;
-  ros::Subscriber robotSub = n1.subscribe("jaction",100,callbackFunc);
+void subThread(){
+  ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
+  JROS f(jargc,jargv);
+  ros::Subscriber robotSub = node->subscribe("jaction",1000,&JROS::callbackFunc,&f);
   ros::spin();
-  ros::NodeHandle n2;
-  ros::Publisher robotPub = n2.advertise<std_msgs::String>("jconfirmation",100);
+}
+
+void pubThread(){
+  ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
+  ros::Publisher robotPub = node->advertise<std_msgs::String>("jconfirmation",1000);
   ros::Rate loop_rate(10);
-  //JROS::actName = "test";
-  string s("aaa");
   while(ros::ok()){
-    std_msgs::String actMsg;
-    actMsg.data = s;
-    robotPub.publish(actMsg);
+    std_msgs::String msg;
+    msg.data = pubMsg;
+    robotPub.publish(msg);
+    ros::spinOnce();
     loop_rate.sleep();
   }
-  return 0;
 }
 
-int JROS::sendConfirmation(std::string action){
-  /*cout << "chamou confirm" << endl;
-  if(ros::ok()){
-    std_msgs::String message;
-    message.data = action;
-    JROS::robotPub.publish(message);
-    return 0;
-  }*/
-  return 1;
+JROS::JROS(int argc, char **argv){
+  jargc = argc;
+  jargv = argv;
+  ros::init(argc,argv,"jroscpp");
+  if(psubThread == NULL)
+    psubThread = new boost::thread(subThread);
+  if(ppubThread == NULL)
+    ppubThread = new boost::thread(pubThread);
 }
 
+string JROS::getAction(void){
+  return recvMsg;
+}
 
-int JROS::recvAction(void){
-  //ros::spin();
-  return 0;
+void JROS::sendConfirmation(std::string action){
+  pubMsg = action;
 }

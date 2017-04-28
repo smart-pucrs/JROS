@@ -13,6 +13,12 @@ ros/ros.h
 /home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/src/jrostest/src/ros/ros.h
 string
 -
+iostream
+-
+stdio.h
+/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/src/jrostest/src/stdio.h
+unistd.h
+/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/src/jrostest/src/unistd.h
 
 /home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/src/jrostest/src/jros.h
 ros/ros.h
@@ -20,6 +26,8 @@ ros/ros.h
 std_msgs/String.h
 /home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/src/jrostest/src/std_msgs/String.h
 string
+-
+boost/thread.hpp
 -
 
 /opt/ros/kinetic/include/XmlRpcDecl.h

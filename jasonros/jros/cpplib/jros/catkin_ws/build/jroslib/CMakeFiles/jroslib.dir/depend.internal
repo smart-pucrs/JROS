@@ -9,6 +9,8 @@ jroslib/CMakeFiles/jroslib.dir/src/jros.cpp.o
  /opt/ros/kinetic/include/ros/advertise_service_options.h
  /opt/ros/kinetic/include/ros/assert.h
  /opt/ros/kinetic/include/ros/builtin_message_traits.h
+ /opt/ros/kinetic/include/ros/callback_queue.h
+ /opt/ros/kinetic/include/ros/callback_queue_interface.h
  /opt/ros/kinetic/include/ros/common.h
  /opt/ros/kinetic/include/ros/console.h
  /opt/ros/kinetic/include/ros/console_backend.h

@@ -1,10 +1,11 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include <string>
+#include <boost/thread.hpp>
 
 class JROS{
   public:
-    int init(int argc, char **argv);
-    int sendConfirmation(std::string action);
-    int recvAction(void);
+    JROS(int argc, char **argv);
+    std::string getAction(void);
+    void sendConfirmation(std::string action);
 };

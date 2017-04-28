@@ -8,6 +8,8 @@ jroslib/CMakeFiles/jroslib.dir/src/jros.cpp.o: /opt/ros/kinetic/include/ros/adve
 jroslib/CMakeFiles/jroslib.dir/src/jros.cpp.o: /opt/ros/kinetic/include/ros/advertise_service_options.h
 jroslib/CMakeFiles/jroslib.dir/src/jros.cpp.o: /opt/ros/kinetic/include/ros/assert.h
 jroslib/CMakeFiles/jroslib.dir/src/jros.cpp.o: /opt/ros/kinetic/include/ros/builtin_message_traits.h
+jroslib/CMakeFiles/jroslib.dir/src/jros.cpp.o: /opt/ros/kinetic/include/ros/callback_queue.h
+jroslib/CMakeFiles/jroslib.dir/src/jros.cpp.o: /opt/ros/kinetic/include/ros/callback_queue_interface.h
 jroslib/CMakeFiles/jroslib.dir/src/jros.cpp.o: /opt/ros/kinetic/include/ros/common.h
 jroslib/CMakeFiles/jroslib.dir/src/jros.cpp.o: /opt/ros/kinetic/include/ros/console.h
 jroslib/CMakeFiles/jroslib.dir/src/jros.cpp.o: /opt/ros/kinetic/include/ros/console_backend.h
