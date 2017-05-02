@@ -36,7 +36,7 @@ public class ActionTalker extends AbstractNodeMain{
 	@Override
 	public void onStart(final ConnectedNode connectedNode){
 		System.out.println("onStart!!!");
-		Publisher<jason_msgs.action> actionPub = connectedNode.newPublisher("/jtopics/action",jason_msgs.action._TYPE);
+		Publisher<jason_msgs.action> actionPub = connectedNode.newPublisher("/jaction",jason_msgs.action._TYPE);
 		connectedNode.executeCancellableLoop(new CancellableLoop(){
 			@Override
 			protected void loop() throws InterruptedException{

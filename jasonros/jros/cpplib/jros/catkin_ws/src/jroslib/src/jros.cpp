@@ -3,30 +3,46 @@
 #include "ros/ros.h"
 #include <ros/callback_queue.h>
 #include "std_msgs/String.h"
+#include "jason_msgs/action.h"
+#include "jason_msgs/perception.h"
 #include <boost/thread.hpp>
 
 using namespace std;
 int jargc;
 char **jargv;
-string recvMsg;
+//string recvAgent;
+//string recvAction;
+//vector<string> recvParameters;
+void (*actionCallback)(std::string,std::string,std::vector<std::string>);
 string pubMsg;
 boost::thread *psubThread;
 boost::thread *ppubThread;
 class JROS{
   public:
-    JROS(int argc, char **argv);
-    void callbackFunc(const std_msgs::String::ConstPtr& message);
-    std::string getAction(void);
+    void callbackFunc(const jason_msgs::action::ConstPtr& message);
+    void init(int argc, char **argv);
+    //std::string getAction(void);
+    //std::string getAgent(void);
+    //std::vector<std::string> getParameters(void);
+    void jasonActionCB(void (*callbackF)(std::string,std::string,std::vector<std::string>));
+    void shutdown(void);
     void sendConfirmation(std::string action);
 };
 
-void JROS::callbackFunc(const std_msgs::String::ConstPtr& message){
-  recvMsg = message->data;
+void JROS::callbackFunc(const jason_msgs::action::ConstPtr& message){
+  //recvAgent = message->agent;
+  //recvAction = message->action;
+  //recvParameters = message->parameters;
+  (*actionCallback)(message->agent,message->action,message->parameters);
+}
+
+void JROS::jasonActionCB(void (*callbackF)(std::string,std::string,std::vector<std::string>)){
+  actionCallback = callbackF;
 }
 
 void subThread(){
   ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
-  JROS f(jargc,jargv);
+  JROS f;
   ros::Subscriber robotSub = node->subscribe("jaction",1000,&JROS::callbackFunc,&f);
   ros::spin();
 }
@@ -44,7 +60,7 @@ void pubThread(){
   }
 }
 
-JROS::JROS(int argc, char **argv){
+void JROS::init(int argc, char **argv){
   jargc = argc;
   jargv = argv;
   ros::init(argc,argv,"jroscpp");
@@ -54,8 +70,8 @@ JROS::JROS(int argc, char **argv){
     ppubThread = new boost::thread(pubThread);
 }
 
-string JROS::getAction(void){
-  return recvMsg;
+void JROS::shutdown(void){
+
 }
 
 void JROS::sendConfirmation(std::string action){

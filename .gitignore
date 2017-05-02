@@ -7,3 +7,5 @@
 *~
 *.bk
 e_r_r_o_r.txt
+/jasonros/jros/cpplib/jros/catkin_ws/build/
+/jasonros/jros/cpplib/jros/catkin_ws/devel/

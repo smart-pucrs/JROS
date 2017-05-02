@@ -5,7 +5,7 @@ MAS jasonros {
 	agents:
 		//test;
 		publisher_agent;
-		subscriber_agent;
+		//subscriber_agent;
 
 	aslSourcePath:
 		"src/asl";

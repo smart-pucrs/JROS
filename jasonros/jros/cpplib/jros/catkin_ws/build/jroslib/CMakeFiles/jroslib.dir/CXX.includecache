@@ -6,6 +6,38 @@
 
 #IncludeRegexTransform: 
 
+/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/src/jroslib/src/jason_msgs/action.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
+/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/src/jroslib/src/jason_msgs/perception.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
 /home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/src/jroslib/src/jros.cpp
 string
 -
@@ -17,6 +49,10 @@ ros/callback_queue.h
 -
 std_msgs/String.h
 /home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/src/jroslib/src/std_msgs/String.h
+jason_msgs/action.h
+/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/src/jroslib/src/jason_msgs/action.h
+jason_msgs/perception.h
+/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/src/jroslib/src/jason_msgs/perception.h
 boost/thread.hpp
 -
 
