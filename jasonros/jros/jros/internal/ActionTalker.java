@@ -40,11 +40,14 @@ public class ActionTalker extends AbstractNodeMain{
 		connectedNode.executeCancellableLoop(new CancellableLoop(){
 			@Override
 			protected void loop() throws InterruptedException{
-				jason_msgs.action actionMsg = actionPub.newMessage();
-				actionMsg.setAgent(agName);
-				actionMsg.setAction(action);
-				actionMsg.setParameters(parameters);
-				actionPub.publish(actionMsg);
+				if(!action.isEmpty()){
+					jason_msgs.action actionMsg = actionPub.newMessage();
+					actionMsg.setAgent(agName);
+					actionMsg.setAction(action);
+					actionMsg.setParameters(parameters);
+					actionPub.publish(actionMsg);
+					action = "";
+				}
 				Thread.sleep(pRate);
 			}
 		});

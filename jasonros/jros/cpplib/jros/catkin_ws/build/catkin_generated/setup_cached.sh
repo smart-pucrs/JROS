@@ -8,4 +8,3 @@
 
 # modified environment variables
 export PWD="/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/build"
-export PYTHONPATH="/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/devel/lib/python2.7/dist-packages:$PYTHONPATH"

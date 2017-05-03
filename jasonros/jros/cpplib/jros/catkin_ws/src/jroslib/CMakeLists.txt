@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  jason_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -104,6 +105,7 @@ catkin_package(
 #  LIBRARIES jroslib
 #  CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
+  CATKIN_DEPENDS jason_msgs
 )
 
 ###########

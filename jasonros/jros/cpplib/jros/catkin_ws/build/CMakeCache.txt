@@ -301,6 +301,9 @@ gtest_main_LIB_DEPENDS:STATIC=general;-lpthread;general;gtest;
 //Value Computed by CMake
 jason_msgs_BINARY_DIR:STATIC=/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/build/jason_msgs
 
+//The directory containing a CMake configuration file for jason_msgs.
+jason_msgs_DIR:PATH=/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/devel/share/jason_msgs/cmake
+
 //Value Computed by CMake
 jason_msgs_SOURCE_DIR:STATIC=/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/src/jason_msgs
 
@@ -318,6 +321,9 @@ jros_cpp_SOURCE_DIR:STATIC=/home/iancalaca/jason/projects/JROS/jasonros/jros/cpp
 
 //Value Computed by CMake
 jroslib_BINARY_DIR:STATIC=/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/build/jroslib
+
+//The directory containing a CMake configuration file for jroslib.
+jroslib_DIR:PATH=/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/devel/share/jroslib/cmake
 
 //Dependencies for the target
 jroslib_LIB_DEPENDS:STATIC=general;/opt/ros/kinetic/lib/libroscpp.so;general;/usr/lib/x86_64-linux-gnu/libboost_signals.so;general;/usr/lib/x86_64-linux-gnu/libboost_filesystem.so;general;/opt/ros/kinetic/lib/librosconsole.so;general;/opt/ros/kinetic/lib/librosconsole_log4cxx.so;general;/opt/ros/kinetic/lib/librosconsole_backend_interface.so;general;/usr/lib/x86_64-linux-gnu/liblog4cxx.so;general;/usr/lib/x86_64-linux-gnu/libboost_regex.so;general;/opt/ros/kinetic/lib/libxmlrpcpp.so;general;/opt/ros/kinetic/lib/libroscpp_serialization.so;general;/opt/ros/kinetic/lib/librostime.so;general;/usr/lib/x86_64-linux-gnu/libboost_date_time.so;general;/opt/ros/kinetic/lib/libcpp_common.so;general;/usr/lib/x86_64-linux-gnu/libboost_system.so;general;/usr/lib/x86_64-linux-gnu/libboost_thread.so;general;/usr/lib/x86_64-linux-gnu/libpthread.so;general;/usr/lib/x86_64-linux-gnu/libconsole_bridge.so;

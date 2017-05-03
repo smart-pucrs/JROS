@@ -5,11 +5,12 @@
 
 class JROS{
   public:
-    void init(int argc, char **argv);
+    void init(int argc, char **argv,std::string robotName);
     //std::string getAction(void);
     //std::string getAgent(void);
     //std::vector<std::string> getParameters(void);
     void jasonActionCB(void (*callbackF)(std::string,std::string,std::vector<std::string>));
     void shutdown(void);
     void sendConfirmation(std::string action);
+    void sendPerceptions(std::vector<std::string> *perceptions);
 };

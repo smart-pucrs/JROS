@@ -25,11 +25,11 @@ struct perception_
 
   perception_()
     : agent()
-    , perception()  {
+    , perceptions()  {
     }
   perception_(const ContainerAllocator& _alloc)
     : agent(_alloc)
-    , perception(_alloc)  {
+    , perceptions(_alloc)  {
   (void)_alloc;
     }
 
@@ -38,8 +38,8 @@ struct perception_
    typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _agent_type;
   _agent_type agent;
 
-   typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _perception_type;
-  _perception_type perception;
+   typedef std::vector<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > , typename ContainerAllocator::template rebind<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::other >  _perceptions_type;
+  _perceptions_type perceptions;
 
 
 
@@ -118,12 +118,12 @@ struct MD5Sum< ::jason_msgs::perception_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "51e9bf81e50ba562d5cb123e14c339af";
+    return "72e815c4c1f67f2fa9f1b634af412886";
   }
 
   static const char* value(const ::jason_msgs::perception_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x51e9bf81e50ba562ULL;
-  static const uint64_t static_value2 = 0xd5cb123e14c339afULL;
+  static const uint64_t static_value1 = 0x72e815c4c1f67f2fULL;
+  static const uint64_t static_value2 = 0xa9f1b634af412886ULL;
 };
 
 template<class ContainerAllocator>
@@ -143,7 +143,7 @@ struct Definition< ::jason_msgs::perception_<ContainerAllocator> >
   static const char* value()
   {
     return "string agent\n\
-string perception\n\
+string[] perceptions\n\
 ";
   }
 
@@ -163,7 +163,7 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.agent);
-      stream.next(m.perception);
+      stream.next(m.perceptions);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER;
@@ -184,8 +184,12 @@ struct Printer< ::jason_msgs::perception_<ContainerAllocator> >
   {
     s << indent << "agent: ";
     Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.agent);
-    s << indent << "perception: ";
-    Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.perception);
+    s << indent << "perceptions[]" << std::endl;
+    for (size_t i = 0; i < v.perceptions.size(); ++i)
+    {
+      s << indent << "  perceptions[" << i << "]: ";
+      Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.perceptions[i]);
+    }
   }
 };
 

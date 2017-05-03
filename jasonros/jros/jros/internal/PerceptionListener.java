@@ -1,5 +1,7 @@
 package jros.internal;
 
+import java.util.List;
+
 import org.ros.message.MessageListener;
 import org.ros.namespace.GraphName;
 import org.ros.node.AbstractNodeMain;
@@ -31,11 +33,14 @@ public class PerceptionListener extends AbstractNodeMain{
 			@Override
 			public void onNewMessage(jason_msgs.perception message) {
 				if(message.getAgent().equals(rcvFrom) || rcvFrom == null){
-					Literal l = Literal.parseLiteral(message.getPerception());
-					try {
-						ag.addBel(l);
-					} catch (RevisionFailedException e) {
-						e.printStackTrace();
+					List<String> pList = message.getPerceptions();
+					for(String s : pList){
+						Literal l = Literal.parseLiteral(s);
+						try {
+							ag.addBel(l);
+						} catch (RevisionFailedException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			} 

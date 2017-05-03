@@ -1,2 +1,2 @@
 string agent
-string perception
+string[] perceptions

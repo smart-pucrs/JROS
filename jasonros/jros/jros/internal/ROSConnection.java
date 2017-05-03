@@ -5,8 +5,9 @@ import org.ros.node.NodeMainExecutor;
 
 import jason.asSemantics.Agent;
 import jason.asSemantics.Unifier;
+import jason.asSemantics.DefaultInternalAction;
 import jason.asSyntax.Term;
-
+import jason.stdlib.*;
 import org.ros.node.NodeConfiguration;
 import org.ros.internal.node.client.SlaveClient;
 import org.ros.namespace.GraphName;
@@ -21,6 +22,7 @@ public class ROSConnection{
 	private ActionTalker jasonPNode;
 	private JasonListener subscriberNode;
 	private PerceptionListener jasonSNode;
+	private ConfirmationListener confirmNode;
 	private ArrayList<String> nCheckList = new ArrayList<String>();
 	//private HashMap<String, String> subTopics = new HashMap<String, String>();
 	private ArrayList<Object> subTopics = new ArrayList<Object>();
@@ -33,7 +35,12 @@ public class ROSConnection{
 	public boolean rosConfig(String rosIP, String rosPort) throws InterruptedException{
 		masteruri = URI.create("http://"+rosIP+":"+rosPort);
 		nodeConfiguration = NodeConfiguration.newPublic(rosIP, masteruri);
-		return checkConn();
+		boolean res = checkConn();
+		if(res){
+			confirmNode = new ConfirmationListener();
+			nodeMainExecutor.execute(confirmNode, nodeConfiguration);
+		}
+		return res;
 	}
 	
 	private boolean checkConn(){
@@ -113,11 +120,18 @@ public class ROSConnection{
 	}
 	
 	public boolean sendAction(String agName, String action, List<String> parameters) throws InterruptedException{
-		if(jasonPNode == null)
-			return createJasonPubNode(agName,action,parameters,500);
-		else
+		if(jasonPNode == null){
+			createJasonPubNode(agName,action,parameters,500);
+			while(confirmNode.getLastAction() != action) Thread.sleep(10);
+			confirmNode.setLastAction("");
+			return true;
+		}
+		else{
 			jasonPNode.setNewAction(agName, action, parameters);
-		return true;
+			while(confirmNode.getLastAction() != action) Thread.sleep(10);
+			confirmNode.setLastAction("");
+			return true;
+		}
 	}
 	
 	public boolean listenPerceptions(Agent ag, String rcvFrom){
