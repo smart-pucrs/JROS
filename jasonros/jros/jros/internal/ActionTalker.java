@@ -10,15 +10,14 @@ import org.ros.node.topic.Publisher;
 
 public class ActionTalker extends AbstractNodeMain{
 	
-	private String action;
+	private String action = "";
 	private String agName;
+	private String remoteAgName;
 	private List<String> parameters;
 	private long pRate;
 	
-	public ActionTalker(String agName, String action, List<String> parameters, long pRate){
-		this.agName = agName;
-		this.action = action;
-		this.parameters = parameters;
+	public ActionTalker(String remoteAgName,long pRate){
+		this.remoteAgName = remoteAgName;
 		this.pRate = pRate;
 	}
 	
@@ -30,13 +29,13 @@ public class ActionTalker extends AbstractNodeMain{
 	
 	@Override
 	public GraphName getDefaultNodeName() {
-		return GraphName.of("Jason/pubNode");
+		return GraphName.of(remoteAgName+"/actionNode");
 	}
 	
 	@Override
 	public void onStart(final ConnectedNode connectedNode){
 		System.out.println("onStart!!!");
-		Publisher<jason_msgs.action> actionPub = connectedNode.newPublisher("/jaction",jason_msgs.action._TYPE);
+		Publisher<jason_msgs.action> actionPub = connectedNode.newPublisher(remoteAgName+"/jaction",jason_msgs.action._TYPE);
 		connectedNode.executeCancellableLoop(new CancellableLoop(){
 			@Override
 			protected void loop() throws InterruptedException{

@@ -3,8 +3,9 @@ MAS jasonros {
 	infrastructure: Centralised
 
 	agents:
+		arobot;
 		//test;
-		publisher_agent;
+		//publisher_agent;
 		//subscriber_agent;
 
 	aslSourcePath:

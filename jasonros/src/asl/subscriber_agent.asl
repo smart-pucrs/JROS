@@ -5,12 +5,13 @@
 /* Plans */
 +!connectto(IP, Port)
 	<-  jros.config(IP,Port);
-		!addTopicT1;
-		!addTopicT2;
-		!addTopicT3;
-		!addTopicT4;
-		!addTopicT5;
-		!subToTopics.
+		!getSubData.
+		//!addTopicT1;
+		//!addTopicT2;
+		//!addTopicT3;
+		//!addTopicT4;
+		//!addTopicT5;
+		//!subToTopics.
 -!connectto(IP, Port)
 	<-	.print("Connection error. Trying again...");
 		.wait(1000);
@@ -29,17 +30,17 @@
 	<- 	jros.createSubNode("jason/subnode");
 		!getSubData.
 +!getSubData
-	<- 	jros.getTopicData("/topics/t1", A);
-		jros.getTopicData("/topics/t2", B);
-		jros.getTopicData("/topics/t3", C);
-		jros.getTopicData("/topics/t4", D);
-		//jros.listenPerceptions;
-		//.wait({+testP});
-		.print("Topic 1:", A);
-		.print("Topic 2:", B);
-		.print("Topic 3:", C);
-		.print("Topic 4:", D);
-		!btRec.
+	<- 	//jros.getTopicData("/topics/t1", A);
+		//jros.getTopicData("/topics/t2", B);
+		//jros.getTopicData("/topics/t3", C);
+		//jros.getTopicData("/topics/t4", D);
+		jros.listenPerceptions;
+		.wait({+testP}).
+		//.print("Topic 1:", A);
+		//.print("Topic 2:", B);
+		//.print("Topic 3:", C);
+		//.print("Topic 4:", D);
+		//!btRec.
 		
 -!getSubData
 	<- .wait(400);

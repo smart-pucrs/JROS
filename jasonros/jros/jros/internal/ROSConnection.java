@@ -17,11 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ROSConnection{
-	
+	private String remoteAgName;
 	private JasonTalker publisherNode;
-	private ActionTalker jasonPNode;
+	private ActionTalker actionNode;
 	private JasonListener subscriberNode;
-	private PerceptionListener jasonSNode;
+	private PerceptionListener perceptNode;
 	private ConfirmationListener confirmNode;
 	private ArrayList<String> nCheckList = new ArrayList<String>();
 	//private HashMap<String, String> subTopics = new HashMap<String, String>();
@@ -32,13 +32,21 @@ public class ROSConnection{
 	private ArrayList<JasonTalker> talkerList = new ArrayList<JasonTalker>();
 	URI masteruri;
 	
+	public ROSConnection(String remoteAgName){
+		this.remoteAgName = remoteAgName;
+	}
+	
 	public boolean rosConfig(String rosIP, String rosPort) throws InterruptedException{
 		masteruri = URI.create("http://"+rosIP+":"+rosPort);
 		nodeConfiguration = NodeConfiguration.newPublic(rosIP, masteruri);
 		boolean res = checkConn();
-		if(res){
-			confirmNode = new ConfirmationListener();
+		if(res ){
+			confirmNode = new ConfirmationListener(remoteAgName);
+			perceptNode = new PerceptionListener(remoteAgName);
+			actionNode = new ActionTalker(remoteAgName,500);
 			nodeMainExecutor.execute(confirmNode, nodeConfiguration);
+			nodeMainExecutor.execute(perceptNode, nodeConfiguration);
+			nodeMainExecutor.execute(actionNode, nodeConfiguration);
 		}
 		return res;
 	}
@@ -97,46 +105,15 @@ public class ROSConnection{
 		return false;
 	}
 	
-	private boolean createJasonPubNode(String agName, String action, List<String> parameters,long pRate){
-		try{
-			jasonPNode = new ActionTalker(agName,action,parameters,pRate);
-			nodeMainExecutor.execute(jasonPNode, nodeConfiguration);
-			return true;
-		}catch(RuntimeException e){
-			System.out.println("Connection error!");
-		}
-		return false;
-	}
-	
-	private boolean createJasonSubNode(Agent ag, String rcvFrom){
-		try{
-			jasonSNode = new PerceptionListener(ag, rcvFrom);
-			nodeMainExecutor.execute(jasonSNode, nodeConfiguration);
-			return true;
-		}catch(RuntimeException e){
-			System.out.println("Connection error!");
-		}
-		return false;
-	}
-	
 	public boolean sendAction(String agName, String action, List<String> parameters) throws InterruptedException{
-		if(jasonPNode == null){
-			createJasonPubNode(agName,action,parameters,500);
-			while(confirmNode.getLastAction() != action) Thread.sleep(10);
-			confirmNode.setLastAction("");
-			return true;
-		}
-		else{
-			jasonPNode.setNewAction(agName, action, parameters);
-			while(confirmNode.getLastAction() != action) Thread.sleep(10);
-			confirmNode.setLastAction("");
-			return true;
-		}
+		actionNode.setNewAction(agName, action, parameters);
+		while(confirmNode.getLastAction() != action) Thread.sleep(10);
+		confirmNode.setLastAction("");
+		return true;
 	}
 	
-	public boolean listenPerceptions(Agent ag, String rcvFrom){
-		if(jasonSNode == null)
-			return createJasonSubNode(ag,rcvFrom);
+	public boolean listenPerceptions(Agent ag){
+		perceptNode.setAg(ag);
 		return true;
 	}
 	

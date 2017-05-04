@@ -24,16 +24,21 @@ struct perception_
   typedef perception_<ContainerAllocator> Type;
 
   perception_()
-    : agent()
+    : id(0)
+    , agent()
     , perceptions()  {
     }
   perception_(const ContainerAllocator& _alloc)
-    : agent(_alloc)
+    : id(0)
+    , agent(_alloc)
     , perceptions(_alloc)  {
   (void)_alloc;
     }
 
 
+
+   typedef int8_t _id_type;
+  _id_type id;
 
    typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _agent_type;
   _agent_type agent;
@@ -118,12 +123,12 @@ struct MD5Sum< ::jason_msgs::perception_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "72e815c4c1f67f2fa9f1b634af412886";
+    return "5b485de24e1d16592eadbfc502f0304a";
   }
 
   static const char* value(const ::jason_msgs::perception_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x72e815c4c1f67f2fULL;
-  static const uint64_t static_value2 = 0xa9f1b634af412886ULL;
+  static const uint64_t static_value1 = 0x5b485de24e1d1659ULL;
+  static const uint64_t static_value2 = 0x2eadbfc502f0304aULL;
 };
 
 template<class ContainerAllocator>
@@ -142,7 +147,8 @@ struct Definition< ::jason_msgs::perception_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "string agent\n\
+    return "int8 id\n\
+string agent\n\
 string[] perceptions\n\
 ";
   }
@@ -162,6 +168,7 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
+      stream.next(m.id);
       stream.next(m.agent);
       stream.next(m.perceptions);
     }
@@ -182,6 +189,8 @@ struct Printer< ::jason_msgs::perception_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::jason_msgs::perception_<ContainerAllocator>& v)
   {
+    s << indent << "id: ";
+    Printer<int8_t>::stream(s, indent + "  ", v.id);
     s << indent << "agent: ";
     Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.agent);
     s << indent << "perceptions[]" << std::endl;

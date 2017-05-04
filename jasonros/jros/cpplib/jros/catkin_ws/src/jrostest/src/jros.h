@@ -12,5 +12,5 @@ class JROS{
     void jasonActionCB(void (*callbackF)(std::string,std::string,std::vector<std::string>));
     void shutdown(void);
     void sendConfirmation(std::string action);
-    void sendPerceptions(std::vector<std::string> *perceptions);
+    void sendPerceptions(std::vector<std::string> perceptions);
 };

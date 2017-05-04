@@ -11,7 +11,7 @@ public interface action extends Message{
 	public String getAgent();
 	public String getAction();
 	public List<String> getParameters();
-	public void setAgent(String name);
+	public void setAgent(String agent);
 	public void setAction(String action);
 	public void setParameters(List<String> parameters);
 }

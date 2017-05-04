@@ -20,7 +20,7 @@ public class TestGenericPub extends GenericPub{
 			@Override
 			protected void loop() throws InterruptedException {
 				jason_msgs.perception msg = pubNode.newMessage();
-				msg.setPerception("testP");
+				//msg.setPerception("testP");
 				pubNode.publish(msg);
 				cancel();
 			}

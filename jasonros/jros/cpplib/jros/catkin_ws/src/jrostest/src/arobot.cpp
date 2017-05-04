@@ -34,7 +34,8 @@ int main(int argc, char **argv){
   perceptions.push_back("speed(10)");
   perceptions.push_back("direction(35.4)");
   perceptions.push_back("no_obstacles");
-  pjros->sendPerceptions(&perceptions);
+  perceptions.push_back("@speed(25)");
+  pjros->sendPerceptions(perceptions);
   sleep(10);
   pjros->shutdown();
   cout << "Shutting down..." << endl;
