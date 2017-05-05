@@ -3,7 +3,8 @@ MAS jasonros {
 	infrastructure: Centralised
 
 	agents:
-		arobot;
+		turtlebot;
+		//arobot;
 		//test;
 		//publisher_agent;
 		//subscriber_agent;

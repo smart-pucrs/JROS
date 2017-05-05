@@ -16,5 +16,11 @@
 		!!connectto(IP, Port).
 		
 +!receivePerceptions
-	<-	jros.listenPerceptions.
+	<-	jros.listenPerceptions;
+		!listBeliefs.
 		//.wait({+lala}).
+		
++!listBeliefs
+	<- jros.listBeliefs;
+		.wait(1500);
+		!!listBeliefs.

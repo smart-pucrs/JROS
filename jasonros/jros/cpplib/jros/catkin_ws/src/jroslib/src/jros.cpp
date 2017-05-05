@@ -19,7 +19,8 @@ void (*actionCallback)(std::string,std::string,std::vector<std::string>);
 boost::thread *pactThread;
 boost::thread *pconfThread;
 boost::thread *pperceptThread;
-vector<string> *perceptionsToSend;
+//vector<string> *perceptionsToSend;
+vector<string> perceptions;
 class JROS{
   public:
     static void callbackFunc(const jason_msgs::action::ConstPtr& message);
@@ -27,7 +28,9 @@ class JROS{
     void jasonActionCB(void (*callbackF)(std::string,std::string,std::vector<std::string>));
     void shutdown(void);
     void sendConfirmation(std::string action);
-    void sendPerceptions(std::vector<std::string> perceptions);
+    void sendPerceptions(void);
+    void addPerception(std::string perception);
+    void clearPerceptions(void);
 };
 
 void JROS::callbackFunc(const jason_msgs::action::ConstPtr& message){
@@ -76,14 +79,11 @@ void sendPerceptionsThread(){
   ros::Publisher robotPub = node->advertise<jason_msgs::perception>(topicName,1000);
   ros::Rate loop_rate(5);
   while(ros::ok()){
-    if(perceptionsToSend != NULL){
-      cout << "publicado!" << endl;
-      jason_msgs::perception msg;
-      msg.id = aid;
-      msg.agent = rName;
-      msg.perceptions = *perceptionsToSend;
-      robotPub.publish(msg);
-    }
+    jason_msgs::perception msg;
+    msg.id = aid;
+    msg.agent = rName;
+    msg.perceptions = perceptions;
+    robotPub.publish(msg);
     ros::spinOnce();
     loop_rate.sleep();
   }
@@ -111,7 +111,15 @@ void JROS::sendConfirmation(std::string action){
   pubMsg = action;
 }
 
-void JROS::sendPerceptions(std::vector<std::string> perceptions){
-  perceptionsToSend = &perceptions;
+void JROS::addPerception(std::string perception){
+  perceptions.push_back(perception);
+}
+
+void JROS::clearPerceptions(void){
+  perceptions.clear();
+}
+
+void JROS::sendPerceptions(void){
+  //perceptionsToSend = &perceptions;
   aid = rand()%128;
 }

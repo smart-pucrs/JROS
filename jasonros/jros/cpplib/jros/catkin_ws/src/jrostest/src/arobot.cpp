@@ -27,15 +27,15 @@ void jasonActCallback(string agent, string action, vector<string> parameters){
 
 int main(int argc, char **argv){
   JROS jros;
-  vector<string> perceptions;
   pjros = &jros;
   pjros->init(argc,argv,"arobot");
   pjros->jasonActionCB(&jasonActCallback);
-  perceptions.push_back("speed(10)");
-  perceptions.push_back("direction(35.4)");
-  perceptions.push_back("no_obstacles");
-  perceptions.push_back("@speed(25)");
-  pjros->sendPerceptions(perceptions);
+  pjros->addPerception("speed(10)");
+  pjros->addPerception("direction(35.4)");
+  pjros->addPerception("no_obstacles");
+  pjros->addPerception("@speed(15)");
+  pjros->sendPerceptions();
+
   sleep(10);
   pjros->shutdown();
   cout << "Shutting down..." << endl;

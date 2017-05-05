@@ -11,6 +11,7 @@ import org.ros.node.topic.Subscriber;
 
 import jason.RevisionFailedException;
 import jason.asSemantics.Agent;
+import jason.asSemantics.Unifier;
 import jason.asSyntax.ASSyntax;
 import jason.asSyntax.Literal;
 import jason.asSyntax.PredicateIndicator;
@@ -38,25 +39,22 @@ public class PerceptionListener extends AbstractNodeMain{
 		String sToParse;
 		PredicateIndicator pi;
 		Literal l = null;
-		if(s.charAt(0) == '@'){
-			sToParse = s.substring(1, s.length());
-			try {
+		try{
+			if(s.charAt(0) == '@'){
+				sToParse = s.substring(1, s.length());
 				l = ASSyntax.parseLiteral(sToParse);
 				pi = new PredicateIndicator(l.getFunctor(),l.getArity());
 				ag.getBB().abolish(pi);
 				ag.addBel(l);
-			} catch (RevisionFailedException|ParseException e) {
-				e.printStackTrace();
 			}
-		}
-		else{
-			sToParse = s;
-			try {
+			else{
+				sToParse = s;
 				l = ASSyntax.parseLiteral(sToParse);
-				ag.addBel(l);
-			} catch (RevisionFailedException|ParseException e) {
-				e.printStackTrace();
+				if(!ag.believes(l, new Unifier()))
+					ag.addBel(l);
 			}
+		}catch(RevisionFailedException|ParseException e){
+			e.printStackTrace();
 		}
 	}
 	
