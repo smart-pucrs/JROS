@@ -7,6 +7,7 @@ import org.ros.node.AbstractNodeMain;
 import org.ros.node.ConnectedNode;
 import org.ros.node.topic.Publisher;
 
+import geometry_msgs.Vector3;
 import jason.asSemantics.Unifier;
 import jason.asSyntax.Term;
 
@@ -42,6 +43,29 @@ public class PublisherObject extends AbstractNodeMain{
 					protected void loop() throws InterruptedException {
 						std_msgs.String msg = pubNode.newMessage();
 						msg.setData((String)data);
+						pubNode.publish(msg);
+						Thread.sleep(pRate);
+					}
+				});
+			}
+			case "geometry_msgs/Twist":{
+				Publisher<geometry_msgs.Twist> pubNode = connectedNode.newPublisher(topicName, msgType);
+				connectedNode.executeCancellableLoop(new CancellableLoop() {
+					@Override
+					protected void loop() throws InterruptedException {
+						String[] params = ((String)data).split("(,)|( ,)");
+						
+						geometry_msgs.Twist msg = pubNode.newMessage();
+						Vector3 ang = msg.getAngular();
+						Vector3 lin = msg.getLinear();
+						lin.setX(Double.valueOf(params[0]));
+						lin.setY(Double.valueOf(params[1]));
+						lin.setZ(Double.valueOf(params[2]));
+						ang.setX(Double.valueOf(params[3]));
+						ang.setY(Double.valueOf(params[4]));
+						ang.setZ(Double.valueOf(params[5]));
+						msg.setAngular(ang);
+						msg.setLinear(lin);
 						pubNode.publish(msg);
 						Thread.sleep(pRate);
 					}

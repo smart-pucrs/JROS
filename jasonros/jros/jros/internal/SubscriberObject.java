@@ -3,6 +3,7 @@ package jros.internal;
 
 import java.util.ArrayList;
 //import java.util.HashMap;
+import java.util.List;
 
 import org.ros.message.MessageListener;
 import org.ros.namespace.GraphName;
@@ -11,6 +12,7 @@ import org.ros.node.ConnectedNode;
 //import org.ros.node.Node;
 import org.ros.node.topic.Subscriber;
 
+import geometry_msgs.Vector3;
 import jason.asSemantics.Unifier;
 import jason.asSyntax.Term;
 
@@ -152,7 +154,6 @@ public class SubscriberObject extends AbstractNodeMain{
 				subNode.addMessageListener(new MessageListener<std_msgs.String>() {     
 					@Override
 					public void onNewMessage(std_msgs.String message) {
-						//timeStamp++;
 						SDataClass dc;
 						if(subData.isEmpty()){
 							dc = new SDataClass(topicName, message.getData());
@@ -164,10 +165,35 @@ public class SubscriberObject extends AbstractNodeMain{
 								subData.add(dc);
 							}
 						}
-						//subData.put(topicName, message.getData());
-						//System.out.println(subData.size());
-						//System.out.println(searchState(topicName,"abc"));
-						//System.out.println(getLastStateObj(topicName).getData().toString());
+					}
+				});
+			}
+			break;
+			case "geometry_msgs/Twist":{
+				Subscriber<geometry_msgs.Twist> subNode = connectedNode.newSubscriber(topicName, msgType);
+				subNode.addMessageListener(new MessageListener<geometry_msgs.Twist>() {     
+					@Override
+					public void onNewMessage(geometry_msgs.Twist message) {
+						SDataClass dc;
+						List<Double> l = new ArrayList<Double>();
+						Vector3 ang = message.getAngular();
+						Vector3 lin = message.getLinear();
+						l.add(lin.getX());
+						l.add(lin.getY());
+						l.add(lin.getZ());
+						l.add(ang.getX());
+						l.add(ang.getY());
+						l.add(ang.getZ());
+						if(subData.isEmpty()){
+							dc = new SDataClass(topicName, l);
+							subData.add(dc);
+						}else{
+							Object lastObj = (Object)subData.get(subData.size()-1).getData();
+							if(!lastObj.equals(l)){
+								dc = new SDataClass(topicName, l);
+								subData.add(dc);
+							}
+						}
 					}
 				});
 			}
