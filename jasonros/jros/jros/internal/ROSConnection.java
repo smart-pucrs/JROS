@@ -23,6 +23,7 @@ public class ROSConnection{
 	private JasonListener subscriberNode;
 	private PerceptionListener perceptNode;
 	private ConfirmationListener confirmNode;
+	private Agent ag;
 	private ArrayList<String> nCheckList = new ArrayList<String>();
 	//private HashMap<String, String> subTopics = new HashMap<String, String>();
 	private ArrayList<Object> subTopics = new ArrayList<Object>();
@@ -32,8 +33,9 @@ public class ROSConnection{
 	private ArrayList<JasonTalker> talkerList = new ArrayList<JasonTalker>();
 	URI masteruri;
 	
-	public ROSConnection(String remoteAgName){
+	public ROSConnection(Agent ag, String remoteAgName){
 		this.remoteAgName = remoteAgName;
+		this.ag = ag;
 	}
 	
 	public boolean rosConfig(String rosIP, String rosPort) throws InterruptedException{
@@ -71,7 +73,7 @@ public class ROSConnection{
 	
 	private boolean createSubNodeP(String nodeName) throws InterruptedException{
 		try{
-			subscriberNode = new JasonListener(nodeName, subTopics, this);
+			subscriberNode = new JasonListener(ag,nodeName, subTopics, this);
 			nodeMainExecutor.execute(subscriberNode, nodeConfiguration);
 			while(!nCheckList.contains(nodeName)) Thread.sleep(10);
 			nCheckList.remove(nodeName);
@@ -112,13 +114,13 @@ public class ROSConnection{
 		return true;
 	}
 	
-	public boolean listenPerceptions(Agent ag){
+	public boolean listenPerceptions(){
 		perceptNode.setAg(ag);
 		return true;
 	}
 	
 	public boolean createPubNode(String nodeName, long pRate) throws InterruptedException{
-		publisherNode = new JasonTalker(nodeName, pubTopics, pRate, this);
+		publisherNode = new JasonTalker(ag,nodeName, pubTopics, pRate, this);
 		if(publisherNode != null){
 			return createPubNodeP(nodeName, pRate);
 		}

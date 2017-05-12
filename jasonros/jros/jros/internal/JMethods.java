@@ -14,7 +14,7 @@ private static ConcurrentHashMap<Agent,ROSConnection> agMap = new ConcurrentHash
 	public static boolean rosConfig(Agent ag, String rosIP, String rosPort,String remoteAgName) throws InterruptedException{
 		ROSConnection rc = agMap.get(ag);
 		if(rc == null){
-			rc = new ROSConnection(remoteAgName);
+			rc = new ROSConnection(ag,remoteAgName);
 			agMap.put(ag, rc);
 		}
 		return rc.rosConfig(rosIP, rosPort);
@@ -32,7 +32,7 @@ private static ConcurrentHashMap<Agent,ROSConnection> agMap = new ConcurrentHash
 	
 	public static boolean listenPerceptions(Agent ag){
 		ROSConnection rc = agMap.get(ag);
-		return rc.listenPerceptions(ag);
+		return rc.listenPerceptions();
 	}
 	
 	public static boolean sendAction(Agent ag, String action, List<String> parameters) throws InterruptedException{

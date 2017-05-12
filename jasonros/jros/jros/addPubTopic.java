@@ -15,7 +15,11 @@ public class addPubTopic extends DefaultInternalAction{
 		String topicName = ((StringTerm)terms[0]).getString();
 		String msgType = ((StringTerm)terms[1]).getString();
 		Object data;
-		if(terms[2].isNumeric())
+		if(terms[2].isAtom()){
+			return JMethods.addPubTopic(ts.getAg(), topicName, msgType, null);
+		}
+		if(terms.length > 3) data = terms;
+		else if(terms[2].isNumeric())
 			data = ((NumberTerm)terms[2]).solve();
 		else if(terms[2].isString())
 			data = ((StringTerm)terms[2]).getString();

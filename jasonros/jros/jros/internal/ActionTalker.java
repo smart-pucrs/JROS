@@ -34,7 +34,6 @@ public class ActionTalker extends AbstractNodeMain{
 	
 	@Override
 	public void onStart(final ConnectedNode connectedNode){
-		System.out.println("onStart!!!");
 		Publisher<jason_msgs.action> actionPub = connectedNode.newPublisher(remoteAgName+"/jaction",jason_msgs.action._TYPE);
 		connectedNode.executeCancellableLoop(new CancellableLoop(){
 			@Override

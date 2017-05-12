@@ -2,6 +2,7 @@ package jros.internal;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 //import java.util.HashMap;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import org.ros.node.ConnectedNode;
 //import org.ros.node.Node;
 import org.ros.node.topic.Subscriber;
 
+import geometry_msgs.Point;
+import geometry_msgs.Quaternion;
 import geometry_msgs.Vector3;
 import jason.asSemantics.Unifier;
 import jason.asSyntax.Term;
@@ -21,6 +24,7 @@ public class SubscriberObject extends AbstractNodeMain{
 	private String nodeName;
 	private String topicName;
 	private ArrayList<SDataClass> subData = new ArrayList<SDataClass>();
+	//private HashMap<SDataClass> subData = new HashMap<SDataClass>();
 	//private long timeStamp = 0;
 	
 	public String getTopicName(){
@@ -184,6 +188,36 @@ public class SubscriberObject extends AbstractNodeMain{
 						l.add(ang.getX());
 						l.add(ang.getY());
 						l.add(ang.getZ());
+						if(subData.isEmpty()){
+							dc = new SDataClass(topicName, l);
+							subData.add(dc);
+						}else{
+							Object lastObj = (Object)subData.get(subData.size()-1).getData();
+							if(!lastObj.equals(l)){
+								dc = new SDataClass(topicName, l);
+								subData.add(dc);
+							}
+						}
+					}
+				});
+			}
+			break;
+			case "nav_msgs/Odometry":{
+				Subscriber<nav_msgs.Odometry> subNode = connectedNode.newSubscriber(topicName, msgType);
+				subNode.addMessageListener(new MessageListener<nav_msgs.Odometry>() {     
+					@Override
+					public void onNewMessage(nav_msgs.Odometry message) {
+						SDataClass dc;
+						List<Double> l = new ArrayList<Double>();
+						Point pos = message.getPose().getPose().getPosition();
+						Quaternion ori = message.getPose().getPose().getOrientation();
+						l.add(pos.getX());
+						l.add(pos.getY());
+						l.add(pos.getZ());
+						l.add(ori.getW());
+						l.add(ori.getX());
+						l.add(ori.getY());
+						l.add(ori.getZ());
 						if(subData.isEmpty()){
 							dc = new SDataClass(topicName, l);
 							subData.add(dc);

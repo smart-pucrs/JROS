@@ -14,17 +14,24 @@ public class getTopicData extends DefaultInternalAction{
 	public Object execute(TransitionSystem ts, Unifier un, Term[] terms) throws Exception {
 		String topicName = ((StringTerm)terms[0]).getString();
 		Object data = JMethods.getTopicData(ts.getAg(), topicName);
-		if (data == null)
+		if (data == null){
+			System.out.println("getTopicData");
 			return false;
+		}
 		if(data instanceof List){
 			ListTerm t = new ListTermImpl();
 			List<Double> l = (List<Double>)data;
 			for(Double n : l)
 				t.add(new NumberTermImpl(n));
-			return un.unifies(t,terms[1]);
+			if(un.unifies(t,terms[1]))
+				return true;
+			else return false;
+					
 		}else{
 			ObjectTerm t = new ObjectTermImpl(data);
-			return un.unifies(t,terms[1]);
+			if(un.unifies(t,terms[1]))
+				return true;
+			else return false;
 		}
 	}
 }
