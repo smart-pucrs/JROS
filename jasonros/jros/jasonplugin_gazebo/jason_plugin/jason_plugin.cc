@@ -1,5 +1,5 @@
-#ifndef _VELODYNE_PLUGIN_HH_
-#define _VELODYNE_PLUGIN_HH_
+#ifndef _JASON_PLUGIN_HH_
+#define _JASON_PLUGIN_HH_
 
 #include <gazebo/gazebo.hh>
 #include <gazebo/physics/physics.hh>
@@ -23,7 +23,6 @@ namespace gazebo
       // Just output a message for now
       std::cerr << "\nJason Plugin loaded![" <<
         _model->GetName() << "]\n";
-        std::cout << "\nJasonPlugin loaded!!!\n";
     }
   };
 
