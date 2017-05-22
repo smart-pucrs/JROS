@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <sdf version='1.6'>
-  <model name='mobile_base'>
+  <model name='jason_turtlebot'>
     <link name='base_footprint'>
       <pose frame=''>0 0 0 0 -0 0</pose>
       <inertial>
@@ -2049,7 +2049,6 @@
     </joint>
     <static>0</static>
     <allow_auto_disable>1</allow_auto_disable>
-    <plugin name='jason_plugin' filename='libjason_plugin.so'/>
     <plugin name='kobuki_controller' filename='libgazebo_ros_kobuki.so'>
       <publish_tf>1</publish_tf>
       <left_wheel_joint_name>wheel_left_joint</left_wheel_joint_name>
@@ -2066,5 +2065,6 @@
       <imu_name>imu</imu_name>
       <robotNamespace>/</robotNamespace>
     </plugin>
+    <plugin name="jason_plugin" filename="libjason_plugin.so"/>
   </model>
 </sdf>

@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin/jason_plugin.cc
+/home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/jason_plugin.cc
 gazebo/gazebo.hh
 -
 gazebo/physics/physics.hh

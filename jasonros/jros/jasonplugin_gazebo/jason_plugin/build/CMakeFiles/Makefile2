@@ -47,10 +47,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin
+CMAKE_SOURCE_DIR = /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin/build
+CMAKE_BINARY_DIR = /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/build
 
 #=============================================================================
 # Target rules for target CMakeFiles/jason_plugin.dir
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gaze
 CMakeFiles/jason_plugin.dir/all:
 	$(MAKE) -f CMakeFiles/jason_plugin.dir/build.make CMakeFiles/jason_plugin.dir/depend
 	$(MAKE) -f CMakeFiles/jason_plugin.dir/build.make CMakeFiles/jason_plugin.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin/build/CMakeFiles  1
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/build/CMakeFiles  1
 	@echo "Built target jason_plugin"
 .PHONY : CMakeFiles/jason_plugin.dir/all
 
@@ -69,9 +69,9 @@ all: CMakeFiles/jason_plugin.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/jason_plugin.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/jason_plugin.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/build/CMakeFiles 0
 .PHONY : CMakeFiles/jason_plugin.dir/rule
 
 # Convenience name for target.

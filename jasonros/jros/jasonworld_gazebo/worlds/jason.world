@@ -641,11 +641,5 @@
       <pose>1.41131 -1 0 0 -0 0.9</pose>
       <static>0</static>
     </model>
-    <model name="jason_turtlebot">
-      <include>
-        <uri>model://jason_turtlebot</uri>
-      </include>
-    </model>
-
   </world>
 </sdf>

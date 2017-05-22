@@ -1,4 +1,4 @@
-# Install script for directory: /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin
+# Install script for directory: /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

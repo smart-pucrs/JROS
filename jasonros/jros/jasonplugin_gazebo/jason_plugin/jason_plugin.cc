@@ -7,26 +7,35 @@
 
 namespace gazebo
 {
-  /// \brief A plugin to control a Velodyne sensor.
   class JasonPlugin : public ModelPlugin
   {
-    /// \brief Constructor
     public: JasonPlugin() {}
-
-    /// \brief The load function is called by Gazebo when the plugin is
-    /// inserted into simulation
-    /// \param[in] _model A pointer to the model that this plugin is
-    /// attached to.
-    /// \param[in] _sdf A pointer to the plugin's SDF element.
+    public: void moveForward(double vel){
+      this->model->GetJointController()->SetVelocityTarget(this->jleft->GetScopedName(),vel);
+      this->model->GetJointController()->SetVelocityTarget(this->jright->GetScopedName(),vel);
+    }
     public: virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
     {
-      // Just output a message for now
-      std::cerr << "\nJason Plugin loaded![" <<
-        _model->GetName() << "]\n";
-    }
-  };
 
-  // Tell Gazebo about this plugin, so that Gazebo can call Load on this plugin.
+      if(_model->GetJointCount() != 2){
+        std::cerr << "Invalid joint count!\n";
+        return;
+      }
+      this->pid = common::PID(0.1, 0, 0);
+      this->v = _model->GetJoints();
+      this->model = _model;
+      this->jleft = v[0];
+      this->jright = v[1];
+      std::cerr << "\nJoint Left:" << this->jleft->GetName();
+      std::cerr << "\nJoint Right:" << this->jright->GetName();
+      std::cerr << "\nJason Plugin loaded![" << _model->GetName() << "]\n";
+      this->moveForward(0.1);
+    }
+  private: physics::Joint_V v;
+  private: physics::ModelPtr model;
+  private: physics::JointPtr jleft,jright;
+  private: common::PID pid;
+  };
   GZ_REGISTER_MODEL_PLUGIN(JasonPlugin)
 }
 #endif

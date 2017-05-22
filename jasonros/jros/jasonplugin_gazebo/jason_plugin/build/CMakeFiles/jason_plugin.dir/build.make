@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin
+CMAKE_SOURCE_DIR = /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin/build
+CMAKE_BINARY_DIR = /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/jason_plugin.dir/depend.make
@@ -51,17 +51,17 @@ include CMakeFiles/jason_plugin.dir/flags.make
 
 CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: CMakeFiles/jason_plugin.dir/flags.make
 CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: ../jason_plugin.cc
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin/build/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/jason_plugin.dir/jason_plugin.cc.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/jason_plugin.dir/jason_plugin.cc.o -c /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin/jason_plugin.cc
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/jason_plugin.dir/jason_plugin.cc.o -c /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/jason_plugin.cc
 
 CMakeFiles/jason_plugin.dir/jason_plugin.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/jason_plugin.dir/jason_plugin.cc.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin/jason_plugin.cc > CMakeFiles/jason_plugin.dir/jason_plugin.cc.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/jason_plugin.cc > CMakeFiles/jason_plugin.dir/jason_plugin.cc.i
 
 CMakeFiles/jason_plugin.dir/jason_plugin.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/jason_plugin.dir/jason_plugin.cc.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin/jason_plugin.cc -o CMakeFiles/jason_plugin.dir/jason_plugin.cc.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/jason_plugin.cc -o CMakeFiles/jason_plugin.dir/jason_plugin.cc.s
 
 CMakeFiles/jason_plugin.dir/jason_plugin.cc.o.requires:
 .PHONY : CMakeFiles/jason_plugin.dir/jason_plugin.cc.o.requires
@@ -97,6 +97,6 @@ CMakeFiles/jason_plugin.dir/clean:
 .PHONY : CMakeFiles/jason_plugin.dir/clean
 
 CMakeFiles/jason_plugin.dir/depend:
-	cd /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin/build /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin/build /home/iancalaca/jason/projects/JROS/jasonros/jasonplugin_gazebo/jason_plugin/build/CMakeFiles/jason_plugin.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/build /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/build /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/build/CMakeFiles/jason_plugin.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/jason_plugin.dir/depend
 
