@@ -11,6 +11,12 @@ gazebo/gazebo.hh
 -
 gazebo/physics/physics.hh
 -
+gazebo/gazebo_config.h
+-
+gazebo/transport/transport.hh
+-
+gazebo/msgs/msgs.hh
+-
 iostream
 -
 
