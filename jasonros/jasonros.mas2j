@@ -3,8 +3,9 @@ MAS jasonros {
 	infrastructure: Centralised
 
 	agents:
+		turtlebot_cpplib;
 		//turtlebot2;
-		turtlebot;
+		//turtlebot;
 		//arobot;
 		//test;
 		//publisher_agent;

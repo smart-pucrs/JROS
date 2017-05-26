@@ -81,6 +81,24 @@ jason_plugin_EXTERNAL_OBJECTS =
 
 libjason_plugin.so: CMakeFiles/jason_plugin.dir/jason_plugin.cc.o
 libjason_plugin.so: CMakeFiles/jason_plugin.dir/build.make
+libjason_plugin.so: /opt/ros/kinetic/lib/libroscpp.so
+libjason_plugin.so: /usr/lib/x86_64-linux-gnu/libboost_signals.so
+libjason_plugin.so: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
+libjason_plugin.so: /opt/ros/kinetic/lib/librosconsole.so
+libjason_plugin.so: /opt/ros/kinetic/lib/librosconsole_log4cxx.so
+libjason_plugin.so: /opt/ros/kinetic/lib/librosconsole_backend_interface.so
+libjason_plugin.so: /usr/lib/x86_64-linux-gnu/liblog4cxx.so
+libjason_plugin.so: /usr/lib/x86_64-linux-gnu/libboost_regex.so
+libjason_plugin.so: /opt/ros/kinetic/lib/libroscpp_serialization.so
+libjason_plugin.so: /opt/ros/kinetic/lib/librostime.so
+libjason_plugin.so: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
+libjason_plugin.so: /opt/ros/kinetic/lib/libxmlrpcpp.so
+libjason_plugin.so: /opt/ros/kinetic/lib/libcpp_common.so
+libjason_plugin.so: /usr/lib/x86_64-linux-gnu/libboost_system.so
+libjason_plugin.so: /usr/lib/x86_64-linux-gnu/libboost_thread.so
+libjason_plugin.so: /usr/lib/x86_64-linux-gnu/libpthread.so
+libjason_plugin.so: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so
+libjason_plugin.so: /home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/devel/lib/libjroslib.so
 libjason_plugin.so: CMakeFiles/jason_plugin.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX shared library libjason_plugin.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/jason_plugin.dir/link.txt --verbose=$(VERBOSE)

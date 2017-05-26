@@ -34,6 +34,7 @@ class JROS{
 };
 
 void JROS::callbackFunc(const jason_msgs::action::ConstPtr& message){
+  cout << "Callback\n";
   if(actionCallback != NULL){
     (*actionCallback)(message->agent,message->action,message->parameters);
   }else{
@@ -47,6 +48,7 @@ void JROS::jasonActionCB(void (*callbackF)(std::string,std::string,std::vector<s
 }
 
 void actionRecvThread(){
+    cout << "action thread\n" << endl;
     ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
     std::string topicName(rName);
     topicName += "/jaction";
@@ -90,10 +92,13 @@ void sendPerceptionsThread(){
 }
 
 void JROS::init(int argc, char **argv, std::string robotName){
+  cout << "JROS Lib Loaded!\n";
   jargc = argc;
   jargv = argv;
   rName = robotName;
-  ros::init(argc,argv,"jroscpp");
+  if(!ros::isInitialized()){
+    ros::init(argc,argv,"jroscpp");
+  }
   srand(time(NULL));
   if(pactThread == NULL)
     pactThread = new boost::thread(actionRecvThread);

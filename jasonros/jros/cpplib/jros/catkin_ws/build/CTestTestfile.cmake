@@ -5,7 +5,6 @@
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.
 subdirs(gtest)
-subdirs(jasonworld_gazebo)
 subdirs(jason_msgs)
 subdirs(jroslib)
 subdirs(jrostest)

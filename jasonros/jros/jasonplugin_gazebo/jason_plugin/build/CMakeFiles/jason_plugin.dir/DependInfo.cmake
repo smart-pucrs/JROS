@@ -8,6 +8,12 @@ set(CMAKE_DEPENDS_CHECK_CXX
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
+# Preprocessor definitions for this target.
+set(CMAKE_TARGET_DEFINITIONS
+  "ROSCONSOLE_BACKEND_LOG4CXX"
+  "ROS_PACKAGE_NAME=\"Project\""
+  )
+
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
   )
@@ -20,6 +26,7 @@ set(CMAKE_C_TARGET_INCLUDE_PATH
   "/usr/include/OGRE"
   "/usr/include/OGRE/Terrain"
   "/usr/include/OGRE/Paging"
+  "/opt/ros/kinetic/include"
   )
 set(CMAKE_CXX_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})
 set(CMAKE_Fortran_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})
