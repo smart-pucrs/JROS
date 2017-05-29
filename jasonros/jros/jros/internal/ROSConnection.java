@@ -44,6 +44,7 @@ public class ROSConnection{
 		boolean res = checkConn();
 		if(res ){
 			confirmNode = new ConfirmationListener(remoteAgName);
+			confirmNode.setAg(ag);
 			perceptNode = new PerceptionListener(remoteAgName);
 			actionNode = new ActionTalker(remoteAgName,500);
 			nodeMainExecutor.execute(confirmNode, nodeConfiguration);
@@ -109,8 +110,6 @@ public class ROSConnection{
 	
 	public boolean sendAction(String agName, String action, List<String> parameters) throws InterruptedException{
 		actionNode.setNewAction(agName, action, parameters);
-		while(confirmNode.getLastAction() != action) Thread.sleep(10);
-		confirmNode.setLastAction("");
 		return true;
 	}
 	

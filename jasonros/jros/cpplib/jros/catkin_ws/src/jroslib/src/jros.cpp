@@ -3,11 +3,13 @@
 #include <cstdlib>
 #include <time.h>
 #include "ros/ros.h"
+#include "ros/spinner.h"
 #include <ros/callback_queue.h>
 #include "std_msgs/String.h"
 #include "jason_msgs/action.h"
 #include "jason_msgs/perception.h"
 #include <boost/thread.hpp>
+#include <thread>
 
 using namespace std;
 int jargc;
@@ -34,7 +36,6 @@ class JROS{
 };
 
 void JROS::callbackFunc(const jason_msgs::action::ConstPtr& message){
-  cout << "Callback\n";
   if(actionCallback != NULL){
     (*actionCallback)(message->agent,message->action,message->parameters);
   }else{
@@ -42,6 +43,7 @@ void JROS::callbackFunc(const jason_msgs::action::ConstPtr& message){
     ros::shutdown();
   }
 }
+
 
 void JROS::jasonActionCB(void (*callbackF)(std::string,std::string,std::vector<std::string>)){
   actionCallback = callbackF;
@@ -52,8 +54,10 @@ void actionRecvThread(){
     ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
     std::string topicName(rName);
     topicName += "/jaction";
+    cout << "topic:" << topicName << endl;
     ros::Subscriber robotSub = node->subscribe(topicName,1000,JROS::callbackFunc);
-    ros::spin();
+    ros::MultiThreadedSpinner spinner;
+    spinner.spin();
 }
 
 void sendConfirmationThread(){
@@ -63,19 +67,19 @@ void sendConfirmationThread(){
   ros::Publisher robotPub = node->advertise<std_msgs::String>(topicName,1000);
   ros::Rate loop_rate(10);
   while(ros::ok()){
-    if(pubMsg.compare("") != 0){
+    //if(pubMsg.compare("") != 0){
       std_msgs::String msg;
       msg.data = pubMsg;
       robotPub.publish(msg);
-      pubMsg = "";
-    }
+      //pubMsg = "";
+    //}
     ros::spinOnce();
     loop_rate.sleep();
   }
 }
 
 void sendPerceptionsThread(){
-  ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
+  /*ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
   std::string topicName(rName);
   topicName += "/jperceptions";
   ros::Publisher robotPub = node->advertise<jason_msgs::perception>(topicName,1000);
@@ -88,17 +92,17 @@ void sendPerceptionsThread(){
     robotPub.publish(msg);
     ros::spinOnce();
     loop_rate.sleep();
-  }
+  }*/
 }
 
 void JROS::init(int argc, char **argv, std::string robotName){
   cout << "JROS Lib Loaded!\n";
   jargc = argc;
   jargv = argv;
-  rName = robotName;
   if(!ros::isInitialized()){
     ros::init(argc,argv,"jroscpp");
   }
+  rName = robotName;
   srand(time(NULL));
   if(pactThread == NULL)
     pactThread = new boost::thread(actionRecvThread);

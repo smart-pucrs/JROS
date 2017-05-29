@@ -49,6 +49,8 @@ time.h
 -
 ros/ros.h
 /home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/src/jroslib/src/ros/ros.h
+ros/spinner.h
+/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/src/jroslib/src/ros/spinner.h
 ros/callback_queue.h
 -
 std_msgs/String.h
@@ -58,6 +60,8 @@ jason_msgs/action.h
 jason_msgs/perception.h
 /home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/src/jroslib/src/jason_msgs/perception.h
 boost/thread.hpp
+-
+thread
 -
 
 /opt/ros/kinetic/include/XmlRpcDecl.h

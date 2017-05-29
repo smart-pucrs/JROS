@@ -8,12 +8,15 @@ import org.ros.node.topic.Subscriber;
 
 import jason.RevisionFailedException;
 import jason.asSemantics.Agent;
+import jason.asSyntax.ASSyntax;
 import jason.asSyntax.Literal;
+import jason.asSyntax.parser.ParseException;
 import jason_msgs.perception;
 
 public class ConfirmationListener extends AbstractNodeMain{
-	private String lastAction;
+	private String lastBel = "";
 	private String remoteAgName;
+	private Agent ag;
 	@Override
 	public GraphName getDefaultNodeName() {
 		return GraphName.of(remoteAgName+"/confirmationNode");
@@ -23,12 +26,9 @@ public class ConfirmationListener extends AbstractNodeMain{
 		this.remoteAgName = remoteAgName;
 	}
 	
-	public String getLastAction(){
-		return lastAction;
-	}
 	
-	public void setLastAction(String action){
-		lastAction = action;
+	public void setAg(Agent ag){
+		this.ag = ag;
 	}
 	
 	@Override
@@ -37,7 +37,16 @@ public class ConfirmationListener extends AbstractNodeMain{
 		confirmationSub.addMessageListener(new MessageListener<std_msgs.String>() {
 			@Override
 			public void onNewMessage(std_msgs.String message) {
-				lastAction = message.getData();
+				String msg = message.getData();
+				try {
+					if(!lastBel.equals(msg)){
+						lastBel = msg;
+						ag.addBel(ASSyntax.parseLiteral(msg));
+					}
+				} catch (RevisionFailedException | ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} 
 		});
 	}

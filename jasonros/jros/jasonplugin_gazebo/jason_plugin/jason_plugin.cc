@@ -19,6 +19,9 @@
 #define WHEEL_DIAM 0.070
 #define WHEEL_SEP .230
 #define ACCEL 0.0
+
+JROS *pjros;
+
 void jasonCB(std::string agent, std::string action, std::vector<std::string> parameters){
   std::cout << "New Action!!!!\n";
   std::cout << "Agent name: " << agent << std::endl;
@@ -27,6 +30,7 @@ void jasonCB(std::string agent, std::string action, std::vector<std::string> par
   for(int i = 0;i < parameters.size();i++){
     std::cout << parameters[i] << std::endl;
   }
+  pjros->sendConfirmation(action);
 }
 namespace gazebo
 {
@@ -132,7 +136,6 @@ namespace gazebo
       this->move(15);//metros
       //this->rotate(360);//graus
     }
-  private: JROS *pjros;
   private: double wspeedR = 0;
   private: double wspeedL = 0;
   private: double wspeedRAux = 0;
