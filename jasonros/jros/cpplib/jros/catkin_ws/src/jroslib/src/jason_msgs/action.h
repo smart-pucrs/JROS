@@ -24,18 +24,23 @@ struct action_
   typedef action_<ContainerAllocator> Type;
 
   action_()
-    : agent()
+    : id(0)
+    , agent()
     , action()
     , parameters()  {
     }
   action_(const ContainerAllocator& _alloc)
-    : agent(_alloc)
+    : id(0)
+    , agent(_alloc)
     , action(_alloc)
     , parameters(_alloc)  {
   (void)_alloc;
     }
 
 
+
+   typedef int32_t _id_type;
+  _id_type id;
 
    typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _agent_type;
   _agent_type agent;
@@ -123,12 +128,12 @@ struct MD5Sum< ::jason_msgs::action_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "88f4750ff844da2b938564005232aa28";
+    return "6d0e8f208fe41da9f21c3a9c3ab8c693";
   }
 
   static const char* value(const ::jason_msgs::action_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x88f4750ff844da2bULL;
-  static const uint64_t static_value2 = 0x938564005232aa28ULL;
+  static const uint64_t static_value1 = 0x6d0e8f208fe41da9ULL;
+  static const uint64_t static_value2 = 0xf21c3a9c3ab8c693ULL;
 };
 
 template<class ContainerAllocator>
@@ -147,7 +152,8 @@ struct Definition< ::jason_msgs::action_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "string agent\n\
+    return "int32 id\n\
+string agent\n\
 string action\n\
 string[] parameters\n\
 ";
@@ -168,6 +174,7 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
+      stream.next(m.id);
       stream.next(m.agent);
       stream.next(m.action);
       stream.next(m.parameters);
@@ -189,6 +196,8 @@ struct Printer< ::jason_msgs::action_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::jason_msgs::action_<ContainerAllocator>& v)
   {
+    s << indent << "id: ";
+    Printer<int32_t>::stream(s, indent + "  ", v.id);
     s << indent << "agent: ";
     Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.agent);
     s << indent << "action: ";

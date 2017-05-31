@@ -17,7 +17,7 @@ char **jargv;
 char aid;
 string pubMsg;
 string rName;
-void (*actionCallback)(std::string,std::string,std::vector<std::string>);
+void (*actionCallback)(int,std::string,std::string,std::vector<std::string>);
 boost::thread *pactThread;
 boost::thread *pconfThread;
 boost::thread *pperceptThread;
@@ -27,7 +27,7 @@ class JROS{
   public:
     static void callbackFunc(const jason_msgs::action::ConstPtr& message);
     void init(int argc, char **argv,std::string robotName);
-    void jasonActionCB(void (*callbackF)(std::string,std::string,std::vector<std::string>));
+    void jasonActionCB(void (*callbackF)(int,std::string,std::string,std::vector<std::string>));
     void shutdown(void);
     void sendConfirmation(std::string action);
     void sendPerceptions(void);
@@ -37,15 +37,14 @@ class JROS{
 
 void JROS::callbackFunc(const jason_msgs::action::ConstPtr& message){
   if(actionCallback != NULL){
-    (*actionCallback)(message->agent,message->action,message->parameters);
+    (*actionCallback)(message->id,message->agent,message->action,message->parameters);
   }else{
     cout << "jasonActionCB: Error! Callback function not defined." << endl;
     ros::shutdown();
   }
 }
 
-
-void JROS::jasonActionCB(void (*callbackF)(std::string,std::string,std::vector<std::string>)){
+void JROS::jasonActionCB(void (*callbackF)(int,std::string,std::string,std::vector<std::string>)){
   actionCallback = callbackF;
 }
 

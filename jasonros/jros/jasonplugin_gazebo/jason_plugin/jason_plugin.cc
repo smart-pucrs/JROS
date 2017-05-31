@@ -21,34 +21,56 @@
 #define ACCEL 0.0
 
 JROS *pjros;
+double distanceGoal = 0;
+double distanceTime = 0;
+double linearVel = 0;
+double angularVel = 0;
+double angleGoal = 0;
+double rotationTime = 0;
+int lastId = -1;
 
-void jasonCB(std::string agent, std::string action, std::vector<std::string> parameters){
+
+void move(double distance){// metros
+  linearVel = MOVE_SPEED;
+  distanceGoal = distance;
+  distanceTime = fabs(distance/MOVE_SPEED);
+}
+
+void rotate(double ang){// graus | graus/s
+  angularVel = fabs(ROTATION_SPEED * 2 * PI / 360);
+  angleGoal = ang;
+  rotationTime = fabs(ang / ROTATION_SPEED);
+}
+
+void jasonCB(int id,std::string agent, std::string action, std::vector<std::string> parameters){
   std::cout << "New Action!!!!\n";
+  std::cout << "Action id: " << id << std::endl;
   std::cout << "Agent name: " << agent << std::endl;
   std::cout << "Action name: " << action << std::endl;
-  std::cout << "Parameters:\n";
-  for(int i = 0;i < parameters.size();i++){
-    std::cout << parameters[i] << std::endl;
+  if(id != lastId){
+    if(action == "move"){
+      move(stoi(parameters[0]));
+    }
+    if(action == "rotate"){
+      rotate(stoi(parameters[0]));
+    }
+    /*//Caso opte por receber varias acoes ao mesmo tempo
+    if(action == "move"){
+      boost::thread moveThread(move,stoi(parameters[0]));
+    }
+    if(action == "rotate"){
+      boost::thread moveThread(rotate,stoi(parameters[0]));
+    }*/
+    lastId = id;
   }
-  pjros->sendConfirmation(action);
 }
+
 namespace gazebo
 {
   class JasonPlugin : public ModelPlugin
   {
     public: JasonPlugin() {}
     //Com joints
-    public: void move(double distance){// metros
-      this->linearVel = MOVE_SPEED;
-      this->distanceGoal = distance;
-      distanceTime = fabs(distance/MOVE_SPEED);
-    }
-
-  public: void rotate(double ang){// graus | graus/s
-    this->angularVel = fabs(ROTATION_SPEED * 2 * PI / 360);
-    this->angleGoal = ang;
-    rotationTime = fabs(ang / ROTATION_SPEED);
-  }
 
   public: void getVel(){
     //std::cerr << "Vel:" << linearVel << std::endl;
@@ -66,16 +88,18 @@ namespace gazebo
         //std::cout << "rotationTime:" << rotationTime << "  -  " << "updateRate:" << updateRate << std::endl;
         rotationTime -= updateRate;
         if(rotationTime <= 0){
-          this->angularVel = 0;
-          this->angleGoal = 0;
+          angularVel = 0;
+          angleGoal = 0;
+          pjros->sendConfirmation("rotate");
         }
       }
       if(distanceGoal != 0){
         //std::cout << "distanceTime:" << distanceTime << "  -  " << "updateRate:" << updateRate << std::endl;
         distanceTime -= updateRate;
         if(distanceTime <= 0){
-          this->linearVel = 0;
+          linearVel = 0;
           distanceGoal = 0;
+          pjros->sendConfirmation("move");
         }
       }
       getVel();
@@ -117,7 +141,7 @@ namespace gazebo
       char **argv = NULL;
       JROS jros;
       pjros = &jros;
-      pjros->init(argc,argv,"jason_turtlebot");
+      pjros->init(argc,argv,"jason_turtlebot");//alterar quando for simular MAS
       pjros->jasonActionCB(&jasonCB);
       this->v = _model->GetJoints();
       this->model = _model;
@@ -133,19 +157,12 @@ namespace gazebo
       else this->updateRate = 0.0;
       lastTime = model->GetWorld()->GetSimTime();
       this->updateConn = event::Events::ConnectWorldUpdateBegin(boost::bind(&JasonPlugin::Update,this));
-      this->move(15);//metros
       //this->rotate(360);//graus
     }
   private: double wspeedR = 0;
   private: double wspeedL = 0;
   private: double wspeedRAux = 0;
   private: double wspeedLAux = 0;
-  private: double linearVel = 0;
-  private: double angularVel = 0;
-  private: double angleGoal = 0;
-private:  double distanceGoal = 0;
-private: double rotationTime = 0;
-private:  double distanceTime = 0;
   private: double updateRate;
   private: boost::mutex lock;
   private: physics::Joint_V v;

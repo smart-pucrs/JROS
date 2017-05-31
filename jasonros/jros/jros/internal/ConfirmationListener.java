@@ -8,6 +8,7 @@ import org.ros.node.topic.Subscriber;
 
 import jason.RevisionFailedException;
 import jason.asSemantics.Agent;
+import jason.asSemantics.Unifier;
 import jason.asSyntax.ASSyntax;
 import jason.asSyntax.Literal;
 import jason.asSyntax.parser.ParseException;
@@ -41,7 +42,9 @@ public class ConfirmationListener extends AbstractNodeMain{
 				try {
 					if(!lastBel.equals(msg)){
 						lastBel = msg;
-						ag.addBel(ASSyntax.parseLiteral(msg));
+						Literal bel = ASSyntax.parseLiteral(msg);
+						if(!ag.believes(bel, new Unifier()))
+							ag.addBel(ASSyntax.parseLiteral(msg));
 					}
 				} catch (RevisionFailedException | ParseException e) {
 					// TODO Auto-generated catch block

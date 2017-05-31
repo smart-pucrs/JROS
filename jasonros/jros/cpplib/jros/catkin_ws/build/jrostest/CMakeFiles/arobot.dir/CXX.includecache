@@ -31,6 +31,8 @@ string
 -
 boost/thread.hpp
 -
+iostream
+-
 
 /opt/ros/kinetic/include/XmlRpcDecl.h
 ros/macros.h

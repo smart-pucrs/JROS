@@ -14,7 +14,7 @@ void inthand(int signum){
     stop = 1;
 }
 
-void jasonActCallback(string agent, string action, vector<string> parameters){
+void jasonActCallback(int id,string agent, string action, vector<string> parameters){
   cout << "Action received!!" << endl;
   cout << "Agent:" << agent << endl;
   cout << "Action:" << action << endl;
