@@ -1,84 +1,83 @@
-#include <string>
-#include <iostream>
-#include <cstdlib>
-#include <time.h>
-#include "ros/ros.h"
-#include "ros/spinner.h"
-#include <ros/callback_queue.h>
-#include "std_msgs/String.h"
-#include "jason_msgs/action.h"
-#include "jason_msgs/perception.h"
-#include <boost/thread.hpp>
-#include <thread>
+#include "../include/jroslib/jros.h"
 
+#define WRITE 0
+#define READ 1
 using namespace std;
-int jargc;
-char **jargv;
-char aid;
-string pubMsg;
-string rName;
-void (*actionCallback)(int,std::string,std::string,std::vector<std::string>);
-boost::thread *pactThread;
-boost::thread *pconfThread;
-boost::thread *pperceptThread;
-//vector<string> *perceptionsToSend;
-vector<string> perceptions;
-class JROS{
-  public:
-    static void callbackFunc(const jason_msgs::action::ConstPtr& message);
-    void init(int argc, char **argv,std::string robotName);
-    void jasonActionCB(void (*callbackF)(int,std::string,std::string,std::vector<std::string>));
-    void shutdown(void);
-    void sendConfirmation(std::string action);
-    void sendPerceptions(void);
-    void addPerception(std::string perception);
-    void clearPerceptions(void);
-};
 
-void JROS::callbackFunc(const jason_msgs::action::ConstPtr& message){
-  if(actionCallback != NULL){
-    (*actionCallback)(message->id,message->agent,message->action,message->parameters);
-  }else{
-    cout << "jasonActionCB: Error! Callback function not defined." << endl;
-    ros::shutdown();
-  }
+void JROS::callbackFuncM(const jason_msgs::action::ConstPtr& message, boost::function<void(int,std::string,std::string,std::vector<std::string>)> f){
+  if(this->getConfirmation() == 1){
+      cout << "callbackfunc" << endl;
+      if(f != NULL){
+        cout << "entrou cb2" << endl;
+        f(message->id,message->agent,message->action,message->parameters);
+      }else{
+        cout << "jasonActionCB: Error! Callback function not defined." << endl;
+        ros::shutdown();
+      }
+    }
 }
 
-void JROS::jasonActionCB(void (*callbackF)(int,std::string,std::string,std::vector<std::string>)){
-  actionCallback = callbackF;
+void JROS::callbackFuncS(const jason_msgs::action::ConstPtr& message, void (*f)(int,std::string,std::string,std::vector<std::string>)){
+  if(this->getConfirmation() == 1){
+      cout << "callbackfunc" << endl;
+      if(f != NULL){
+        cout << "entrou cb2" << endl;
+        (*f)(message->id,message->agent,message->action,message->parameters);
+      }else{
+        cout << "jasonActionCB: Error! Callback function not defined." << endl;
+        ros::shutdown();
+      }
+    }
 }
 
-void actionRecvThread(){
+
+void JROS::actionRecvThreadM(boost::function<void(int,std::string,std::string,std::vector<std::string>)> f){
     cout << "action thread\n" << endl;
     ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
-    std::string topicName(rName);
+    std::string topicName(this->rName);
     topicName += "/jaction";
-    cout << "topic:" << topicName << endl;
-    ros::Subscriber robotSub = node->subscribe(topicName,1000,JROS::callbackFunc);
+    ros::Subscriber robotSub = node->subscribe<jason_msgs::action>(topicName,1000,boost::bind(&JROS::callbackFuncM,this,_1,f));
     ros::MultiThreadedSpinner spinner;
     spinner.spin();
 }
 
-void sendConfirmationThread(){
-  ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
-  std::string topicName(rName);
-  topicName += "/jconfirmation";
-  ros::Publisher robotPub = node->advertise<std_msgs::String>(topicName,1000);
-  ros::Rate loop_rate(10);
-  while(ros::ok()){
-    //if(pubMsg.compare("") != 0){
-      std_msgs::String msg;
-      msg.data = pubMsg;
-      robotPub.publish(msg);
-      //pubMsg = "";
-    //}
-    ros::spinOnce();
-    loop_rate.sleep();
-  }
+void JROS::actionRecvThreadS(void (*f)(int,std::string,std::string,std::vector<std::string>)){
+    cout << "action thread\n" << endl;
+    ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
+    std::string topicName(this->rName);
+    topicName += "/jaction";
+    ros::Subscriber robotSub = node->subscribe<jason_msgs::action>(topicName,1000,boost::bind(&JROS::callbackFuncS,this,_1,f));
+    ros::MultiThreadedSpinner spinner;
+    spinner.spin();
 }
 
-void sendPerceptionsThread(){
-  /*ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
+
+void JROS::sendConfirmationFunc(){
+  char *ptr = this->pubMsg;
+  printf("sendp:%p\n",this->pubMsg);
+  cout << "confirmation func\n" << endl;
+  printf("thread: %s\n",this->rName);
+  ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
+  std::string topicName(this->rName);
+  topicName += "/jconfirmation";
+  cout << topicName << endl;
+  ros::Publisher robotPub = node->advertise<std_msgs::String>(topicName,1000);
+  ros::Rate loop_rate(10);
+  this->setConf();
+  this->pubMsg = ptr;
+  while(ros::ok){
+    //printf("sendconf:%s\n",ptr);
+      std_msgs::String msg;
+      msg.data = string(this->pubMsg);
+      robotPub.publish(msg);
+      ros::spinOnce();
+      loop_rate.sleep();
+  }
+}
+/*
+void JROS::sendPerceptionsThread(){
+  cout << "perception thread\n" << endl;
+  ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
   std::string topicName(rName);
   topicName += "/jperceptions";
   ros::Publisher robotPub = node->advertise<jason_msgs::perception>(topicName,1000);
@@ -86,41 +85,86 @@ void sendPerceptionsThread(){
   while(ros::ok()){
     jason_msgs::perception msg;
     msg.id = aid;
-    msg.agent = rName;
+    //msg.agent = *prName;
     msg.perceptions = perceptions;
     robotPub.publish(msg);
     ros::spinOnce();
     loop_rate.sleep();
-  }*/
-}
+  }
+}*/
 
-void JROS::init(int argc, char **argv, std::string robotName){
+
+void JROS::init(int argc, char **argv, string robotName, boost::function<void(int,std::string,std::string,std::vector<std::string>)> f){
   cout << "JROS Lib Loaded!\n";
-  jargc = argc;
-  jargv = argv;
+  this->setRobotName(robotName.c_str());
+  this->pubMsg = (char *)malloc(256);
+  strcpy(this->pubMsg,(char *)"");
   if(!ros::isInitialized()){
     ros::init(argc,argv,"jroscpp");
   }
-  rName = robotName;
   srand(time(NULL));
-  if(pactThread == NULL)
-    pactThread = new boost::thread(actionRecvThread);
-  if(pconfThread == NULL)
-    pconfThread = new boost::thread(sendConfirmationThread);
-  if(pperceptThread == NULL)
-    pperceptThread = new boost::thread(sendPerceptionsThread);
+  cout << "chegou" << endl;
+  boost::thread acthread(&JROS::actionRecvThreadM, this, f);
+  boost::thread confthread(&JROS::sendConfirmationFunc,this);
+  //boost::thread percepthread(&JROS::sendPerceptionsThread, this);
+}
+
+void JROS::init(int argc, char **argv, string robotName, void (*f)(int,std::string,std::string,std::vector<std::string>)){
+  cout << "JROS Lib Loaded!\n";
+  this->setRobotName(robotName.c_str());
+  this->pubMsg = (char *)malloc(256);
+  strcpy(this->pubMsg,(char *)"");
+  if(!ros::isInitialized()){
+    ros::init(argc,argv,"jroscpp");
+  }
+  srand(time(NULL));
+  cout << "chegou" << endl;
+  boost::thread acthread(&JROS::actionRecvThreadS, this, f);
+  boost::thread confthread(&JROS::sendConfirmationFunc,this);
+  //boost::thread percepthread(&JROS::sendPerceptionsThread, this);
+}
+
+void JROS::removePerception(string perception){
+  for(int i = 0;i < perceptions.size();i++){
+    if(perceptions[i] == perception)
+      perceptions.erase(perceptions.begin()+i);
+  }
 }
 
 void JROS::shutdown(void){
   ros::shutdown();
 }
 
-void JROS::sendConfirmation(std::string action){
-  pubMsg = action;
+
+int JROS::getConfirmation(){
+  if(this->command == 872){
+    return 1;
+  }else return 0;
 }
 
-void JROS::addPerception(std::string perception){
-  perceptions.push_back(perception);
+
+void JROS::sendConfirmation(const char* cstr){
+  this->changePubMsg(cstr);
+}
+
+void JROS::addPerception(std::string iperception){
+  string perception;
+  int qtd = 0;
+  if(iperception[0] == '@'){
+    qtd = iperception.find("(");
+    perception = iperception.substr(0,qtd);//@speed() => speed
+  }else perception = iperception;
+  for(int i = 0;i < perceptions.size();i++){
+    if(perceptions[i] == perception)
+      return;
+    if(perception[0] == '@' && qtd < perceptions[i].length()){
+      if(perception == perceptions[i].substr(0,qtd)){
+        perceptions[i] = iperception;
+        return;
+      }
+    }
+  }
+  perceptions.push_back(string(perception));
 }
 
 void JROS::clearPerceptions(void){

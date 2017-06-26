@@ -27,11 +27,19 @@ jros.h
 /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/jros.h
 ros/ros.h
 /home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/ros/ros.h
-std_msgs/String.h
-/home/iancalaca/jason/projects/JROS/jasonros/jros/jasonplugin_gazebo/jason_plugin/std_msgs/String.h
 string
 -
 boost/thread.hpp
+-
+gazebo/gazebo.hh
+-
+gazebo/physics/physics.hh
+-
+gazebo/gazebo_config.h
+-
+gazebo/transport/transport.hh
+-
+gazebo/msgs/msgs.hh
 -
 
 /opt/ros/kinetic/include/XmlRpcDecl.h
@@ -254,10 +262,6 @@ boost/make_shared.hpp
 cstddef
 -
 memory
--
-
-/opt/ros/kinetic/include/ros/message_operations.h
-ostream
 -
 
 /opt/ros/kinetic/include/ros/message_traits.h
@@ -677,22 +681,6 @@ ros/forwards.h
 /opt/ros/kinetic/include/ros/ros/forwards.h
 
 /opt/ros/kinetic/include/rosconsole/macros_generated.h
-
-/opt/ros/kinetic/include/std_msgs/String.h
-string
--
-vector
--
-map
--
-ros/types.h
--
-ros/serialization.h
--
-ros/builtin_message_traits.h
--
-ros/message_operations.h
--
 
 /usr/include/gazebo-7/gazebo/Master.hh
 string

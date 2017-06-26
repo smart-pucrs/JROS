@@ -16,6 +16,12 @@ set(CMAKE_TARGET_LINKED_INFO_FILES
 
 # The include file search paths:
 set(CMAKE_C_TARGET_INCLUDE_PATH
+  "/usr/include/gazebo-7"
+  "/usr/include/sdformat-4.0"
+  "/usr/include/ignition/math2"
+  "/usr/include/OGRE"
+  "/usr/include/OGRE/Terrain"
+  "/usr/include/OGRE/Paging"
   "/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/devel/include"
   "/opt/ros/kinetic/include"
   )

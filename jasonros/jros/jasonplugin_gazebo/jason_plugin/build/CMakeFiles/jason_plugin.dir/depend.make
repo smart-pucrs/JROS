@@ -23,7 +23,6 @@ CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: /opt/ros/kinetic/include/ros/mast
 CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: /opt/ros/kinetic/include/ros/message.h
 CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: /opt/ros/kinetic/include/ros/message_event.h
 CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: /opt/ros/kinetic/include/ros/message_forward.h
-CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: /opt/ros/kinetic/include/ros/message_operations.h
 CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: /opt/ros/kinetic/include/ros/message_traits.h
 CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: /opt/ros/kinetic/include/ros/names.h
 CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: /opt/ros/kinetic/include/ros/node_handle.h
@@ -59,7 +58,6 @@ CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: /opt/ros/kinetic/include/ros/type
 CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: /opt/ros/kinetic/include/ros/wall_timer.h
 CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: /opt/ros/kinetic/include/ros/wall_timer_options.h
 CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: /opt/ros/kinetic/include/rosconsole/macros_generated.h
-CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: /opt/ros/kinetic/include/std_msgs/String.h
 CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: /usr/include/gazebo-7/gazebo/Master.hh
 CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: /usr/include/gazebo-7/gazebo/Server.hh
 CMakeFiles/jason_plugin.dir/jason_plugin.cc.o: /usr/include/gazebo-7/gazebo/common/Animation.hh

@@ -39,12 +39,13 @@ public class ConfirmationListener extends AbstractNodeMain{
 			@Override
 			public void onNewMessage(std_msgs.String message) {
 				String msg = message.getData();
+				//System.out.println("jason recv:"+msg);
 				try {
 					if(!lastBel.equals(msg)){
 						lastBel = msg;
-						Literal bel = ASSyntax.parseLiteral(msg);
+						Literal bel = ASSyntax.parseLiteral("lastJROSAction("+msg+")");
 						if(!ag.believes(bel, new Unifier()))
-							ag.addBel(ASSyntax.parseLiteral(msg));
+							ag.addBel(bel);
 					}
 				} catch (RevisionFailedException | ParseException e) {
 					// TODO Auto-generated catch block

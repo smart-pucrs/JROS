@@ -16,5 +16,5 @@ class JROS{
     void sendPerceptions(void);
     void addPerception(std::string perception);
     void clearPerceptions(void);
-
+    void removePerception(string perception);
 };

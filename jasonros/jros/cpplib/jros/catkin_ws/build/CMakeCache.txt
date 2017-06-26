@@ -14,8 +14,80 @@
 # EXTERNAL cache entries
 ########################
 
+//The threading library used by boost-thread
+BOOST_THREAD_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libpthread.so
+
 //Build shared libraries (DLLs).
 BUILD_SHARED_LIBS:BOOL=ON
+
+//Boost atomic library (debug)
+Boost_ATOMIC_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_atomic.so
+
+//Boost atomic library (release)
+Boost_ATOMIC_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_atomic.so
+
+//Boost chrono library (debug)
+Boost_CHRONO_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_chrono.so
+
+//Boost chrono library (release)
+Boost_CHRONO_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_chrono.so
+
+//Boost date_time library (debug)
+Boost_DATE_TIME_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_date_time.so
+
+//Boost date_time library (release)
+Boost_DATE_TIME_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_date_time.so
+
+//The directory containing a CMake configuration file for Boost.
+Boost_DIR:PATH=Boost_DIR-NOTFOUND
+
+//Boost filesystem library (debug)
+Boost_FILESYSTEM_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_filesystem.so
+
+//Boost filesystem library (release)
+Boost_FILESYSTEM_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_filesystem.so
+
+//Path to a file.
+Boost_INCLUDE_DIR:PATH=/usr/include
+
+//Boost iostreams library (debug)
+Boost_IOSTREAMS_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_iostreams.so
+
+//Boost iostreams library (release)
+Boost_IOSTREAMS_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_iostreams.so
+
+//Boost library directory
+Boost_LIBRARY_DIR:PATH=/usr/lib/x86_64-linux-gnu
+
+//Boost program_options library (debug)
+Boost_PROGRAM_OPTIONS_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_program_options.so
+
+//Boost program_options library (release)
+Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_program_options.so
+
+//Boost regex library (debug)
+Boost_REGEX_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_regex.so
+
+//Boost regex library (release)
+Boost_REGEX_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_regex.so
+
+//Boost signals library (debug)
+Boost_SIGNALS_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_signals.so
+
+//Boost signals library (release)
+Boost_SIGNALS_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_signals.so
+
+//Boost system library (debug)
+Boost_SYSTEM_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_system.so
+
+//Boost system library (release)
+Boost_SYSTEM_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_system.so
+
+//Boost thread library (debug)
+Boost_THREAD_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_thread.so
+
+//Boost thread library (release)
+Boost_THREAD_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_thread.so
 
 //List of ';' separated packages to exclude
 CATKIN_BLACKLIST_PACKAGES:STRING=
@@ -219,6 +291,267 @@ LSB_RELEASE_EXECUTABLE:FILEPATH=/usr/bin/lsb_release
 //Path to a program.
 NOSETESTS:FILEPATH=/usr/bin/nosetests-2.7
 
+//x
+OGRE_CONFIG_INCLUDE_DIR:PATH=/usr/include/OGRE
+
+//x
+OGRE_INCLUDE_DIR:PATH=/usr/include/OGRE
+
+//x
+OGRE_LIBRARY_DBG:FILEPATH=/usr/lib/x86_64-linux-gnu/libOgreMain.so
+
+//x
+OGRE_LIBRARY_FWK:STRING=NOTFOUND
+
+//x
+OGRE_LIBRARY_REL:FILEPATH=/usr/lib/x86_64-linux-gnu/libOgreMain.so
+
+//x
+OGRE_MEDIA_DIR:PATH=OGRE_MEDIA_DIR-NOTFOUND
+
+//x
+OGRE_Overlay_INCLUDE_DIR:PATH=/usr/include/OGRE/Overlay
+
+//x
+OGRE_Overlay_LIBRARY_DBG:FILEPATH=/usr/lib/x86_64-linux-gnu/libOgreOverlay.so
+
+//x
+OGRE_Overlay_LIBRARY_FWK:STRING=NOTFOUND
+
+//x
+OGRE_Overlay_LIBRARY_REL:FILEPATH=/usr/lib/x86_64-linux-gnu/libOgreOverlay.so
+
+//Ogre plugin dir (debug)
+OGRE_PLUGIN_DIR_DBG:STRING=
+
+//Ogre plugin dir (release)
+OGRE_PLUGIN_DIR_REL:STRING=
+
+//x
+OGRE_Paging_INCLUDE_DIR:PATH=/usr/include/OGRE/Paging
+
+//x
+OGRE_Paging_LIBRARY_DBG:FILEPATH=/usr/lib/x86_64-linux-gnu/libOgrePaging.so
+
+//x
+OGRE_Paging_LIBRARY_FWK:STRING=NOTFOUND
+
+//x
+OGRE_Paging_LIBRARY_REL:FILEPATH=/usr/lib/x86_64-linux-gnu/libOgrePaging.so
+
+//x
+OGRE_Plugin_BSPSceneManager_INCLUDE_DIR:PATH=/usr/include/OGRE/Plugins/BSPSceneManager
+
+//x
+OGRE_Plugin_BSPSceneManager_LIBRARY_DBG:FILEPATH=OGRE_Plugin_BSPSceneManager_LIBRARY_DBG-NOTFOUND
+
+//x
+OGRE_Plugin_BSPSceneManager_LIBRARY_FWK:STRING=NOTFOUND
+
+//x
+OGRE_Plugin_BSPSceneManager_LIBRARY_REL:FILEPATH=OGRE_Plugin_BSPSceneManager_LIBRARY_REL-NOTFOUND
+
+//x
+OGRE_Plugin_CgProgramManager_INCLUDE_DIR:PATH=OGRE_Plugin_CgProgramManager_INCLUDE_DIR-NOTFOUND
+
+//x
+OGRE_Plugin_CgProgramManager_LIBRARY_DBG:FILEPATH=OGRE_Plugin_CgProgramManager_LIBRARY_DBG-NOTFOUND
+
+//x
+OGRE_Plugin_CgProgramManager_LIBRARY_FWK:STRING=NOTFOUND
+
+//x
+OGRE_Plugin_CgProgramManager_LIBRARY_REL:FILEPATH=OGRE_Plugin_CgProgramManager_LIBRARY_REL-NOTFOUND
+
+//x
+OGRE_Plugin_OctreeSceneManager_INCLUDE_DIR:PATH=/usr/include/OGRE/Plugins/OctreeSceneManager
+
+//x
+OGRE_Plugin_OctreeSceneManager_LIBRARY_DBG:FILEPATH=OGRE_Plugin_OctreeSceneManager_LIBRARY_DBG-NOTFOUND
+
+//x
+OGRE_Plugin_OctreeSceneManager_LIBRARY_FWK:STRING=NOTFOUND
+
+//x
+OGRE_Plugin_OctreeSceneManager_LIBRARY_REL:FILEPATH=OGRE_Plugin_OctreeSceneManager_LIBRARY_REL-NOTFOUND
+
+//x
+OGRE_Plugin_OctreeZone_INCLUDE_DIR:PATH=/usr/include/OGRE/Plugins/OctreeZone
+
+//x
+OGRE_Plugin_OctreeZone_LIBRARY_DBG:FILEPATH=OGRE_Plugin_OctreeZone_LIBRARY_DBG-NOTFOUND
+
+//x
+OGRE_Plugin_OctreeZone_LIBRARY_FWK:STRING=NOTFOUND
+
+//x
+OGRE_Plugin_OctreeZone_LIBRARY_REL:FILEPATH=OGRE_Plugin_OctreeZone_LIBRARY_REL-NOTFOUND
+
+//x
+OGRE_Plugin_PCZSceneManager_INCLUDE_DIR:PATH=/usr/include/OGRE/Plugins/PCZSceneManager
+
+//x
+OGRE_Plugin_PCZSceneManager_LIBRARY_DBG:FILEPATH=OGRE_Plugin_PCZSceneManager_LIBRARY_DBG-NOTFOUND
+
+//x
+OGRE_Plugin_PCZSceneManager_LIBRARY_FWK:STRING=NOTFOUND
+
+//x
+OGRE_Plugin_PCZSceneManager_LIBRARY_REL:FILEPATH=OGRE_Plugin_PCZSceneManager_LIBRARY_REL-NOTFOUND
+
+//x
+OGRE_Plugin_ParticleFX_INCLUDE_DIR:PATH=/usr/include/OGRE/Plugins/ParticleFX
+
+//x
+OGRE_Plugin_ParticleFX_LIBRARY_DBG:FILEPATH=OGRE_Plugin_ParticleFX_LIBRARY_DBG-NOTFOUND
+
+//x
+OGRE_Plugin_ParticleFX_LIBRARY_FWK:STRING=NOTFOUND
+
+//x
+OGRE_Plugin_ParticleFX_LIBRARY_REL:FILEPATH=OGRE_Plugin_ParticleFX_LIBRARY_REL-NOTFOUND
+
+//Path to a file.
+OGRE_Property_INCLUDE_DIR:PATH=/usr/include/OGRE/Property
+
+//Path to a library.
+OGRE_Property_LIBRARY_DBG:FILEPATH=/usr/lib/x86_64-linux-gnu/libOgreProperty.so
+
+//Path to a library.
+OGRE_Property_LIBRARY_REL:FILEPATH=/usr/lib/x86_64-linux-gnu/libOgreProperty.so
+
+//Path to a file.
+OGRE_RTShaderSystem_INCLUDE_DIR:PATH=/usr/include/OGRE/RTShaderSystem
+
+//Path to a library.
+OGRE_RTShaderSystem_LIBRARY_DBG:FILEPATH=/usr/lib/x86_64-linux-gnu/libOgreRTShaderSystem.so
+
+//Path to a library.
+OGRE_RTShaderSystem_LIBRARY_REL:FILEPATH=/usr/lib/x86_64-linux-gnu/libOgreRTShaderSystem.so
+
+//x
+OGRE_RenderSystem_Direct3D11_INCLUDE_DIR:PATH=OGRE_RenderSystem_Direct3D11_INCLUDE_DIR-NOTFOUND
+
+//x
+OGRE_RenderSystem_Direct3D11_LIBRARY_DBG:FILEPATH=OGRE_RenderSystem_Direct3D11_LIBRARY_DBG-NOTFOUND
+
+//x
+OGRE_RenderSystem_Direct3D11_LIBRARY_FWK:STRING=NOTFOUND
+
+//x
+OGRE_RenderSystem_Direct3D11_LIBRARY_REL:FILEPATH=OGRE_RenderSystem_Direct3D11_LIBRARY_REL-NOTFOUND
+
+//x
+OGRE_RenderSystem_Direct3D9_INCLUDE_DIR:PATH=OGRE_RenderSystem_Direct3D9_INCLUDE_DIR-NOTFOUND
+
+//x
+OGRE_RenderSystem_Direct3D9_LIBRARY_DBG:FILEPATH=OGRE_RenderSystem_Direct3D9_LIBRARY_DBG-NOTFOUND
+
+//x
+OGRE_RenderSystem_Direct3D9_LIBRARY_FWK:STRING=NOTFOUND
+
+//x
+OGRE_RenderSystem_Direct3D9_LIBRARY_REL:FILEPATH=OGRE_RenderSystem_Direct3D9_LIBRARY_REL-NOTFOUND
+
+//x
+OGRE_RenderSystem_GL3Plus_INCLUDE_DIR:PATH=OGRE_RenderSystem_GL3Plus_INCLUDE_DIR-NOTFOUND
+
+//x
+OGRE_RenderSystem_GL3Plus_LIBRARY_DBG:FILEPATH=OGRE_RenderSystem_GL3Plus_LIBRARY_DBG-NOTFOUND
+
+//x
+OGRE_RenderSystem_GL3Plus_LIBRARY_FWK:STRING=NOTFOUND
+
+//x
+OGRE_RenderSystem_GL3Plus_LIBRARY_REL:FILEPATH=OGRE_RenderSystem_GL3Plus_LIBRARY_REL-NOTFOUND
+
+//x
+OGRE_RenderSystem_GLES2_INCLUDE_DIR:PATH=/usr/include/OGRE/RenderSystems/GLES2
+
+//x
+OGRE_RenderSystem_GLES2_LIBRARY_DBG:FILEPATH=OGRE_RenderSystem_GLES2_LIBRARY_DBG-NOTFOUND
+
+//x
+OGRE_RenderSystem_GLES2_LIBRARY_FWK:STRING=NOTFOUND
+
+//x
+OGRE_RenderSystem_GLES2_LIBRARY_REL:FILEPATH=OGRE_RenderSystem_GLES2_LIBRARY_REL-NOTFOUND
+
+//x
+OGRE_RenderSystem_GLES_INCLUDE_DIR:PATH=OGRE_RenderSystem_GLES_INCLUDE_DIR-NOTFOUND
+
+//x
+OGRE_RenderSystem_GLES_LIBRARY_DBG:FILEPATH=OGRE_RenderSystem_GLES_LIBRARY_DBG-NOTFOUND
+
+//x
+OGRE_RenderSystem_GLES_LIBRARY_FWK:STRING=NOTFOUND
+
+//x
+OGRE_RenderSystem_GLES_LIBRARY_REL:FILEPATH=OGRE_RenderSystem_GLES_LIBRARY_REL-NOTFOUND
+
+//x
+OGRE_RenderSystem_GL_INCLUDE_DIR:PATH=/usr/include/OGRE/RenderSystems/GL
+
+//x
+OGRE_RenderSystem_GL_LIBRARY_DBG:FILEPATH=OGRE_RenderSystem_GL_LIBRARY_DBG-NOTFOUND
+
+//x
+OGRE_RenderSystem_GL_LIBRARY_FWK:STRING=NOTFOUND
+
+//x
+OGRE_RenderSystem_GL_LIBRARY_REL:FILEPATH=OGRE_RenderSystem_GL_LIBRARY_REL-NOTFOUND
+
+//x
+OGRE_Terrain_INCLUDE_DIR:PATH=/usr/include/OGRE/Terrain
+
+//x
+OGRE_Terrain_LIBRARY_DBG:FILEPATH=/usr/lib/x86_64-linux-gnu/libOgreTerrain.so
+
+//x
+OGRE_Terrain_LIBRARY_FWK:STRING=NOTFOUND
+
+//x
+OGRE_Terrain_LIBRARY_REL:FILEPATH=/usr/lib/x86_64-linux-gnu/libOgreTerrain.so
+
+//x
+OGRE_Volume_INCLUDE_DIR:PATH=/usr/include/OGRE/Volume
+
+//x
+OGRE_Volume_LIBRARY_DBG:FILEPATH=/usr/lib/x86_64-linux-gnu/libOgreVolume.so
+
+//x
+OGRE_Volume_LIBRARY_FWK:STRING=NOTFOUND
+
+//x
+OGRE_Volume_LIBRARY_REL:FILEPATH=/usr/lib/x86_64-linux-gnu/libOgreVolume.so
+
+//pkg-config executable
+PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
+
+//Path to a file.
+PROTOBUF_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a library.
+PROTOBUF_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libprotobuf.so
+
+//Path to a library.
+PROTOBUF_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libprotobuf.so
+
+//Path to a library.
+PROTOBUF_LITE_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libprotobuf-lite.so
+
+//Path to a library.
+PROTOBUF_LITE_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libprotobuf-lite.so
+
+//The Google Protocol Buffers Compiler
+PROTOBUF_PROTOC_EXECUTABLE:FILEPATH=PROTOBUF_PROTOC_EXECUTABLE-NOTFOUND
+
+//Path to a library.
+PROTOBUF_PROTOC_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libprotoc.so
+
+//Path to a library.
+PROTOBUF_PROTOC_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libprotoc.so
+
 //Path to a program.
 PYTHON_EXECUTABLE:FILEPATH=/usr/bin/python
 
@@ -233,6 +566,9 @@ Project_SOURCE_DIR:STATIC=/home/iancalaca/jason/projects/JROS/jasonros/jros/cppl
 
 //Path to a library.
 RT_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/librt.so
+
+//The directory containing a CMake configuration file for SDFormat.
+SDFormat_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/sdformat
 
 //Enable debian style python package layout
 SETUPTOOLS_DEB_LAYOUT:BOOL=ON
@@ -254,6 +590,12 @@ catkin_DIR:PATH=/opt/ros/kinetic/share/catkin/cmake
 
 //The directory containing a CMake configuration file for cpp_common.
 cpp_common_DIR:PATH=/opt/ros/kinetic/share/cpp_common/cmake
+
+//The directory containing a CMake configuration file for gazebo.
+gazebo_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/gazebo
+
+//Path to a library.
+gazebo_proto_msgs_lib:FILEPATH=/usr/lib/x86_64-linux-gnu/libgazebo_msgs.so
 
 //The directory containing a CMake configuration file for gencpp.
 gencpp_DIR:PATH=/opt/ros/kinetic/share/gencpp/cmake
@@ -297,6 +639,9 @@ gtest_force_shared_crt:BOOL=OFF
 
 //Dependencies for the target
 gtest_main_LIB_DEPENDS:STATIC=general;-lpthread;general;gtest;
+
+//The directory containing a CMake configuration file for ignition-math2.
+ignition-math2_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/ignition-math2
 
 //Value Computed by CMake
 jason_msgs_BINARY_DIR:STATIC=/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/build/jason_msgs
@@ -352,6 +697,9 @@ message_generation_DIR:PATH=/opt/ros/kinetic/share/message_generation/cmake
 //The directory containing a CMake configuration file for message_runtime.
 message_runtime_DIR:PATH=/opt/ros/kinetic/share/message_runtime/cmake
 
+//Path to a library.
+onelib:FILEPATH=/usr/lib/x86_64-linux-gnu/libignition-math2.so
+
 //The directory containing a CMake configuration file for rosconsole.
 rosconsole_DIR:PATH=/opt/ros/kinetic/share/rosconsole/cmake
 
@@ -384,6 +732,52 @@ xmlrpcpp_DIR:PATH=/opt/ros/kinetic/share/xmlrpcpp/cmake
 # INTERNAL cache entries
 ########################
 
+//ADVANCED property for variable: Boost_ATOMIC_LIBRARY_DEBUG
+Boost_ATOMIC_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_ATOMIC_LIBRARY_RELEASE
+Boost_ATOMIC_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_CHRONO_LIBRARY_DEBUG
+Boost_CHRONO_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_CHRONO_LIBRARY_RELEASE
+Boost_CHRONO_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_DATE_TIME_LIBRARY_DEBUG
+Boost_DATE_TIME_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_DATE_TIME_LIBRARY_RELEASE
+Boost_DATE_TIME_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_DIR
+Boost_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_FILESYSTEM_LIBRARY_DEBUG
+Boost_FILESYSTEM_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_FILESYSTEM_LIBRARY_RELEASE
+Boost_FILESYSTEM_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_INCLUDE_DIR
+Boost_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_IOSTREAMS_LIBRARY_DEBUG
+Boost_IOSTREAMS_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_IOSTREAMS_LIBRARY_RELEASE
+Boost_IOSTREAMS_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_LIBRARY_DIR
+Boost_LIBRARY_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PROGRAM_OPTIONS_LIBRARY_DEBUG
+Boost_PROGRAM_OPTIONS_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE
+Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_REGEX_LIBRARY_DEBUG
+Boost_REGEX_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_REGEX_LIBRARY_RELEASE
+Boost_REGEX_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_SIGNALS_LIBRARY_DEBUG
+Boost_SIGNALS_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_SIGNALS_LIBRARY_RELEASE
+Boost_SIGNALS_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_SYSTEM_LIBRARY_DEBUG
+Boost_SYSTEM_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_SYSTEM_LIBRARY_RELEASE
+Boost_SYSTEM_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_THREAD_LIBRARY_DEBUG
+Boost_THREAD_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_THREAD_LIBRARY_RELEASE
+Boost_THREAD_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //catkin environment
 CATKIN_ENV:INTERNAL=/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/build/catkin_generated/env_cached.sh
 CATKIN_TEST_RESULTS_DIR:INTERNAL=/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/build/test_results
@@ -524,6 +918,10 @@ CMAKE_USE_RELATIVE_PATHS-ADVANCED:INTERNAL=1
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Test COMPILER_SUPPORTS_CXX11
 COMPILER_SUPPORTS_CXX11:INTERNAL=1
+//Details about finding PROTOBUF
+FIND_PACKAGE_MESSAGE_DETAILS_PROTOBUF:INTERNAL=[/usr/lib/x86_64-linux-gnu/libprotobuf.so][/usr/include][v()]
+//Details about finding PkgConfig
+FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v0.28()]
 //Details about finding PythonInterp
 FIND_PACKAGE_MESSAGE_DETAILS_PythonInterp:INTERNAL=[/usr/bin/python][v2.7.10()]
 //Details about finding Threads
@@ -543,10 +941,231 @@ GTEST_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 GTEST_MAIN_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: GTEST_MAIN_LIBRARY_DEBUG
 GTEST_MAIN_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_CONFIG_INCLUDE_DIR
+OGRE_CONFIG_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_INCLUDE_DIR
+OGRE_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_LIBRARY_DBG
+OGRE_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_LIBRARY_FWK
+OGRE_LIBRARY_FWK-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_LIBRARY_REL
+OGRE_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_MEDIA_DIR
+OGRE_MEDIA_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Overlay_INCLUDE_DIR
+OGRE_Overlay_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Overlay_LIBRARY_DBG
+OGRE_Overlay_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Overlay_LIBRARY_FWK
+OGRE_Overlay_LIBRARY_FWK-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Overlay_LIBRARY_REL
+OGRE_Overlay_LIBRARY_REL-ADVANCED:INTERNAL=1
+OGRE_PKGC_CFLAGS:INTERNAL=-pthread;-I/usr/include/OGRE
+OGRE_PKGC_CFLAGS_I:INTERNAL=
+OGRE_PKGC_CFLAGS_OTHER:INTERNAL=-pthread
+OGRE_PKGC_FOUND:INTERNAL=1
+OGRE_PKGC_INCLUDEDIR:INTERNAL=/usr/include
+OGRE_PKGC_INCLUDE_DIRS:INTERNAL=/usr/include/OGRE
+OGRE_PKGC_LDFLAGS:INTERNAL=-lOgreMain;-lpthread
+OGRE_PKGC_LDFLAGS_OTHER:INTERNAL=
+OGRE_PKGC_LIBDIR:INTERNAL=/usr/lib/x86_64-linux-gnu
+OGRE_PKGC_LIBRARIES:INTERNAL=OgreMain;pthread
+OGRE_PKGC_LIBRARY_DIRS:INTERNAL=
+OGRE_PKGC_LIBS:INTERNAL=
+OGRE_PKGC_LIBS_L:INTERNAL=
+OGRE_PKGC_LIBS_OTHER:INTERNAL=
+OGRE_PKGC_LIBS_PATHS:INTERNAL=
+OGRE_PKGC_OGRE_INCLUDEDIR:INTERNAL=
+OGRE_PKGC_OGRE_LIBDIR:INTERNAL=
+OGRE_PKGC_OGRE_PREFIX:INTERNAL=
+OGRE_PKGC_OGRE_VERSION:INTERNAL=
+OGRE_PKGC_PREFIX:INTERNAL=/usr
+OGRE_PKGC_STATIC_CFLAGS:INTERNAL=-pthread;-I/usr/include/OGRE
+OGRE_PKGC_STATIC_CFLAGS_I:INTERNAL=
+OGRE_PKGC_STATIC_CFLAGS_OTHER:INTERNAL=-pthread
+OGRE_PKGC_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include/OGRE
+OGRE_PKGC_STATIC_LDFLAGS:INTERNAL=-lOgreMain;-lpthread
+OGRE_PKGC_STATIC_LDFLAGS_OTHER:INTERNAL=
+OGRE_PKGC_STATIC_LIBDIR:INTERNAL=
+OGRE_PKGC_STATIC_LIBRARIES:INTERNAL=OgreMain;pthread
+OGRE_PKGC_STATIC_LIBRARY_DIRS:INTERNAL=
+OGRE_PKGC_STATIC_LIBS:INTERNAL=
+OGRE_PKGC_STATIC_LIBS_L:INTERNAL=
+OGRE_PKGC_STATIC_LIBS_OTHER:INTERNAL=
+OGRE_PKGC_STATIC_LIBS_PATHS:INTERNAL=
+OGRE_PKGC_VERSION:INTERNAL=1.9.0
+//ADVANCED property for variable: OGRE_PLUGIN_DIR_DBG
+OGRE_PLUGIN_DIR_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_PLUGIN_DIR_REL
+OGRE_PLUGIN_DIR_REL-ADVANCED:INTERNAL=1
+//x
+OGRE_PREFIX_WATCH_INT_CHECK:INTERNAL=/opt/ogre;/opt/OGRE;/usr/lib/ogre;/usr/lib/OGRE;/usr/local/lib/ogre;/usr/local/lib/OGRE;/home/iancalaca/ogre;/home/iancalaca/OGRE;NOTFOUND;NOTFOUND
+//ADVANCED property for variable: OGRE_Paging_INCLUDE_DIR
+OGRE_Paging_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Paging_LIBRARY_DBG
+OGRE_Paging_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Paging_LIBRARY_FWK
+OGRE_Paging_LIBRARY_FWK-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Paging_LIBRARY_REL
+OGRE_Paging_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_BSPSceneManager_INCLUDE_DIR
+OGRE_Plugin_BSPSceneManager_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_BSPSceneManager_LIBRARY_DBG
+OGRE_Plugin_BSPSceneManager_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_BSPSceneManager_LIBRARY_FWK
+OGRE_Plugin_BSPSceneManager_LIBRARY_FWK-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_BSPSceneManager_LIBRARY_REL
+OGRE_Plugin_BSPSceneManager_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_CgProgramManager_INCLUDE_DIR
+OGRE_Plugin_CgProgramManager_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_CgProgramManager_LIBRARY_DBG
+OGRE_Plugin_CgProgramManager_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_CgProgramManager_LIBRARY_FWK
+OGRE_Plugin_CgProgramManager_LIBRARY_FWK-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_CgProgramManager_LIBRARY_REL
+OGRE_Plugin_CgProgramManager_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_OctreeSceneManager_INCLUDE_DIR
+OGRE_Plugin_OctreeSceneManager_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_OctreeSceneManager_LIBRARY_DBG
+OGRE_Plugin_OctreeSceneManager_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_OctreeSceneManager_LIBRARY_FWK
+OGRE_Plugin_OctreeSceneManager_LIBRARY_FWK-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_OctreeSceneManager_LIBRARY_REL
+OGRE_Plugin_OctreeSceneManager_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_OctreeZone_INCLUDE_DIR
+OGRE_Plugin_OctreeZone_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_OctreeZone_LIBRARY_DBG
+OGRE_Plugin_OctreeZone_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_OctreeZone_LIBRARY_FWK
+OGRE_Plugin_OctreeZone_LIBRARY_FWK-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_OctreeZone_LIBRARY_REL
+OGRE_Plugin_OctreeZone_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_PCZSceneManager_INCLUDE_DIR
+OGRE_Plugin_PCZSceneManager_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_PCZSceneManager_LIBRARY_DBG
+OGRE_Plugin_PCZSceneManager_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_PCZSceneManager_LIBRARY_FWK
+OGRE_Plugin_PCZSceneManager_LIBRARY_FWK-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_PCZSceneManager_LIBRARY_REL
+OGRE_Plugin_PCZSceneManager_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_ParticleFX_INCLUDE_DIR
+OGRE_Plugin_ParticleFX_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_ParticleFX_LIBRARY_DBG
+OGRE_Plugin_ParticleFX_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_ParticleFX_LIBRARY_FWK
+OGRE_Plugin_ParticleFX_LIBRARY_FWK-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Plugin_ParticleFX_LIBRARY_REL
+OGRE_Plugin_ParticleFX_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Property_INCLUDE_DIR
+OGRE_Property_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Property_LIBRARY_DBG
+OGRE_Property_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Property_LIBRARY_REL
+OGRE_Property_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RTShaderSystem_INCLUDE_DIR
+OGRE_RTShaderSystem_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RTShaderSystem_LIBRARY_DBG
+OGRE_RTShaderSystem_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RTShaderSystem_LIBRARY_REL
+OGRE_RTShaderSystem_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_Direct3D11_INCLUDE_DIR
+OGRE_RenderSystem_Direct3D11_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_Direct3D11_LIBRARY_DBG
+OGRE_RenderSystem_Direct3D11_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_Direct3D11_LIBRARY_FWK
+OGRE_RenderSystem_Direct3D11_LIBRARY_FWK-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_Direct3D11_LIBRARY_REL
+OGRE_RenderSystem_Direct3D11_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_Direct3D9_INCLUDE_DIR
+OGRE_RenderSystem_Direct3D9_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_Direct3D9_LIBRARY_DBG
+OGRE_RenderSystem_Direct3D9_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_Direct3D9_LIBRARY_FWK
+OGRE_RenderSystem_Direct3D9_LIBRARY_FWK-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_Direct3D9_LIBRARY_REL
+OGRE_RenderSystem_Direct3D9_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_GL3Plus_INCLUDE_DIR
+OGRE_RenderSystem_GL3Plus_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_GL3Plus_LIBRARY_DBG
+OGRE_RenderSystem_GL3Plus_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_GL3Plus_LIBRARY_FWK
+OGRE_RenderSystem_GL3Plus_LIBRARY_FWK-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_GL3Plus_LIBRARY_REL
+OGRE_RenderSystem_GL3Plus_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_GLES2_INCLUDE_DIR
+OGRE_RenderSystem_GLES2_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_GLES2_LIBRARY_DBG
+OGRE_RenderSystem_GLES2_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_GLES2_LIBRARY_FWK
+OGRE_RenderSystem_GLES2_LIBRARY_FWK-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_GLES2_LIBRARY_REL
+OGRE_RenderSystem_GLES2_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_GLES_INCLUDE_DIR
+OGRE_RenderSystem_GLES_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_GLES_LIBRARY_DBG
+OGRE_RenderSystem_GLES_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_GLES_LIBRARY_FWK
+OGRE_RenderSystem_GLES_LIBRARY_FWK-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_GLES_LIBRARY_REL
+OGRE_RenderSystem_GLES_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_GL_INCLUDE_DIR
+OGRE_RenderSystem_GL_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_GL_LIBRARY_DBG
+OGRE_RenderSystem_GL_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_GL_LIBRARY_FWK
+OGRE_RenderSystem_GL_LIBRARY_FWK-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_RenderSystem_GL_LIBRARY_REL
+OGRE_RenderSystem_GL_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Terrain_INCLUDE_DIR
+OGRE_Terrain_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Terrain_LIBRARY_DBG
+OGRE_Terrain_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Terrain_LIBRARY_FWK
+OGRE_Terrain_LIBRARY_FWK-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Terrain_LIBRARY_REL
+OGRE_Terrain_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Volume_INCLUDE_DIR
+OGRE_Volume_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Volume_LIBRARY_DBG
+OGRE_Volume_LIBRARY_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Volume_LIBRARY_FWK
+OGRE_Volume_LIBRARY_FWK-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OGRE_Volume_LIBRARY_REL
+OGRE_Volume_LIBRARY_REL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
+PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PROTOBUF_INCLUDE_DIR
+PROTOBUF_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PROTOBUF_LIBRARY
+PROTOBUF_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PROTOBUF_LIBRARY_DEBUG
+PROTOBUF_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PROTOBUF_LITE_LIBRARY
+PROTOBUF_LITE_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PROTOBUF_LITE_LIBRARY_DEBUG
+PROTOBUF_LITE_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PROTOBUF_PROTOC_EXECUTABLE
+PROTOBUF_PROTOC_EXECUTABLE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PROTOBUF_PROTOC_LIBRARY
+PROTOBUF_PROTOC_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PROTOBUF_PROTOC_LIBRARY_DEBUG
+PROTOBUF_PROTOC_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_EXECUTABLE
 PYTHON_EXECUTABLE-ADVANCED:INTERNAL=1
 //This needs to be in PYTHONPATH when 'setup.py install' is called.
 //  And it needs to match.  But setuptools won't tell us where
 // it will install things.
 PYTHON_INSTALL_DIR:INTERNAL=lib/python2.7/dist-packages
+//Components requested for this build tree.
+_Boost_COMPONENTS_SEARCHED:INTERNAL=atomic;chrono;date_time;filesystem;iostreams;program_options;regex;signals;system;thread
+//Last used Boost_INCLUDE_DIR value.
+_Boost_INCLUDE_DIR_LAST:INTERNAL=/usr/include
+//Last used Boost_LIBRARY_DIR value.
+_Boost_LIBRARY_DIR_LAST:INTERNAL=/usr/lib/x86_64-linux-gnu
+//Last used Boost_NAMESPACE value.
+_Boost_NAMESPACE_LAST:INTERNAL=boost
+//Last used Boost_USE_MULTITHREADED value.
+_Boost_USE_MULTITHREADED_LAST:INTERNAL=TRUE
+__pkg_config_checked_OGRE_PKGC:INTERNAL=1
 
