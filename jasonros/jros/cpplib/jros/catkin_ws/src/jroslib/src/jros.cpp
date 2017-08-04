@@ -32,9 +32,9 @@ void JROS::callbackFuncS(const jason_msgs::action::ConstPtr& message, void (*f)(
 
 
 void JROS::actionRecvThreadM(JROS *i,boost::function<void(int,std::string,std::string,std::vector<std::string>)> f){
+    printf("Action instance:%p\n", i);
     char *ptra = i->rName;
-    cout << "action thread\n" << endl;
-    printf("action thread:%s",i->rName);
+    printf("Name:%s\n", ptra);
     ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
     std::string topicName(ptra);
     topicName += "/jaction";
@@ -43,7 +43,7 @@ void JROS::actionRecvThreadM(JROS *i,boost::function<void(int,std::string,std::s
     spinner.spin();
 }
 
-void JROS::actionRecvThreadS(void (*f)(int,std::string,std::string,std::vector<std::string>)){
+/*void JROS::actionRecvThreadS(void (*f)(int,std::string,std::string,std::vector<std::string>)){
     char *ptr = this->rName;
     cout << "action thread\n" << endl;
     ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
@@ -52,17 +52,15 @@ void JROS::actionRecvThreadS(void (*f)(int,std::string,std::string,std::vector<s
     ros::Subscriber robotSub = node->subscribe<jason_msgs::action>(topicName,1000,boost::bind(&JROS::callbackFuncS,this,_1,f));
     ros::MultiThreadedSpinner spinner;
     spinner.spin();
-}
+}*/
 
 
 void JROS::sendConfirmationFunc(JROS *j){
   if((j->pubMsg != NULL) && (j->rName != NULL)){
   char *ptr = j->pubMsg;
+  printf("Confirmation instance:%p\n", j);
   char *ptr2 = j->rName;
-  printf("thread: %s\n",ptr2);
-  printf("sendp:%s\n",ptr);
-  cout << "confirmation func\n" << endl;
-  printf("thread2: %s\n",ptr2);
+  printf("Confirmation Name:%s\n", ptr2);
   ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
   std::string topicName(ptr2);
   topicName += "/jconfirmation";
@@ -103,7 +101,6 @@ void JROS::sendPerceptionsThread(){
 
 void JROS::init(int argc, char **argv, string robotName, boost::function<void(int,std::string,std::string,std::vector<std::string>)> f){
   cout << "JROS Lib Loaded!\n";
-  cout << "Nome::::" << robotName.c_str() << endl;
   //this->setRobotName(robotName.c_str());
 
   if(!ros::isInitialized()){
@@ -114,11 +111,11 @@ void JROS::init(int argc, char **argv, string robotName, boost::function<void(in
   this->rName = (char *)malloc(256);
   this->pubMsg = (char *)malloc(256);
   strcpy(this->rName, robotName.c_str());
-  cout << "Nome::::" << robotName.c_str() << "-" << this->rName << endl;
   strcpy(this->pubMsg,(char *)"");
+  printf("Init instance:%p\n", this);
   boost::thread acthread(&JROS::actionRecvThreadM, this,this,f);
+  printf("Init instance:%p\n", this);
   boost::thread confthread(&JROS::sendConfirmationFunc,this,this);
-  printf("init: %s - %s",this->rName,this->pubMsg);
   //boost::thread percepthread(&JROS::sendPerceptionsThread, this);
 }
 

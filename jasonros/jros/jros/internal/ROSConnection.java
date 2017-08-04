@@ -24,6 +24,7 @@ public class ROSConnection{
 	private PerceptionListener perceptNode;
 	private ConfirmationListener confirmNode;
 	private Agent ag;
+	private List<String> fList;
 	private ArrayList<String> nCheckList = new ArrayList<String>();
 	//private HashMap<String, String> subTopics = new HashMap<String, String>();
 	private ArrayList<Object> subTopics = new ArrayList<Object>();
@@ -36,6 +37,11 @@ public class ROSConnection{
 	public ROSConnection(Agent ag, String remoteAgName){
 		this.remoteAgName = remoteAgName;
 		this.ag = ag;
+	}
+	
+	public boolean rosConfig(String rosIP, String rosPort, List<String> fList) throws InterruptedException{
+		this.fList = fList;
+		return rosConfig(rosIP, rosPort);
 	}
 	
 	public boolean rosConfig(String rosIP, String rosPort) throws InterruptedException{

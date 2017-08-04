@@ -1,6 +1,10 @@
 package jros.internal;
 
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,6 +23,29 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 			agMap.put(agName, rc);
 		}
 		return rc.rosConfig(rosIP, rosPort);
+	}
+	
+	public static boolean rosConfig(String agName, Agent ag, String rosIP, String rosPort,String remoteAgName, String configFile) throws InterruptedException{
+		System.out.println("criou");
+		List<String> fList = null;
+	    
+		ROSConnection rc = agMap.get(ag);
+		Path file = Paths.get(configFile);
+		try {
+			fList = Files.readAllLines(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(rc == null){
+			rc = new ROSConnection(ag,remoteAgName);
+			agMap.put(agName, rc);
+		}
+		for(String s : fList){
+			String[] params = s.split(" ");
+			rc.addPubTopic(params[2], params[1], null);
+		}
+		return rc.rosConfig(rosIP, rosPort,fList);
 	}
 	
 	public static boolean addPubGenericTopic(String ag, String topicName, String msgType, String className, Unifier un, Term[] terms) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
@@ -127,15 +154,6 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 		ArrayList<JasonTalker> l = rc.getTalkerList();
 		for(JasonTalker jt : l){//nodeName -> nodo que ira publicar o dado
 			if(jt.getNodeName().equals(nodeName)){
-			//	Object topicData = getTopicData(topicName);
-				//timeoutTimer(setTopicTimeout);
-			//	while(!topicData.equals(data))
-			//		topicData = getTopicData(topicName);
-				/*if(timeout){
-					System.out.println("setTopicData: timeout!");
-					timeout = false;
-					return false;
-				}else timer.cancel();*/
 				return jt.setTopicData(topicName, data);
 			
 			}

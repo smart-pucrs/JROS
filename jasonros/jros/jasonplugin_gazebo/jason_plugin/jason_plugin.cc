@@ -14,7 +14,7 @@
 #define EPSILON 0.01
 #define MOVE_SPEED 0.1 // m/s
 #define ROTATION_SPEED 15 //graus/s
-#define UPDATE_RATE 1000.0
+#define UPDATE_RATE 100.0
 //Definidos no .sdf
 #define WHEEL_DIAM 0.070
 #define WHEEL_SEP .230
@@ -76,7 +76,6 @@ public:
     common::Time currTime = model->GetWorld()->GetSimTime();
     double deltaTime = (currTime - lastTime).Double();
     if(deltaTime > updateRate){
-      printf("Plugin loop:%s - %s\n",jros->rName,jros->pubMsg);
       if(angleGoal != 0){
         //std::cout << "rotationTime:" << rotationTime << "  -  " << "updateRate:" << updateRate << std::endl;
         rotationTime -= updateRate;

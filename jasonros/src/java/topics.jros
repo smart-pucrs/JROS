@@ -1,0 +1,6 @@
+#JROS Config File
+#action_name message_type topic_name
+
+testaction1 std_msgs/String     jason_turtlebot_1/testactionstr
+testaction2 std_msgs/Int32      jason_turtlebot_1/testactionint
+testaction3 geometry_msgs/Twist jason_turtlebot_1/testactiontwist
