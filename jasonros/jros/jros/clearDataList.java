@@ -11,6 +11,6 @@ public class clearDataList extends DefaultInternalAction{
 	@Override
 	public Object execute(TransitionSystem ts, Unifier un, Term[] terms) throws Exception {
 		String topicName = ((StringTerm)terms[0]).getString();
-		return JMethods.clearDataList(ts.getAg(), topicName);
+		return JMethods.clearDataList(ts.getUserAgArch().getAgName(), topicName);
 	}
 }

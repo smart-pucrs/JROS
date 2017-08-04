@@ -34,7 +34,7 @@ class JROS{
     void callbackFuncM(const jason_msgs::action::ConstPtr& message, boost::function<void(int,std::string,std::string,std::vector<std::string>)> f);
     void callbackFuncS(const jason_msgs::action::ConstPtr& message, void (*f)(int,std::string,std::string,std::vector<std::string>));
     void init(int argc, char **argv,std::string robotName,void (*f)(int,std::string,std::string,std::vector<std::string>));
-    void init(int argc, char **argv,std::string robotName,boost::function<void(int,std::string,std::string,std::vector<std::string>)> f);
+    void init(int argc, char **argv,string robotName,boost::function<void(int,std::string,std::string,std::vector<std::string>)> f);
     void shutdown(void);
     void sendConfirmation(const char* cstr);
 
@@ -65,13 +65,13 @@ class JROS{
     char* getRobotName(){
       return this->rName;
     }
-    void sendConfirmationFunc();
+    char *pubMsg = NULL;
+    char *rName = NULL;
     //void sendConfirmationFunc(void);
   private:
-    char *pubMsg;
-    char *rName;
     int command;
-    void actionRecvThreadM(boost::function<void(int,std::string,std::string,std::vector<std::string>)> f);
+    void sendConfirmationFunc(JROS *j);
+    void actionRecvThreadM(JROS *i,boost::function<void(int,std::string,std::string,std::vector<std::string>)> f);
     void actionRecvThreadS(void (*f)(int,std::string,std::string,std::vector<std::string>));
     void sendPerceptionsThread(void);
     vector<string> perceptions;

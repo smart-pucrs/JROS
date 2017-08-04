@@ -1,11 +1,16 @@
 MAS jasonros {
 
 	infrastructure: Centralised
-
 	agents:
-		turtlebot_cpplib_1;
-		turtlebot_cpplib_0;
-		turtlebot_cpplib;
+	//agent jason_tb: turtlebot_cpplib.asl{
+	//	beliefs:turtlebot_name("jason_turtlebot_1")
+	//}
+	//	turtlebot_cpplib_1{ 
+	//		beliefs:turtlebot_name("jason_turtlebot_1")
+	//	};
+	//	turtlebot_cpplib_0;
+		//turtlebot_cpplib;
+		jason_turtlebot_ #3;
 		//turtlebot2;
 		//turtlebot;
 		//arobot;

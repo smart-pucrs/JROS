@@ -11,6 +11,6 @@ public class createSubNode extends DefaultInternalAction{
 	@Override
 	public Object execute(TransitionSystem ts, Unifier un, Term[] terms) throws Exception {
 		String nodeName = ((StringTerm)terms[0]).getString();
-		return JMethods.createSubNode(ts.getAg(), nodeName);
+		return JMethods.createSubNode(ts.getUserAgArch().getAgName(), nodeName);
 	}
 }

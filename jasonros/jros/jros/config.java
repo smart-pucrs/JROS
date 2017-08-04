@@ -14,9 +14,10 @@ public class config extends DefaultInternalAction{
 		String rosPort = ((StringTerm)terms[1]).getString();
 		if(terms.length > 2){
 			String remoteAgName = ((StringTerm)terms[2]).getString();
-			return JMethods.rosConfig(ts.getAg(), rosIP, rosPort,remoteAgName);
+			System.out.println(ts.getUserAgArch().getAgName()+"<-----");
+			return JMethods.rosConfig(ts.getUserAgArch().getAgName(), ts.getAg(), rosIP, rosPort,remoteAgName);
 		}else{
-			return JMethods.rosConfig(ts.getAg(), rosIP, rosPort,null);
+			return JMethods.rosConfig(ts.getUserAgArch().getAgName(), ts.getAg(), rosIP, rosPort,null);
 		}
 	}
 }

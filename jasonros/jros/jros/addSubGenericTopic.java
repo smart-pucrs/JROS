@@ -13,6 +13,6 @@ public class addSubGenericTopic extends DefaultInternalAction{
 		String topicName = ((StringTerm)terms[0]).getString();
 		String msgType = ((StringTerm)terms[1]).getString();
 		String className = ((StringTerm)terms[2]).getString();
-		return JMethods.addSubGenericTopic(ts.getAg(), topicName, msgType, className, un, terms);
+		return JMethods.addSubGenericTopic(ts.getUserAgArch().getAgName(), topicName, msgType, className, un, terms);
 	}
 }

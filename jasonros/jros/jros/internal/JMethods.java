@@ -9,58 +9,59 @@ import jason.asSemantics.Unifier;
 import jason.asSyntax.Term;
 
 public class JMethods {
-private static ConcurrentHashMap<Agent,ROSConnection> agMap = new ConcurrentHashMap<Agent,ROSConnection>();
+private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHashMap<String,ROSConnection>();
 	
-	public static boolean rosConfig(Agent ag, String rosIP, String rosPort,String remoteAgName) throws InterruptedException{
+	public static boolean rosConfig(String agName, Agent ag, String rosIP, String rosPort,String remoteAgName) throws InterruptedException{
+		System.out.println("criou");
 		ROSConnection rc = agMap.get(ag);
 		if(rc == null){
 			rc = new ROSConnection(ag,remoteAgName);
-			agMap.put(ag, rc);
+			agMap.put(agName, rc);
 		}
 		return rc.rosConfig(rosIP, rosPort);
 	}
 	
-	public static boolean addPubGenericTopic(Agent ag, String topicName, String msgType, String className, Unifier un, Term[] terms) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+	public static boolean addPubGenericTopic(String ag, String topicName, String msgType, String className, Unifier un, Term[] terms) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		ROSConnection rc = agMap.get(ag);
 		return rc.addPubGenericTopic(topicName, msgType, className, un, terms);
 	}
 	
-	public static boolean addSubGenericTopic(Agent ag, String topicName, String msgType, String className, Unifier un, Term[] terms) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+	public static boolean addSubGenericTopic(String ag, String topicName, String msgType, String className, Unifier un, Term[] terms) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		ROSConnection rc = agMap.get(ag);
 		return rc.addSubGenericTopic(topicName, msgType, className, un, terms);
 	}
 	
-	public static boolean listenPerceptions(Agent ag){
+	public static boolean listenPerceptions(String ag){
 		ROSConnection rc = agMap.get(ag);
 		return rc.listenPerceptions();
 	}
 	
-	public static boolean sendAction(Agent ag, String action, List<String> parameters) throws InterruptedException{
+	public static boolean sendAction(String ag, String action, List<String> parameters) throws InterruptedException{
 		ROSConnection rc = agMap.get(ag);
 		return rc.sendAction(ag.toString(), action, parameters);
 	}
 	
-	public static boolean createSubNode(Agent ag, String nodeName) throws InterruptedException{
+	public static boolean createSubNode(String ag, String nodeName) throws InterruptedException{
 		ROSConnection rc = agMap.get(ag);
 		return rc.createSubNode(nodeName);
 	}
 	
-	public static boolean createPubNode(Agent ag, String nodeName, long pRate) throws InterruptedException{
+	public static boolean createPubNode(String ag, String nodeName, long pRate) throws InterruptedException{
 		ROSConnection rc = agMap.get(ag);
 		return rc.createPubNode(nodeName, pRate);
 	}
 	
-	public static boolean addSubTopic(Agent ag, String topicName, String msgType){
+	public static boolean addSubTopic(String ag, String topicName, String msgType){
 		ROSConnection rc = agMap.get(ag);
 		return rc.addSubTopic(topicName, msgType);
 	}
 	
-	public static boolean addPubTopic(Agent ag, String topicName, String msgType, Object data){
+	public static boolean addPubTopic(String ag, String topicName, String msgType, Object data){
 		ROSConnection rc = agMap.get(ag);
 		return rc.addPubTopic(topicName, msgType, data);
 	}
 	
-	public static boolean searchLT(Agent ag, String topicName, Object value){
+	public static boolean searchLT(String ag, String topicName, Object value){
 		ROSConnection rc = agMap.get(ag);
 		if(rc.subExists()){
 			return rc.getListenerInstance().searchLT(topicName, value);
@@ -70,7 +71,7 @@ private static ConcurrentHashMap<Agent,ROSConnection> agMap = new ConcurrentHash
 		}
 	}
 	
-	public static boolean searchBT(Agent ag, String topicName, Object value){
+	public static boolean searchBT(String ag, String topicName, Object value){
 		ROSConnection rc = agMap.get(ag);
 		if(rc.subExists()){
 			return rc.getListenerInstance().searchBT(topicName, value);
@@ -80,7 +81,7 @@ private static ConcurrentHashMap<Agent,ROSConnection> agMap = new ConcurrentHash
 		}
 	}
 	
-	public static boolean searchExact(Agent ag, String topicName, Object value){
+	public static boolean searchExact(String ag, String topicName, Object value){
 		ROSConnection rc = agMap.get(ag);
 		if(rc.subExists())
 			return rc.getListenerInstance().searchExact(topicName, value);
@@ -90,7 +91,7 @@ private static ConcurrentHashMap<Agent,ROSConnection> agMap = new ConcurrentHash
 		}
 	}
 	
-	public static boolean clearDataList(Agent ag, String topicName){
+	public static boolean clearDataList(String ag, String topicName){
 		ROSConnection rc = agMap.get(ag);
 		if(rc.subExists()){
 			rc.getListenerInstance().clearDataList(topicName);
@@ -99,7 +100,7 @@ private static ConcurrentHashMap<Agent,ROSConnection> agMap = new ConcurrentHash
 		return false;
 	}
 	
-	public static Object getTopicData(Agent ag, String topicName) throws InterruptedException{
+	public static Object getTopicData(String ag, String topicName) throws InterruptedException{
 		ROSConnection rc = agMap.get(ag);
 		if(rc.subExists()){
 			//Object data = null;
@@ -119,7 +120,7 @@ private static ConcurrentHashMap<Agent,ROSConnection> agMap = new ConcurrentHash
 		return null;
 	}
 	
-	public static boolean setTopicData(Agent ag, String nodeName, String topicName, Object data) throws InterruptedException{
+	public static boolean setTopicData(String ag, String nodeName, String topicName, Object data) throws InterruptedException{
 		ROSConnection rc = agMap.get(ag);
 		if(rc.pubExists(topicName)){
 		//rosconn.getTalkerInstance().setTopicData(topicName, msgType, data);
@@ -143,7 +144,7 @@ private static ConcurrentHashMap<Agent,ROSConnection> agMap = new ConcurrentHash
 		return false;//topico nao existe ou nodo nao existe
 	}
 	
-	public void closeROSConn(Agent ag){
+	public void closeROSConn(String ag){
 		ROSConnection rc = agMap.get(ag);
 		rc.shutdown();
 		agMap.remove(ag);

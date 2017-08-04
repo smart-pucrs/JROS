@@ -25,6 +25,6 @@ public class sendAction extends DefaultInternalAction{
 			}else
 				parameters.add(((StringTerm)terms[i]).getString());
 		}
-		return JMethods.sendAction(ts.getAg(), action, parameters);
+		return JMethods.sendAction(ts.getUserAgArch().getAgName(), action, parameters);
 	}
 }

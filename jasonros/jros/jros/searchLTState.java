@@ -12,7 +12,7 @@ public class searchLTState extends DefaultInternalAction{
 	public Object execute(TransitionSystem ts, Unifier un, Term[] terms) throws Exception {
 		String topicName = ((StringTerm)terms[0]).getString();
 		if(terms[1].isNumeric()){ 
-			boolean rv = JMethods.searchLT(ts.getAg(), topicName, ((NumberTerm)terms[1]).solve());
+			boolean rv = JMethods.searchLT(ts.getUserAgArch().getAgName(), topicName, ((NumberTerm)terms[1]).solve());
 			//ObjectTermImpl l = new ObjectTermImpl(rv);
 			return rv;
 		}else return false;

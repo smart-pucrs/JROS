@@ -31,10 +31,12 @@ void JROS::callbackFuncS(const jason_msgs::action::ConstPtr& message, void (*f)(
 }
 
 
-void JROS::actionRecvThreadM(boost::function<void(int,std::string,std::string,std::vector<std::string>)> f){
+void JROS::actionRecvThreadM(JROS *i,boost::function<void(int,std::string,std::string,std::vector<std::string>)> f){
+    char *ptra = i->rName;
     cout << "action thread\n" << endl;
+    printf("action thread:%s",i->rName);
     ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
-    std::string topicName(this->rName);
+    std::string topicName(ptra);
     topicName += "/jaction";
     ros::Subscriber robotSub = node->subscribe<jason_msgs::action>(topicName,1000,boost::bind(&JROS::callbackFuncM,this,_1,f));
     ros::MultiThreadedSpinner spinner;
@@ -42,9 +44,10 @@ void JROS::actionRecvThreadM(boost::function<void(int,std::string,std::string,st
 }
 
 void JROS::actionRecvThreadS(void (*f)(int,std::string,std::string,std::vector<std::string>)){
+    char *ptr = this->rName;
     cout << "action thread\n" << endl;
     ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
-    std::string topicName(this->rName);
+    std::string topicName(ptr);
     topicName += "/jaction";
     ros::Subscriber robotSub = node->subscribe<jason_msgs::action>(topicName,1000,boost::bind(&JROS::callbackFuncS,this,_1,f));
     ros::MultiThreadedSpinner spinner;
@@ -52,13 +55,16 @@ void JROS::actionRecvThreadS(void (*f)(int,std::string,std::string,std::vector<s
 }
 
 
-void JROS::sendConfirmationFunc(){
-  char *ptr = this->pubMsg;
-  printf("sendp:%p\n",this->pubMsg);
+void JROS::sendConfirmationFunc(JROS *j){
+  if((j->pubMsg != NULL) && (j->rName != NULL)){
+  char *ptr = j->pubMsg;
+  char *ptr2 = j->rName;
+  printf("thread: %s\n",ptr2);
+  printf("sendp:%s\n",ptr);
   cout << "confirmation func\n" << endl;
-  printf("thread: %s\n",this->rName);
+  printf("thread2: %s\n",ptr2);
   ros::NodeHandlePtr node = boost::make_shared<ros::NodeHandle>();
-  std::string topicName(this->rName);
+  std::string topicName(ptr2);
   topicName += "/jconfirmation";
   cout << topicName << endl;
   ros::Publisher robotPub = node->advertise<std_msgs::String>(topicName,1000);
@@ -68,11 +74,12 @@ void JROS::sendConfirmationFunc(){
   while(ros::ok){
     //printf("sendconf:%s\n",ptr);
       std_msgs::String msg;
-      msg.data = string(this->pubMsg);
+      msg.data = string(j->pubMsg);
       robotPub.publish(msg);
       ros::spinOnce();
       loop_rate.sleep();
   }
+}
 }
 /*
 void JROS::sendPerceptionsThread(){
@@ -96,20 +103,27 @@ void JROS::sendPerceptionsThread(){
 
 void JROS::init(int argc, char **argv, string robotName, boost::function<void(int,std::string,std::string,std::vector<std::string>)> f){
   cout << "JROS Lib Loaded!\n";
-  this->setRobotName(robotName.c_str());
-  this->pubMsg = (char *)malloc(256);
-  strcpy(this->pubMsg,(char *)"");
+  cout << "Nome::::" << robotName.c_str() << endl;
+  //this->setRobotName(robotName.c_str());
+
   if(!ros::isInitialized()){
     ros::init(argc,argv,"jroscpp");
   }
   srand(time(NULL));
   cout << "chegou" << endl;
-  boost::thread acthread(&JROS::actionRecvThreadM, this, f);
-  boost::thread confthread(&JROS::sendConfirmationFunc,this);
+  this->rName = (char *)malloc(256);
+  this->pubMsg = (char *)malloc(256);
+  strcpy(this->rName, robotName.c_str());
+  cout << "Nome::::" << robotName.c_str() << "-" << this->rName << endl;
+  strcpy(this->pubMsg,(char *)"");
+  boost::thread acthread(&JROS::actionRecvThreadM, this,this,f);
+  boost::thread confthread(&JROS::sendConfirmationFunc,this,this);
+  printf("init: %s - %s",this->rName,this->pubMsg);
   //boost::thread percepthread(&JROS::sendPerceptionsThread, this);
 }
 
-void JROS::init(int argc, char **argv, string robotName, void (*f)(int,std::string,std::string,std::vector<std::string>)){
+/////////////////////////////////////////////////////////qqq
+/*void JROS::init(int argc, char **argv, string robotName, void (*f)(int,std::string,std::string,std::vector<std::string>)){
   cout << "JROS Lib Loaded!\n";
   this->setRobotName(robotName.c_str());
   this->pubMsg = (char *)malloc(256);
@@ -122,7 +136,7 @@ void JROS::init(int argc, char **argv, string robotName, void (*f)(int,std::stri
   boost::thread acthread(&JROS::actionRecvThreadS, this, f);
   boost::thread confthread(&JROS::sendConfirmationFunc,this);
   //boost::thread percepthread(&JROS::sendPerceptionsThread, this);
-}
+}*/
 
 void JROS::removePerception(string perception){
   for(int i = 0;i < perceptions.size();i++){

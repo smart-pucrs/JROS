@@ -17,7 +17,7 @@ public class searchState extends DefaultInternalAction{
 		else if(terms[1].isString())
 			data = ((StringTerm)terms[1]).getString();
 		else data = ((ObjectTerm)terms[1]).getObject();
-		boolean rv = JMethods.searchExact(ts.getAg(), topicName, data);
+		boolean rv = JMethods.searchExact(ts.getUserAgArch().getAgName(), topicName, data);
 		//ObjectTermImpl l = new ObjectTermImpl(rv);
 		return rv;
 	}

@@ -23,4 +23,6 @@ public:
   void clearPerceptions(void);
   void removePerception(std::string perception);
   gazebo::event::ConnectionPtr getTest();
+  char *pubMsg = NULL;
+  char *rName = NULL;
 };

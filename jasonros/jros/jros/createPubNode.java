@@ -12,6 +12,6 @@ public class createPubNode extends DefaultInternalAction{
 	public Object execute(TransitionSystem ts, Unifier un, Term[] terms) throws Exception {
 		String nodeName = ((StringTerm)terms[0]).getString();
 		long pRate = (long)((NumberTerm)terms[1]).solve();
-		return JMethods.createPubNode(ts.getAg(), nodeName, pRate);
+		return JMethods.createPubNode(ts.getUserAgArch().getAgName(), nodeName, pRate);
 	}
 }

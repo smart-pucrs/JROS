@@ -20,6 +20,6 @@ public class listenPerceptions extends DefaultInternalAction{
 				return JMethods.listenPerceptions(ts.getAg(),rcvFrom);
 			}
 		}*/
-		return JMethods.listenPerceptions(ts.getAg());
+		return JMethods.listenPerceptions(ts.getUserAgArch().getAgName());
 	}
 }

@@ -12,6 +12,6 @@ public class addSubTopic extends DefaultInternalAction{
 	public Object execute(TransitionSystem ts, Unifier un, Term[] terms) throws Exception {
 		String topicName = ((StringTerm)terms[0]).getString();
 		String msgType = ((StringTerm)terms[1]).getString();
-		return JMethods.addSubTopic(ts.getAg(), topicName, msgType);
+		return JMethods.addSubTopic(ts.getUserAgArch().getAgName(), topicName, msgType);
 	}
 }

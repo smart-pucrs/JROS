@@ -13,7 +13,7 @@ public class getTopicData extends DefaultInternalAction{
 	@Override
 	public Object execute(TransitionSystem ts, Unifier un, Term[] terms) throws Exception {
 		String topicName = ((StringTerm)terms[0]).getString();
-		Object data = JMethods.getTopicData(ts.getAg(), topicName);
+		Object data = JMethods.getTopicData(ts.getUserAgArch().getAgName(), topicName);
 		if (data == null){
 			System.out.println("getTopicData");
 			return false;

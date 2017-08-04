@@ -14,7 +14,7 @@
 #define EPSILON 0.01
 #define MOVE_SPEED 0.1 // m/s
 #define ROTATION_SPEED 15 //graus/s
-#define UPDATE_RATE 100.0
+#define UPDATE_RATE 1000.0
 //Definidos no .sdf
 #define WHEEL_DIAM 0.070
 #define WHEEL_SEP .230
@@ -76,13 +76,14 @@ public:
     common::Time currTime = model->GetWorld()->GetSimTime();
     double deltaTime = (currTime - lastTime).Double();
     if(deltaTime > updateRate){
+      printf("Plugin loop:%s - %s\n",jros->rName,jros->pubMsg);
       if(angleGoal != 0){
         //std::cout << "rotationTime:" << rotationTime << "  -  " << "updateRate:" << updateRate << std::endl;
         rotationTime -= updateRate;
         if(rotationTime <= 0){
           angularVel = 0;
           angleGoal = 0;
-          jros.sendConfirmation("rotate");
+          jros->sendConfirmation("rotate");
         }
       }
       if(distanceGoal != 0){
@@ -92,7 +93,7 @@ public:
           linearVel = 0;
           distanceGoal = 0;
           std::cout << "moveu !\n";
-          jros.sendConfirmation("move");
+          jros->sendConfirmation("move");
         }
       }
       getVel();
@@ -137,9 +138,11 @@ public:
       char **argv = NULL;
       //JROS jros;
       //pjros = &jros;
-      jros.init(argc,argv,_model->GetName(),boost::bind(&JasonPlugin::jasonCB,this,_1,_2,_3,_4));//alterar quando for simular MAS
-      this->v = _model->GetJoints();
       this->model = _model;
+      //static std::string rName = _model->GetName();
+      jros = new JROS();
+      jros->init(argc,argv,this->model->GetName(),boost::bind(&JasonPlugin::jasonCB,this,_1,_2,_3,_4));//alterar quando for simular MAS
+      this->v = _model->GetJoints();
       this->jleft = v[0];
       this->jright = v[1];
       std::cerr << "\nJoint Left:" << this->jleft->GetName();
@@ -174,7 +177,7 @@ public:
   private: double angularVel = 0;
   private: double angleGoal = 0;
   private: double rotationTime = 0;
-private: JROS jros;
+private: JROS *jros;
 private:  int lastId = -1;
   event::ConnectionPtr updateConn;
   event::ConnectionPtr updateConn2;

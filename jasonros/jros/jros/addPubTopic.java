@@ -16,7 +16,7 @@ public class addPubTopic extends DefaultInternalAction{
 		String msgType = ((StringTerm)terms[1]).getString();
 		Object data;
 		if(terms[2].isAtom()){
-			return JMethods.addPubTopic(ts.getAg(), topicName, msgType, null);
+			return JMethods.addPubTopic(ts.getUserAgArch().getAgName(), topicName, msgType, null);
 		}
 		if(terms.length > 3) data = terms;
 		else if(terms[2].isNumeric())
@@ -24,6 +24,6 @@ public class addPubTopic extends DefaultInternalAction{
 		else if(terms[2].isString())
 			data = ((StringTerm)terms[2]).getString();
 		else data = ((ObjectTerm)terms[2]).getObject();
-		return JMethods.addPubTopic(ts.getAg(), topicName, msgType, data);
+		return JMethods.addPubTopic(ts.getUserAgArch().getAgName(), topicName, msgType, data);
 	}
 }

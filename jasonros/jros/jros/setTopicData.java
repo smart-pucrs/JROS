@@ -14,13 +14,13 @@ public class setTopicData extends DefaultInternalAction{
 		String topicName = ((StringTerm)terms[1]).getString();
 		Object data;
 		if(terms.length > 3){ data = terms;
-		return JMethods.setTopicData(ts.getAg(), nodeName, topicName, data);
+		return JMethods.setTopicData(ts.getUserAgArch().getAgName(), nodeName, topicName, data);
 		}
 		else if(terms[2].isNumeric())
 			data = ((NumberTerm)terms[2]).solve();
 		else if(terms[2].isString())
 			data = ((StringTerm)terms[2]).getString();
 		else data = ((ObjectTerm)terms[2]).getObject();
-		return JMethods.setTopicData(ts.getAg(), nodeName, topicName, data);
+		return JMethods.setTopicData(ts.getUserAgArch().getAgName(), nodeName, topicName, data);
 	}
 }
