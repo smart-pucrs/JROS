@@ -26,14 +26,15 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 	}
 	
 	public static boolean rosConfig(String agName, Agent ag, String rosIP, String rosPort,String remoteAgName, String configFile) throws InterruptedException{
-		System.out.println("criou");
+		System.out.println("criou config file");
 		List<String> fList = null;
-	    
+	    List<String[]> aList = new ArrayList<String[]>();
 		ROSConnection rc = agMap.get(ag);
 		Path file = Paths.get(configFile);
 		try {
 			fList = Files.readAllLines(file);
 		} catch (IOException e) {
+			System.out.println("Read file error!!!");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -41,11 +42,20 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 			rc = new ROSConnection(ag,remoteAgName);
 			agMap.put(agName, rc);
 		}
-		for(String s : fList){
-			String[] params = s.split(" ");
-			rc.addPubTopic(params[2], params[1], null);
+		if(rc.rosConfig(rosIP, rosPort,aList)){
+			for(String s : fList){
+				//System.out.println(s.charAt(0));
+				if(s.charAt(0) != '#' && !s.isEmpty()){
+					String[] params = s.split(" ");
+					aList.add(params);
+					rc.addPubTopic(params[2], params[1], null);
+				}
+			}
+			//System.out.println("JMethods aList size:"+aList.size());
+			rc.createConfigNodes();
+			return true;
 		}
-		return rc.rosConfig(rosIP, rosPort,fList);
+		return false;
 	}
 	
 	public static boolean addPubGenericTopic(String ag, String topicName, String msgType, String className, Unifier un, Term[] terms) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
@@ -63,9 +73,9 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 		return rc.listenPerceptions();
 	}
 	
-	public static boolean sendAction(String ag, String action, List<String> parameters) throws InterruptedException{
+	public static boolean sendAction(String ag, String action, Term[] terms) throws InterruptedException{
 		ROSConnection rc = agMap.get(ag);
-		return rc.sendAction(ag.toString(), action, parameters);
+		return rc.sendAction(ag.toString(), action, terms);
 	}
 	
 	public static boolean createSubNode(String ag, String nodeName) throws InterruptedException{

@@ -1,6 +1,5 @@
 #JROS Config File
-#action_name message_type topic_name
-
-testaction1 std_msgs/String     jason_turtlebot_1/testactionstr
-testaction2 std_msgs/Int32      jason_turtlebot_1/testactionint
-testaction3 geometry_msgs/Twist jason_turtlebot_1/testactiontwist
+#action_name message_type topic_name type pub/sub interval(ms)
+#setpos geometry_msgs/Twist /cmd_vel_mux/input/teleop message pub 500
+#getpos geometry_msgs/Twist /cmd_vel_mux/input/teleop message sub
+testpub std_msgs/Int32 /testtopic message pub 2000

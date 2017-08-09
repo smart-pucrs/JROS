@@ -8,7 +8,7 @@
 /* Plans */
 
 +!connectto(IP, Port)
-	<-	jros.config(IP,Port,"arobot");
+	<-	jros.config(IP,Port,"arobot","/home/iancalaca/jason/projects/JROS/jasonros/src/java/topics.jros");
 		!createNodes.
 -!connectto(IP, Port)
 	<-	.print("Connection error. Trying again...");

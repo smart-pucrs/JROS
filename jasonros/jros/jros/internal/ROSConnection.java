@@ -24,7 +24,7 @@ public class ROSConnection{
 	private PerceptionListener perceptNode;
 	private ConfirmationListener confirmNode;
 	private Agent ag;
-	private List<String> fList;
+	private List<String[]> aList;
 	private ArrayList<String> nCheckList = new ArrayList<String>();
 	//private HashMap<String, String> subTopics = new HashMap<String, String>();
 	private ArrayList<Object> subTopics = new ArrayList<Object>();
@@ -39,9 +39,24 @@ public class ROSConnection{
 		this.ag = ag;
 	}
 	
-	public boolean rosConfig(String rosIP, String rosPort, List<String> fList) throws InterruptedException{
-		this.fList = fList;
+	public boolean rosConfig(String rosIP, String rosPort, List<String[]> aList) throws InterruptedException{
+		System.out.println("rosconfig <<<<<<<<<<<<<<<<<");
+		this.aList = aList;
+		//return false;
 		return rosConfig(rosIP, rosPort);
+	}
+	
+	public boolean createConfigNodes(){
+		//System.out.println("aList size:"+aList.size());
+		for(String[] sv : this.aList){
+			try {
+				createPubNode(sv[0]+"Node",Integer.parseInt(sv[5]));
+			} catch (NumberFormatException | InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return true;
 	}
 	
 	public boolean rosConfig(String rosIP, String rosPort) throws InterruptedException{
@@ -52,7 +67,7 @@ public class ROSConnection{
 			confirmNode = new ConfirmationListener(remoteAgName);
 			confirmNode.setAg(ag);
 			perceptNode = new PerceptionListener(remoteAgName);
-			actionNode = new ActionTalker(remoteAgName,500);
+			actionNode = new ActionTalker(remoteAgName,500,ag);
 			nodeMainExecutor.execute(confirmNode, nodeConfiguration);
 			nodeMainExecutor.execute(perceptNode, nodeConfiguration);
 			nodeMainExecutor.execute(actionNode, nodeConfiguration);
@@ -114,8 +129,17 @@ public class ROSConnection{
 		return false;
 	}
 	
-	public boolean sendAction(String agName, String action, List<String> parameters) throws InterruptedException{
-		actionNode.setNewAction(agName, action, parameters);
+	public boolean sendAction(String agName, String action, Term[] terms) throws InterruptedException{
+		for(String[] params : aList){
+			for(JasonTalker jt : talkerList){
+				if(jt.getNodeName().equals(params[0]+"Node")){
+					//DataClass dc = new DataClass(params[2], params[1], terms);
+					jt.setTopicData(params[2], terms);
+					return true;
+				}
+			}
+		}
+		actionNode.setNewAction(agName, action, terms);
 		return true;
 	}
 	

@@ -22,8 +22,8 @@ checkPosX(X,W) :- W > X & W < (X + 0.1).
 		jros.addSubTopic("/odom","nav_msgs/Odometry");
 		jros.addSubTopic("/cmd_vel_mux/input/teleop","geometry_msgs/Twist");
 		jros.createPubNode("mynode",500);
-		jros.createSubNode("mysnode");
-		!!s0.
+		jros.createSubNode("mysnode").
+		//!!s0.
 
 +!stop
 	<- jros.setTopicData("mynode","/cmd_vel_mux/input/teleop",0,0,0,0,0,0).
