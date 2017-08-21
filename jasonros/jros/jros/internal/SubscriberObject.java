@@ -16,13 +16,21 @@ import org.ros.node.topic.Subscriber;
 import geometry_msgs.Point;
 import geometry_msgs.Quaternion;
 import geometry_msgs.Vector3;
+import jason.RevisionFailedException;
+import jason.asSemantics.Agent;
 import jason.asSemantics.Unifier;
+import jason.asSyntax.ASSyntax;
+import jason.asSyntax.Literal;
 import jason.asSyntax.Term;
+import jason.asSyntax.parser.ParseException;
 
 
 public class SubscriberObject extends AbstractNodeMain{
 	private String nodeName;
 	private String topicName;
+	private String action = null;
+	private Agent ag;
+	private Literal bel = null;
 	private ArrayList<SDataClass> subData = new ArrayList<SDataClass>();
 	//private HashMap<SDataClass> subData = new HashMap<SDataClass>();
 	//private long timeStamp = 0;
@@ -134,6 +142,7 @@ public class SubscriberObject extends AbstractNodeMain{
 	//Usar TreeMap ao inves de HashMap
 	public SubscriberObject(ConnectedNode connectedNode, String nodeName, Object topic, ROSConnection rosconn){
 		this.nodeName = nodeName;
+		this.ag = rosconn.getAg();
 		//String topicName;
 		String msgType;
 		if(topic instanceof GDataClass){
@@ -151,13 +160,28 @@ public class SubscriberObject extends AbstractNodeMain{
 		}else{
 			this.topicName = ((DataClass)topic).getTopicName();
 			msgType = ((DataClass)topic).getMsgType();
+			//System.out.println("Sub str:"+nodeName.substring(0, nodeName.length()-7));
+			for(String[] p : rosconn.getActionList()){
+				if(p[2].equals(this.topicName) && p[0].equals(nodeName.substring(0, nodeName.length()-7))){ //<<<------- Problem here :/
+					this.action = p[0];
+					break;
+				}
+			}
 			//if(!rosconn.nodeExists(nodeName))
+			if(this.action != null)
+				try {
+					bel = ASSyntax.parseLiteral("lastJROSAction("+this.action+")");
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			switch(msgType){
 			case "std_msgs/String":{
 				Subscriber<std_msgs.String> subNode = connectedNode.newSubscriber(topicName, msgType);
 				subNode.addMessageListener(new MessageListener<std_msgs.String>() {     
 					@Override
 					public void onNewMessage(std_msgs.String message) {
+						//System.out.println("Novo!!!!");
 						SDataClass dc;
 						if(subData.isEmpty()){
 							dc = new SDataClass(topicName, message.getData());
@@ -167,6 +191,15 @@ public class SubscriberObject extends AbstractNodeMain{
 							if(!lastObj.equals(message.getData())){
 								dc = new SDataClass(topicName, message.getData());
 								subData.add(dc);
+							}
+						}
+						if(bel != null && !ag.believes(bel, new Unifier())){
+							System.out.println("Jason Recv:"+bel.toString());
+							try {
+								ag.addBel(bel);
+							} catch (RevisionFailedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
 						}
 					}
@@ -198,6 +231,13 @@ public class SubscriberObject extends AbstractNodeMain{
 								subData.add(dc);
 							}
 						}
+						if(bel != null && !ag.believes(bel, new Unifier()))
+							try {
+								ag.addBel(bel);
+							} catch (RevisionFailedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 					}
 				});
 			}
@@ -228,31 +268,13 @@ public class SubscriberObject extends AbstractNodeMain{
 								subData.add(dc);
 							}
 						}
-					}
-				});
-			}
-			break;
-			case "hanse_msgs/sollSpeed":{
-				Subscriber<hanse_msgs.sollSpeed> subNode = connectedNode.newSubscriber(topicName, msgType);
-				subNode.addMessageListener(new MessageListener<hanse_msgs.sollSpeed>() {     
-					@Override
-					public void onNewMessage(hanse_msgs.sollSpeed message) {
-						//timeStamp++;
-						SDataClass dc;
-						if(subData.isEmpty()){
-							dc = new SDataClass(topicName, message.getData());
-							subData.add(dc);
-						}else{
-							Object lastObj = (Object)subData.get(subData.size()-1).getData();
-							if(!lastObj.equals(message.getData())){
-								dc = new SDataClass(topicName, message.getData());
-								subData.add(dc);
+						if(bel != null && !ag.believes(bel, new Unifier()))
+							try {
+								ag.addBel(bel);
+							} catch (RevisionFailedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
-						}
-						//subData.put(topicName, message.getData());
-						//System.out.println(subData.size());
-						//System.out.println(searchState(topicName,"abc"));
-						//System.out.println(getLastStateObj(topicName).getData().toString());
 					}
 				});
 			}
@@ -294,6 +316,13 @@ public class SubscriberObject extends AbstractNodeMain{
 								subData.add(dc);
 							}
 						}
+						if(bel != null && !ag.believes(bel, new Unifier()))
+							try {
+								ag.addBel(bel);
+							} catch (RevisionFailedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 					}
 				});
 				//rosconn.addToCheckList(nodeName);
@@ -326,6 +355,13 @@ public class SubscriberObject extends AbstractNodeMain{
 								subData.add(dc);
 							}
 						}
+						if(bel != null && !ag.believes(bel, new Unifier()))
+							try {
+								ag.addBel(bel);
+							} catch (RevisionFailedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 					}
 				});
 			}

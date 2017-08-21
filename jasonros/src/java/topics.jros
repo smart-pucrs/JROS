@@ -1,5 +1,8 @@
 #JROS Config File
-#action_name message_type topic_name type pub/sub interval(ms)
+#action_name message_type topic_name type interval(ms)
 #setpos geometry_msgs/Twist /cmd_vel_mux/input/teleop message pub 500
 #getpos geometry_msgs/Twist /cmd_vel_mux/input/teleop message sub
-testpub std_msgs/Int32 /testtopic message pub 2000
+#testactionpub std_msgs/Int32 /testtopics message pub 1000
+#testactionsub std_msgs/String /testtopics message sub
+setVel geometry_msgs/Twist /cmd_vel_mux/input/teleop message pub 500
+getVel geometry_msgs/Twist /cmd_vel_mux/input/teleop message sub

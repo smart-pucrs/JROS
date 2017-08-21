@@ -8,6 +8,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import jason.asSemantics.Agent;
 import jason.asSemantics.Unifier;
 import jason.asSyntax.Term;
@@ -48,7 +51,25 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 				if(s.charAt(0) != '#' && !s.isEmpty()){
 					String[] params = s.split(" ");
 					aList.add(params);
-					rc.addPubTopic(params[2], params[1], null);
+					switch(params[4]){
+					case "sub":
+					{
+						System.out.println("Criou sub!!!");
+						rc.addSubTopic(params[2], params[1]);
+					}
+					break;
+					case "pub":
+					{
+						rc.addPubTopic(params[2], params[1], null);
+						rc.addSubTopic(params[2], params[1]);
+					}
+					break;
+					default:
+					{
+						System.out.println("Error: Node type missing!");
+						return false;
+					}
+					}
 				}
 			}
 			//System.out.println("JMethods aList size:"+aList.size());
@@ -155,6 +176,13 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 			System.out.println("Subscriber node doesn't exists!");
 			//return null;
 		return null;
+	}
+	
+	public static Object recvData(String ag, String action, Unifier un) throws InterruptedException{
+		ROSConnection rc = agMap.get(ag);
+		Object data = rc.getDataByAction(action);
+		return data;
+		
 	}
 	
 	public static boolean setTopicData(String ag, String nodeName, String topicName, Object data) throws InterruptedException{

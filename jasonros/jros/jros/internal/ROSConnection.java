@@ -32,6 +32,7 @@ public class ROSConnection{
 	private NodeMainExecutor nodeMainExecutor = DefaultNodeMainExecutor.newDefault();
 	private NodeConfiguration nodeConfiguration;
 	private ArrayList<JasonTalker> talkerList = new ArrayList<JasonTalker>();
+	private ArrayList<JasonListener> listenerList = new ArrayList<JasonListener>();
 	URI masteruri;
 	
 	public ROSConnection(Agent ag, String remoteAgName){
@@ -50,7 +51,9 @@ public class ROSConnection{
 		//System.out.println("aList size:"+aList.size());
 		for(String[] sv : this.aList){
 			try {
-				createPubNode(sv[0]+"Node",Integer.parseInt(sv[5]));
+				if(sv.length == 6)
+					createPubNode(sv[0]+"NodePub",Integer.parseInt(sv[5]));
+				createSubNode(sv[0]+"NodeSub");
 			} catch (NumberFormatException | InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -99,6 +102,7 @@ public class ROSConnection{
 			nodeMainExecutor.execute(subscriberNode, nodeConfiguration);
 			while(!nCheckList.contains(nodeName)) Thread.sleep(10);
 			nCheckList.remove(nodeName);
+			listenerList.add(subscriberNode);
 			System.out.println("ROSConnection: subNode created.");
 			return true;
 		}catch(RuntimeException e){
@@ -108,11 +112,11 @@ public class ROSConnection{
 	}
 	
 	public boolean createSubNode(String nodeName) throws InterruptedException{
-		if(subscriberNode == null){
+		//if(subscriberNode == null){
 			return createSubNodeP(nodeName);
-		}else
-			System.out.println("An subscriber node already exists!");
-		return false;
+		//}else
+		//	System.out.println("An subscriber node already exists!");
+		//return false;
 	}
 	
 	private boolean createPubNodeP(String nodeName, long pRate) throws InterruptedException{
@@ -132,15 +136,33 @@ public class ROSConnection{
 	public boolean sendAction(String agName, String action, Term[] terms) throws InterruptedException{
 		for(String[] params : aList){
 			for(JasonTalker jt : talkerList){
-				if(jt.getNodeName().equals(params[0]+"Node")){
+				System.out.println("TopicName:"+jt.getNodeName());
+				if(jt.getNodeName().equals(params[0]+"NodePub")){
+					System.out.println("Topic Set!!!!!!");
 					//DataClass dc = new DataClass(params[2], params[1], terms);
 					jt.setTopicData(params[2], terms);
 					return true;
 				}
 			}
 		}
+		System.out.println("Topic Set2!!!!!!");
 		actionNode.setNewAction(agName, action, terms);
 		return true;
+	}
+	
+	public Object getDataByAction(String action){
+		String topic = "";
+		for(String[] p : aList)
+			if(p[0].equals(action)){
+				topic = p[2];
+				break;
+			}
+		for(JasonListener jl : listenerList){
+			Object o = jl.searchTopic(topic);
+			if(o != null)
+				return o;
+		}
+		return null;
 	}
 	
 	public boolean listenPerceptions(){
@@ -195,6 +217,14 @@ public class ROSConnection{
 						return true;
 			}
 		return false;
+	}
+	
+	public Agent getAg(){
+		return ag;
+	}
+	
+	public List<String[]> getActionList(){
+		return aList;
 	}
 	
 	public JasonListener getListenerInstance(){

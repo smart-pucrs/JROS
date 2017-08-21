@@ -98,6 +98,7 @@ public class JasonListener extends AbstractNodeMain {
 	public void onStart(ConnectedNode connectedNode){
 		//Set<String> subKeys = subTopics.keySet();
 		for(Object d : subTopics){
+			System.out.println("Criou sub:"+nodeName);
 			SubscriberObject sub = new SubscriberObject(connectedNode, nodeName, d , rosconn);
 			//subList.add(sub);
 			subList.put(((SDataClass)d).getTopicName(), sub);

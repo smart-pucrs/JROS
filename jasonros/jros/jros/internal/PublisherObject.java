@@ -54,6 +54,7 @@ public class PublisherObject extends AbstractNodeMain{
 			msgType = ((DataClass)topic).getMsgType();
 			data = ((DataClass)topic).getData();
 			dataP = data;
+			
 			switch(msgType){
 			case "std_msgs/String":{
 				Publisher<std_msgs.String> pubNode = connectedNode.newPublisher(topicName, msgType);
@@ -86,6 +87,16 @@ public class PublisherObject extends AbstractNodeMain{
 							if(dataP != null){
 								Term[] terms = ((Term[])dataP);
 								//System.out.println("terms length:"+terms.length);
+								if(terms.length == 7){
+									lin.setX(((NumberTerm)terms[1]).solve());
+									lin.setY(((NumberTerm)terms[2]).solve());
+									lin.setZ(((NumberTerm)terms[3]).solve());
+									ang.setX(((NumberTerm)terms[4]).solve());
+									ang.setY(((NumberTerm)terms[5]).solve());
+									ang.setZ(((NumberTerm)terms[6]).solve());
+									msg.setAngular(ang);
+									msg.setLinear(lin);
+								}else
 								if(terms.length > 3){
 									lin.setX(((NumberTerm)terms[2]).solve());
 									lin.setY(((NumberTerm)terms[3]).solve());
@@ -113,10 +124,11 @@ public class PublisherObject extends AbstractNodeMain{
 				connectedNode.executeCancellableLoop(new CancellableLoop() {
 					@Override
 					protected void loop() throws InterruptedException {
+						nav_msgs.Odometry msg = pubNode.newMessage();
+						if(dataP != null){
 						Term[] terms = ((Term[])dataP);
 						String str = ((StringTerm)terms[1]).getString();
 						String[] params = str.split("(,)|( ,)");
-						nav_msgs.Odometry msg = pubNode.newMessage();
 						PoseWithCovariance posec = msg.getPose();
 						Pose pose = posec.getPose();
 						Point pos = pose.getPosition();
@@ -131,6 +143,7 @@ public class PublisherObject extends AbstractNodeMain{
 						pose.setPosition(pos);
 						posec.setPose(pose);
 						msg.setPose(posec);
+						}
 						pubNode.publish(msg);
 						Thread.sleep(pRate);
 					}
@@ -142,6 +155,8 @@ public class PublisherObject extends AbstractNodeMain{
 				connectedNode.executeCancellableLoop(new CancellableLoop() {
 					@Override
 					protected void loop() throws InterruptedException {
+						std_msgs.Int8 msg = pubNode.newMessage();
+						if(dataP != null){
 						Term[] terms = ((Term[])dataP);
 						double value = 0;
 						try {
@@ -150,8 +165,8 @@ public class PublisherObject extends AbstractNodeMain{
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						std_msgs.Int8 msg = pubNode.newMessage();
 						msg.setData((byte)value);
+						}
 						pubNode.publish(msg);
 						Thread.sleep(pRate);
 					}
@@ -163,17 +178,19 @@ public class PublisherObject extends AbstractNodeMain{
 				connectedNode.executeCancellableLoop(new CancellableLoop() {
 					@Override
 					protected void loop() throws InterruptedException {
-						Term[] terms = ((Term[])dataP);
-						double value = 0;
-						try {
-							value = ((NumberTerm)terms[1]).solve();
-						} catch (NoValueException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
 						std_msgs.Int16 msg = pubNode.newMessage();
-						msg.setData((short)value);
-						pubNode.publish(msg);
+						if(dataP != null){
+							Term[] terms = ((Term[])dataP);
+							double value = 0;
+							try {
+								value = ((NumberTerm)terms[1]).solve();
+							} catch (NoValueException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							msg.setData((short)value);
+						}
+							pubNode.publish(msg);
 						Thread.sleep(pRate);
 					}
 				});
@@ -184,17 +201,19 @@ public class PublisherObject extends AbstractNodeMain{
 				connectedNode.executeCancellableLoop(new CancellableLoop() {
 					@Override
 					protected void loop() throws InterruptedException {
-						Term[] terms = ((Term[])dataP);
-						double value = 0;
-						try {
-							value = ((NumberTerm)terms[1]).solve();
-						} catch (NoValueException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
 						std_msgs.Int32 msg = pubNode.newMessage();
-						msg.setData((int)value);
-						pubNode.publish(msg);
+						if(dataP != null){
+							Term[] terms = ((Term[])dataP);
+							double value = 0;
+							try {
+								value = ((NumberTerm)terms[1]).solve();
+							} catch (NoValueException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							msg.setData((int)value);
+						}
+							pubNode.publish(msg);
 						Thread.sleep(pRate);
 					}
 				});
@@ -205,6 +224,8 @@ public class PublisherObject extends AbstractNodeMain{
 				connectedNode.executeCancellableLoop(new CancellableLoop() {
 					@Override
 					protected void loop() throws InterruptedException {
+						std_msgs.Int64 msg = pubNode.newMessage();
+						if(dataP != null){
 						Term[] terms = ((Term[])dataP);
 						double value = 0;
 						try {
@@ -213,8 +234,8 @@ public class PublisherObject extends AbstractNodeMain{
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						std_msgs.Int64 msg = pubNode.newMessage();
 						msg.setData((long)value);
+						}
 						pubNode.publish(msg);
 						Thread.sleep(pRate);
 					}
@@ -226,6 +247,8 @@ public class PublisherObject extends AbstractNodeMain{
 				connectedNode.executeCancellableLoop(new CancellableLoop() {
 					@Override
 					protected void loop() throws InterruptedException {
+						std_msgs.Float32 msg = pubNode.newMessage();
+						if(dataP != null){
 						Term[] terms = ((Term[])dataP);
 						double value = 0;
 						try {
@@ -234,8 +257,8 @@ public class PublisherObject extends AbstractNodeMain{
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						std_msgs.Float32 msg = pubNode.newMessage();
 						msg.setData((float)value);
+						}
 						pubNode.publish(msg);
 						Thread.sleep(pRate);
 					}
@@ -247,6 +270,8 @@ public class PublisherObject extends AbstractNodeMain{
 				connectedNode.executeCancellableLoop(new CancellableLoop() {
 					@Override
 					protected void loop() throws InterruptedException {
+						std_msgs.Float64 msg = pubNode.newMessage();
+						if(dataP != null){
 						Term[] terms = ((Term[])dataP);
 						double value = 0;
 						try {
@@ -255,8 +280,8 @@ public class PublisherObject extends AbstractNodeMain{
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						std_msgs.Float64 msg = pubNode.newMessage();
 						msg.setData((double)value);
+						}
 						pubNode.publish(msg);
 						Thread.sleep(pRate);
 					}
