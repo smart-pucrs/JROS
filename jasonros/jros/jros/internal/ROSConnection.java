@@ -14,21 +14,23 @@ import org.ros.namespace.GraphName;
 import org.ros.node.DefaultNodeMainExecutor;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ROSConnection{
+	
 	private String remoteAgName;
-	private JasonTalker publisherNode;
+	//private JasonTalker publisherNode;
 	private ActionTalker actionNode;
-	private JasonListener subscriberNode;
+	//private JasonListener subscriberNode;
 	private PerceptionListener perceptNode;
 	private ConfirmationListener confirmNode;
 	private Agent ag;
 	private List<String[]> aList;
 	private ArrayList<String> nCheckList = new ArrayList<String>();
-	//private HashMap<String, String> subTopics = new HashMap<String, String>();
-	private ArrayList<Object> subTopics = new ArrayList<Object>();
-	private ArrayList<Object> pubTopics = new ArrayList<Object>();
+	private HashMap<String, Object> nodeMap = new HashMap<String, Object>();
+	//private ArrayList<Object> subTopics = new ArrayList<Object>();
+	//private ArrayList<Object> pubTopics = new ArrayList<Object>();
 	private NodeMainExecutor nodeMainExecutor = DefaultNodeMainExecutor.newDefault();
 	private NodeConfiguration nodeConfiguration;
 	private ArrayList<JasonTalker> talkerList = new ArrayList<JasonTalker>();
@@ -47,7 +49,7 @@ public class ROSConnection{
 		return rosConfig(rosIP, rosPort);
 	}
 	
-	public boolean createConfigNodes(){
+	/*public boolean createConfigNodes(){
 		//System.out.println("aList size:"+aList.size());
 		for(String[] sv : this.aList){
 			try {
@@ -60,7 +62,7 @@ public class ROSConnection{
 			}
 		}
 		return true;
-	}
+	}*/
 	
 	public boolean rosConfig(String rosIP, String rosPort) throws InterruptedException{
 		masteruri = URI.create("http://"+rosIP+":"+rosPort);
@@ -96,8 +98,10 @@ public class ROSConnection{
 		return nCheckList;
 	}
 	
-	private boolean createSubNodeP(String nodeName) throws InterruptedException{
+	
+	public boolean createSubNode(String nodeName) throws InterruptedException{
 		try{
+			
 			subscriberNode = new JasonListener(ag,nodeName, subTopics, this);
 			nodeMainExecutor.execute(subscriberNode, nodeConfiguration);
 			while(!nCheckList.contains(nodeName)) Thread.sleep(10);
@@ -111,41 +115,30 @@ public class ROSConnection{
 		return false;
 	}
 	
-	public boolean createSubNode(String nodeName) throws InterruptedException{
-		//if(subscriberNode == null){
-			return createSubNodeP(nodeName);
-		//}else
-		//	System.out.println("An subscriber node already exists!");
-		//return false;
-	}
-	
-	private boolean createPubNodeP(String nodeName, long pRate) throws InterruptedException{
+	public JasonTalker createPubNode(String nodeName, String topicName, String messageType,
+			long pRate) throws InterruptedException{
+		//publisherNode = new JasonTalker(ag,nodeName, pubTopics, pRate, this);
+		JROSNodeInfo jn = new JROSNodeInfo(ag, nodeName, "pub", topicName, messageType, null, null, pRate);
+		JasonTalker jt = new JasonTalker(jn, this);
+		jn.setJNode(jt);
 		try{
-			nodeMainExecutor.execute(publisherNode, nodeConfiguration);
+			nodeMainExecutor.execute(jt, nodeConfiguration);
 			while(!nCheckList.contains(nodeName)) Thread.sleep(10);
 			nCheckList.remove(nodeName);
-			talkerList.add(publisherNode);
-			pubTopics = new ArrayList<Object>();
-			return true;
+			talkerList.add(jt);
+			return jt;
 		}catch(RuntimeException e){
 			System.out.println("Connection error!");
 		}
-		return false;
+		return null;
 	}
 	
-	public boolean sendAction(String agName, String action, Term[] terms) throws InterruptedException{
-		for(String[] params : aList){
-			for(JasonTalker jt : talkerList){
-				System.out.println("TopicName:"+jt.getNodeName());
-				if(jt.getNodeName().equals(params[0]+"NodePub")){
-					System.out.println("Topic Set!!!!!!");
-					//DataClass dc = new DataClass(params[2], params[1], terms);
-					jt.setTopicData(params[2], terms);
-					return true;
-				}
-			}
+	public boolean sendAction(String agName, String action, ArrayList<Object> params) throws InterruptedException{
+		JasonTalker jt = (JasonTalker)nodeMap.get(action);
+		if(jt != null){
+			jt.setTopicData(params);
+			return true;
 		}
-		System.out.println("Topic Set2!!!!!!");
 		actionNode.setNewAction(agName, action, terms);
 		return true;
 	}
@@ -165,21 +158,20 @@ public class ROSConnection{
 		return null;
 	}
 	
+	public void mapNode(String action, Object node){
+		nodeMap.put(action, node);
+	}
+	
+	
 	public boolean listenPerceptions(){
 		perceptNode.setAg(ag);
 		return true;
 	}
 	
-	public boolean createPubNode(String nodeName, long pRate) throws InterruptedException{
-		publisherNode = new JasonTalker(ag,nodeName, pubTopics, pRate, this);
-		if(publisherNode != null){
-			return createPubNodeP(nodeName, pRate);
-		}
-		return false;
-	}
+
 	
 	
-	
+	/*
 	public boolean addSubTopic(String topicName, String msgType){
 		//subTopics.put(topicName, msgType);
 		subTopics.add(new DataClass(topicName, msgType,null));
@@ -199,6 +191,7 @@ public class ROSConnection{
 	public boolean addPubGenericTopic(String topicName, String msgType, String className, Unifier un, Term[] terms){
 		return pubTopics.add(new GDataClass(topicName,msgType,className,un,terms));
 	}
+	*/
 	
 	public boolean subExists(){
 		return !(subscriberNode == null);

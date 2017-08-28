@@ -60,7 +60,8 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 					break;
 					case "pub":
 					{
-						rc.addPubTopic(params[2], params[1], null);
+						JasonTalker jt = rc.createPubNode(params[0]+"PubNode", params[2], params[1], Long.valueOf(params[5]));
+						rc.mapNode(params[0], jt);
 						rc.addSubTopic(params[2], params[1]);
 					}
 					break;
@@ -79,7 +80,7 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 		return false;
 	}
 	
-	public static boolean addPubGenericTopic(String ag, String topicName, String msgType, String className, Unifier un, Term[] terms) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+	/*public static boolean addPubGenericTopic(String ag, String topicName, String msgType, String className, Unifier un, Term[] terms) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		ROSConnection rc = agMap.get(ag);
 		return rc.addPubGenericTopic(topicName, msgType, className, un, terms);
 	}
@@ -87,7 +88,7 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 	public static boolean addSubGenericTopic(String ag, String topicName, String msgType, String className, Unifier un, Term[] terms) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		ROSConnection rc = agMap.get(ag);
 		return rc.addSubGenericTopic(topicName, msgType, className, un, terms);
-	}
+	}*/
 	
 	public static boolean listenPerceptions(String ag){
 		ROSConnection rc = agMap.get(ag);
@@ -104,12 +105,13 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 		return rc.createSubNode(nodeName);
 	}
 	
-	public static boolean createPubNode(String ag, String nodeName, long pRate) throws InterruptedException{
+	public static boolean createPubNode(String ag, String nodeName, String topicName,
+			String messageType, long pRate) throws InterruptedException{
 		ROSConnection rc = agMap.get(ag);
 		return rc.createPubNode(nodeName, pRate);
 	}
 	
-	public static boolean addSubTopic(String ag, String topicName, String msgType){
+	/*public static boolean addSubTopic(String ag, String topicName, String msgType){
 		ROSConnection rc = agMap.get(ag);
 		return rc.addSubTopic(topicName, msgType);
 	}
@@ -117,7 +119,7 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 	public static boolean addPubTopic(String ag, String topicName, String msgType, Object data){
 		ROSConnection rc = agMap.get(ag);
 		return rc.addPubTopic(topicName, msgType, data);
-	}
+	}*/
 	
 	public static boolean searchLT(String ag, String topicName, Object value){
 		ROSConnection rc = agMap.get(ag);

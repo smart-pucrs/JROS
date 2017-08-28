@@ -7,7 +7,7 @@ import jason.asSyntax.StringTerm;
 import jason.asSyntax.Term;
 import jros.internal.JMethods;
 
-public class addSubTopic extends DefaultInternalAction{
+public class _addSubTopic extends DefaultInternalAction{
 	@Override
 	public Object execute(TransitionSystem ts, Unifier un, Term[] terms) throws Exception {
 		String topicName = ((StringTerm)terms[0]).getString();

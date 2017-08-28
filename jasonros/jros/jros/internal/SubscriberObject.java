@@ -31,7 +31,7 @@ public class SubscriberObject extends AbstractNodeMain{
 	private String action = null;
 	private Agent ag;
 	private Literal bel = null;
-	private ArrayList<SDataClass> subData = new ArrayList<SDataClass>();
+	private ArrayList<SubscriberData> subData = new ArrayList<SubscriberData>();
 	//private HashMap<SDataClass> subData = new HashMap<SDataClass>();
 	//private long timeStamp = 0;
 	
@@ -39,21 +39,26 @@ public class SubscriberObject extends AbstractNodeMain{
 		return topicName;
 	}
 	
-	public SDataClass getLastStateObj(String topicName){
-		for(int i = subData.size()-1; i >= 0; i--){
-			SDataClass dc = subData.get(i);
-			if(dc.getTopicName().equals(topicName))
-				return dc;
+	public SubscriberData getLastStateObj(String topicName){
+		//for(int i = subData.size()-1; i >= 0; i--){
+		if(!subData.isEmpty()){
+			SubscriberData sd = subData.get(subData.size()-1);
+			//if(dc.getTopicName().equals(topicName))
+				return sd;
 		}
 		return null;
+		//}
+		//return null;
 	}
 	
 	public Object getLastStateData(String topicName){
-		for(int i = subData.size()-1; i >= 0; i--){
-			SDataClass dc = subData.get(i);
-			if(dc.getTopicName().equals(topicName))
-				return dc.getData();
+		//for(int i = subData.size()-1; i >= 0; i--){
+		if(!subData.isEmpty()){	
+		SubscriberData sd = subData.get(subData.size()-1);
+			//if(sd.getTopicName().equals(topicName))
+				return sd.getData();
 		}
+		//}
 		return null;
 	}
 	
@@ -61,26 +66,31 @@ public class SubscriberObject extends AbstractNodeMain{
 		subData.clear();
 	}
 	
-	public SDataClass getFirstStateObj(String topicName){
-		for(int i = 0; i < subData.size(); i++){
-			SDataClass dc = subData.get(i);
-			if(dc.getTopicName().equals(topicName))
+	public SubscriberData getFirstStateObj(String topicName){
+		//for(int i = 0; i < subData.size(); i++){
+		if(!subData.isEmpty()){
+			SubscriberData dc = subData.get(0);
+			//if(dc.getTopicName().equals(topicName))
 				return dc;
 		}
+		//}
 		return null;
 	}
 	
 	public Object getFirstStateData(String topicName){
-		for(int i = 0; i < subData.size(); i++){
-			SDataClass dc = subData.get(i);
-			if(dc.getTopicName().equals(topicName))
+		//for(int i = 0; i < subData.size(); i++){
+		if(!subData.isEmpty()){
+		SubscriberData dc = subData.get(0);
+			
+			//if(dc.getTopicName().equals(topicName))
 				return dc.getData();
 		}
+		//}
 		return null;
 	}
 	
 	public boolean searchExactState(String topicName, Object state){//<---------TODO:converter data
-		for(SDataClass dc : subData){
+		for(SubscriberData dc : subData){
 			if(dc.getTopicName().equals(topicName)){
 				Object data = dc.getData();
 				if(data instanceof Integer){
@@ -105,7 +115,7 @@ public class SubscriberObject extends AbstractNodeMain{
 	}
 	
 	public boolean searchLessThanState(String topicName, Object state){
-		for(SDataClass dc : subData)
+		for(SubscriberData dc : subData)
 			if(dc.getTopicName().equals(topicName)){
 				Object data = dc.getData();
 				if(data instanceof Integer)
@@ -122,7 +132,7 @@ public class SubscriberObject extends AbstractNodeMain{
 	}
 	
 	public boolean searchBiggerThanState(String topicName, Object state){
-		for(SDataClass dc : subData)
+		for(SubscriberData dc : subData)
 			if(dc.getTopicName().equals(topicName)){
 				Object data = dc.getData();
 				if(data instanceof Integer)
@@ -140,33 +150,34 @@ public class SubscriberObject extends AbstractNodeMain{
 	
 	//msgtype ex:"std_msgs/String"
 	//Usar TreeMap ao inves de HashMap
-	public SubscriberObject(ConnectedNode connectedNode, String nodeName, Object topic, ROSConnection rosconn){
-		this.nodeName = nodeName;
+	public SubscriberObject(ConnectedNode connectedNode, String action, JROSNodeInfo jn, ROSConnection rosconn){
+		this.nodeName = jn.getNodeName();
 		this.ag = rosconn.getAg();
 		//String topicName;
-		String msgType;
-		if(topic instanceof GDataClass){
-			this.topicName = ((GDataClass)topic).getTopicName();
-			msgType = ((GDataClass)topic).getMsgType();
-			String className = ((GDataClass)topic).getClassName();
-			Unifier un = ((GDataClass)topic).getUnifier();
-			Term[] terms = ((GDataClass)topic).getTerms();
+		String msgType = "";
+		/*if(topic instanceof _GDataClass){
+			this.topicName = ((_GDataClass)topic).getTopicName();
+			msgType = ((_GDataClass)topic).getMsgType();
+			String className = ((_GDataClass)topic).getClassName();
+			Unifier un = ((_GDataClass)topic).getUnifier();
+			Term[] terms = ((_GDataClass)topic).getTerms();
 			try {
 				Object genClass = Class.forName(className).newInstance();
 				((GenericSub)genClass).subProc(connectedNode, topicName, msgType, un, terms);
 			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 				e.printStackTrace();
 			}
-		}else{
-			this.topicName = ((DataClass)topic).getTopicName();
-			msgType = ((DataClass)topic).getMsgType();
+		}else{*/
+			this.topicName = jn.getTopic();
+			msgType = jn.getMsgType();
 			//System.out.println("Sub str:"+nodeName.substring(0, nodeName.length()-7));
-			for(String[] p : rosconn.getActionList()){
+			/*for(String[] p : rosconn.getActionList()){
 				if(p[2].equals(this.topicName) && p[0].equals(nodeName.substring(0, nodeName.length()-7))){ //<<<------- Problem here :/
 					this.action = p[0];
 					break;
 				}
-			}
+			}*/
+			this.action = action;
 			//if(!rosconn.nodeExists(nodeName))
 			if(this.action != null)
 				try {
@@ -182,15 +193,15 @@ public class SubscriberObject extends AbstractNodeMain{
 					@Override
 					public void onNewMessage(std_msgs.String message) {
 						//System.out.println("Novo!!!!");
-						SDataClass dc;
+						SubscriberData sd;
 						if(subData.isEmpty()){
-							dc = new SDataClass(topicName, message.getData());
-							subData.add(dc);
+							sd = new SubscriberData(topicName, message.getData());
+							subData.add(sd);
 						}else{
 							Object lastObj = (Object)subData.get(subData.size()-1).getData();
 							if(!lastObj.equals(message.getData())){
-								dc = new SDataClass(topicName, message.getData());
-								subData.add(dc);
+								sd = new SubscriberData(topicName, message.getData());
+								subData.add(sd);
 							}
 						}
 						if(bel != null && !ag.believes(bel, new Unifier())){
@@ -211,7 +222,7 @@ public class SubscriberObject extends AbstractNodeMain{
 				subNode.addMessageListener(new MessageListener<geometry_msgs.Twist>() {     
 					@Override
 					public void onNewMessage(geometry_msgs.Twist message) {
-						SDataClass dc;
+						SubscriberData dc;
 						List<Double> l = new ArrayList<Double>();
 						Vector3 ang = message.getAngular();
 						Vector3 lin = message.getLinear();
@@ -222,12 +233,12 @@ public class SubscriberObject extends AbstractNodeMain{
 						l.add(ang.getY());
 						l.add(ang.getZ());
 						if(subData.isEmpty()){
-							dc = new SDataClass(topicName, l);
+							dc = new SubscriberData(topicName, l);
 							subData.add(dc);
 						}else{
 							Object lastObj = (Object)subData.get(subData.size()-1).getData();
 							if(!lastObj.equals(l)){
-								dc = new SDataClass(topicName, l);
+								dc = new SubscriberData(topicName, l);
 								subData.add(dc);
 							}
 						}
@@ -247,7 +258,7 @@ public class SubscriberObject extends AbstractNodeMain{
 				subNode.addMessageListener(new MessageListener<nav_msgs.Odometry>() {     
 					@Override
 					public void onNewMessage(nav_msgs.Odometry message) {
-						SDataClass dc;
+						SubscriberData dc;
 						List<Double> l = new ArrayList<Double>();
 						Point pos = message.getPose().getPose().getPosition();
 						Quaternion ori = message.getPose().getPose().getOrientation();
@@ -259,12 +270,12 @@ public class SubscriberObject extends AbstractNodeMain{
 						l.add(ori.getY());
 						l.add(ori.getZ());
 						if(subData.isEmpty()){
-							dc = new SDataClass(topicName, l);
+							dc = new SubscriberData(topicName, l);
 							subData.add(dc);
 						}else{
 							Object lastObj = (Object)subData.get(subData.size()-1).getData();
 							if(!lastObj.equals(l)){
-								dc = new SDataClass(topicName, l);
+								dc = new SubscriberData(topicName, l);
 								subData.add(dc);
 							}
 						}
@@ -305,14 +316,14 @@ public class SubscriberObject extends AbstractNodeMain{
 					@Override
 					public void onNewMessage(std_msgs.Int32 message) {
 						//timeStamp++;
-						SDataClass dc;
+						SubscriberData dc;
 						if(subData.isEmpty()){
-							dc = new SDataClass(topicName, message.getData());
+							dc = new SubscriberData(topicName, message.getData());
 							subData.add(dc);
 						}else{
 							Object lastObj = (Object)subData.get(subData.size()-1).getData();
 							if(!lastObj.equals(message.getData())){
-								dc = new SDataClass(topicName, message.getData());
+								dc = new SubscriberData(topicName, message.getData());
 								subData.add(dc);
 							}
 						}
@@ -344,14 +355,14 @@ public class SubscriberObject extends AbstractNodeMain{
 					@Override
 					public void onNewMessage(std_msgs.Float32 message) {
 						//timeStamp++;
-						SDataClass dc;
+						SubscriberData dc;
 						if(subData.isEmpty()){
-							dc = new SDataClass(topicName, message.getData());
+							dc = new SubscriberData(topicName, message.getData());
 							subData.add(dc);
 						}else{
 							Object lastObj = (Object)subData.get(subData.size()-1).getData();
 							if(!lastObj.equals(message.getData())){
-								dc = new SDataClass(topicName, message.getData());
+								dc = new SubscriberData(topicName, message.getData());
 								subData.add(dc);
 							}
 						}
@@ -378,7 +389,7 @@ public class SubscriberObject extends AbstractNodeMain{
 			}
 			rosconn.addToCheckList(nodeName);
 	}
-	}
+	
 
 	@Override
 	public GraphName getDefaultNodeName() {

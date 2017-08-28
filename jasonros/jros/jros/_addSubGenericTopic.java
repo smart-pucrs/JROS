@@ -7,13 +7,12 @@ import jason.asSyntax.StringTerm;
 import jason.asSyntax.Term;
 import jros.internal.JMethods;
 
-public class addPubGenericTopic extends DefaultInternalAction{
+public class _addSubGenericTopic extends DefaultInternalAction{
 	@Override
 	public Object execute(TransitionSystem ts, Unifier un, Term[] terms) throws Exception {
 		String topicName = ((StringTerm)terms[0]).getString();
 		String msgType = ((StringTerm)terms[1]).getString();
 		String className = ((StringTerm)terms[2]).getString();
-		//
-		return JMethods.addPubGenericTopic(ts.getUserAgArch().getAgName(), topicName, msgType, className, un, terms);
+		return JMethods.addSubGenericTopic(ts.getUserAgArch().getAgName(), topicName, msgType, className, un, terms);
 	}
 }

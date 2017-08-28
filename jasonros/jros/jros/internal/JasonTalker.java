@@ -13,37 +13,39 @@ import jason.asSyntax.parser.ParseException;
 
 public class JasonTalker extends AbstractNodeMain {
 	
-	private ArrayList<Object> pubTopics;
-	private ArrayList<PublisherObject> pubList = new ArrayList<PublisherObject>();
+	private JROSNodeInfo nodeInfo;
+	private PublisherObject po;
 	private String nodeName;
 	private long pRate;
 	private ROSConnection rosconn;
 	private Agent ag;
+	private String action;
 	
-	public JasonTalker(Agent ag,String nodeName, ArrayList<Object> pubTopics, long pRate, ROSConnection rosconn){
-		this.nodeName = nodeName;
-		this.pubTopics = pubTopics;
+	public JasonTalker(JROSNodeInfo nodeInfo, ROSConnection rosconn){
+		this.nodeInfo = nodeInfo;
+		this.nodeName = nodeInfo.getNodeName();
 		this.rosconn = rosconn;
-		this.pRate = pRate;
-		this.ag = ag;
+		this.ag = nodeInfo.getAgent();
+		this.pRate = nodeInfo.getPRate();
+		this.action = null;
 	}
 	
 	public String getNodeName(){
 		return nodeName;
 	}
 	
-	public ArrayList<Object> getPubList(){
-		return pubTopics;
+	public String getAction(){
+		return action;
 	}
 	
-	public boolean setTopicData(String topicName, Object data){
-		for(PublisherObject po : pubList){
-			if(po.getTopicName().equals(topicName)){
-				po.setData(data);
-				return true;
-			}
-		}
-		return false;
+	public void setAction(String act){
+		action = act;
+	}
+
+	
+	public boolean setTopicData(ArrayList<Object> data){
+		po.setData(data);
+		return true;
 	}
 		
 	@Override
@@ -53,12 +55,10 @@ public class JasonTalker extends AbstractNodeMain {
 	
 	@Override
 	public void onStart(final ConnectedNode connectedNode) {	
-		for(Object d : pubTopics){
-			try {
-			pubList.add(new PublisherObject(connectedNode, nodeName, d, pRate, rosconn));
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+		try {
+		po = new PublisherObject(connectedNode, nodeName, nodeInfo, pRate, rosconn);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 }

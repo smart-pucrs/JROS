@@ -15,48 +15,37 @@
 	<-	.print("Connection error. Trying again...");
 		.wait(1000);
 		!!connectto(IP, Port).
-
-/* +!createNodes
-	<- 	jros.addPubTopic("/cmd_vel_mux/input/teleop","geometry_msgs/Twist",null);//linear = (0,0,0) / angular = (1,2,3)
-		jros.addSubTopic("/cmd_vel_mux/input/teleop","geometry_msgs/Twist");
-		jros.createPubNode("mynode",500);
-		jros.createSubNode("mysnode");
-		.wait(1000);
-		!!turtle.*/
 		
 +!stop
 	<- 	jros.sendAction("setVel",0,0,0,0,0,0);
-		.wait({+lastJROSAction(setVel)});
-		//jros.setTopicData("mynode","/cmd_vel_mux/input/teleop",0,0,0,0,0,0);
-		//jros.getTopicData("/cmd_vel_mux/input/teleop",L);
-		//.nth(0,L,0);
-		//.nth(5,L,0);
+		jros.recvData("getVel",L);
+		.nth(0,L,0);
+		.nth(5,L,0);
 		+stopped.
 -!stop
-	<- !!stop.
+	<- .wait(100);
+		.print("Fail Stop");
+		!!stop.
 	
-//X = angulo (graus)  Y = vel. angular ( graus/sec )
 +!rotate(X,Y)
 	<- 	if(X < 0){
 			jros.sendAction("setVel", 0,0,0,0,0,math.abs(Y*2*math.pi/360));
-		//	jros.setTopicData("mynode","/cmd_vel_mux/input/teleop",0,0,0,0,0,math.abs(Y*2*math.pi/360));//graus(vel_ang)
 		}else{
 			jros.sendAction("setVel", 0,0,0,0,0,-math.abs(Y*2*math.pi/360));
-			//jros.setTopicData("mynode","/cmd_vel_mux/input/teleop",0,0,0,0,0,-math.abs(Y*2*math.pi/360));	
 		}
-		.wait(math.abs(X/Y)*1000);//Y rad por seg, portanto em X/Y segs o robo rotaciona X radianos
+		.wait(math.abs(X/Y)*1000);
 		!!stop;
 		.wait({+stopped});
 		-stopped;
 		+angleok.
 -!rotate(X,Y)
 	<- 	.wait(100);
+		.print("Fail Rotate");
 		!!rotate(X,Y).
 
 +!moveforward(X,Y)
 	<- 	
-		sendAction("setVel", math.abs(Y),0,0,0,0,0);
-		//jros.setTopicData("mynode","/cmd_vel_mux/input/teleop",math.abs(Y),0,0,0,0,0);
+		jros.sendAction("setVel", math.abs(Y),0,0,0,0,0);
 		.wait((X/Y)*1000);
 		!!stop;
 		.wait({+stopped});
@@ -64,9 +53,10 @@
 		+posok.
 -!moveforward(X,Y)
 	<-	.wait(100);
+		.print("Fail Forward");
 		!!moveforward(X,Y).
 
-//move_set = {170,3.2,50,3,-90,1.6,-98,4.935,-91,4,-50,1}
+
 +!turtle
 	<-	M = [3.2,50,3,-90,1.6,-98,4.935,-91,4,-50,1];
 		!!rotate(170,15);

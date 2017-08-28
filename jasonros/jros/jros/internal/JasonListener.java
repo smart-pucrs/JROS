@@ -19,19 +19,24 @@ import jason.asSyntax.parser.ParseException;
 public class JasonListener extends AbstractNodeMain {
 	
 	//private HashMap<String, String> subTopics;
-	private ArrayList<Object> subTopics;
+	//private ArrayList<Object> subTopics;
+	private SubscriberObject so;
 	//private ArrayList<SubscriberObject> subList = new ArrayList<SubscriberObject>();
 	private HashMap<String,SubscriberObject> subList = new HashMap<String,SubscriberObject>();
 	private String nodeName;
 	private ROSConnection rosconn;
 	private Agent ag;
+	private JROSNodeInfo nodeInfo;
+	private String action;
 	
 	//public JasonListener(String nodeName, HashMap<String, String> subTopics, ROSConnection rosconn){
-	public JasonListener(Agent ag,String nodeName, ArrayList<Object> subTopics, ROSConnection rosconn){
-		this.subTopics = subTopics;
-		this.nodeName = nodeName;
+	public JasonListener(JROSNodeInfo nodeInfo, String action, ROSConnection rosconn){
+		//this.subTopics = subTopics;
+		this.nodeInfo = nodeInfo;
+		this.nodeName = nodeInfo.getNodeName();
 		this.rosconn = rosconn;
-		this.ag = ag;
+		this.action = action;
+		this.ag = nodeInfo.getAgent();
 	}
 	
 	public Object searchTopic(String topicName){
@@ -97,11 +102,9 @@ public class JasonListener extends AbstractNodeMain {
 	@Override
 	public void onStart(ConnectedNode connectedNode){
 		//Set<String> subKeys = subTopics.keySet();
-		for(Object d : subTopics){
 			System.out.println("Criou sub:"+nodeName);
-			SubscriberObject sub = new SubscriberObject(connectedNode, nodeName, d , rosconn);
+			SubscriberObject sub = new SubscriberObject(connectedNode, action, nodeInfo , rosconn);
 			//subList.add(sub);
-			subList.put(((SDataClass)d).getTopicName(), sub);
-		}
+			subList.put(nodeInfo.getTopic(), sub);
 	}
 }

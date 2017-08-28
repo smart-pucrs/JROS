@@ -1,6 +1,8 @@
 package jros.internal;
 
 
+import java.util.ArrayList;
+
 import org.ros.concurrent.CancellableLoop;
 import org.ros.namespace.GraphName;
 import org.ros.node.AbstractNodeMain;
@@ -21,38 +23,38 @@ import jason.stdlib.term2string;
 
 public class PublisherObject extends AbstractNodeMain{
 	private String nodeName;
-	private Object dataP;
+	private ArrayList<Object> dataP;
 	private String topicName;
 	
-	public void setData(Object o){
+	public void setData(ArrayList<Object> o){
 		dataP = o;
 	}
 	
 	public String getTopicName(){
 		return topicName;
 	}
-	public PublisherObject(ConnectedNode connectedNode, String nodeName, Object topic, long pRate, ROSConnection rosconn) throws InterruptedException{
+	public PublisherObject(ConnectedNode connectedNode, String nodeName, JROSNodeInfo jn, long pRate, ROSConnection rosconn) throws InterruptedException{
 		this.nodeName = nodeName;
 		String msgType;
-		Object data;
-		if(topic instanceof GDataClass){
-			topicName = ((GDataClass)topic).getTopicName();
-			msgType = ((GDataClass)topic).getMsgType();
+		ArrayList<Object> data;
+		/*if(topic instanceof _GDataClass){
+			topicName = ((_GDataClass)topic).getTopicName();
+			msgType = ((_GDataClass)topic).getMsgType();
 			data = null;
 			dataP = data;
-			Unifier un  = ((GDataClass)topic).getUnifier();
-			Term[] terms = ((GDataClass)topic).getTerms();
-			String className = ((GDataClass)topic).getClassName();
+			Unifier un  = ((_GDataClass)topic).getUnifier();
+			Term[] terms = ((_GDataClass)topic).getTerms();
+			String className = ((_GDataClass)topic).getClassName();
 			try {
 				Object genClass = Class.forName(className).newInstance();
 				((GenericPub)genClass).pubProc(connectedNode, topicName, msgType, un, terms);
 			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 				e.printStackTrace();
 			}
-		}else{
-			topicName = ((DataClass)topic).getTopicName();
-			msgType = ((DataClass)topic).getMsgType();
-			data = ((DataClass)topic).getData();
+		}else{*/
+			topicName = jn.getTopic();
+			msgType = jn.getMsgType();
+			data = jn.getParams();
 			dataP = data;
 			
 			switch(msgType){
@@ -64,8 +66,7 @@ public class PublisherObject extends AbstractNodeMain{
 					protected void loop() throws InterruptedException {
 						std_msgs.String msg = pubNode.newMessage();
 						if(dataP != null){
-							Term[] terms = ((Term[])dataP);
-							msg.setData(((StringTerm)terms[1]).getString());
+							msg.setData((String)dataP.get(0));
 						}
 						pubNode.publish(msg);
 						Thread.sleep(pRate);
@@ -83,37 +84,20 @@ public class PublisherObject extends AbstractNodeMain{
 						geometry_msgs.Twist msg = pubNode.newMessage();
 						Vector3 ang = msg.getAngular();
 						Vector3 lin = msg.getLinear();
-						try {
-							if(dataP != null){
-								Term[] terms = ((Term[])dataP);
-								//System.out.println("terms length:"+terms.length);
-								if(terms.length == 7){
-									lin.setX(((NumberTerm)terms[1]).solve());
-									lin.setY(((NumberTerm)terms[2]).solve());
-									lin.setZ(((NumberTerm)terms[3]).solve());
-									ang.setX(((NumberTerm)terms[4]).solve());
-									ang.setY(((NumberTerm)terms[5]).solve());
-									ang.setZ(((NumberTerm)terms[6]).solve());
-									msg.setAngular(ang);
-									msg.setLinear(lin);
-								}else
-								if(terms.length > 3){
-									lin.setX(((NumberTerm)terms[2]).solve());
-									lin.setY(((NumberTerm)terms[3]).solve());
-									lin.setZ(((NumberTerm)terms[4]).solve());
-									ang.setX(((NumberTerm)terms[5]).solve());
-									ang.setY(((NumberTerm)terms[6]).solve());
-									ang.setZ(((NumberTerm)terms[7]).solve());
-									msg.setAngular(ang);
-									msg.setLinear(lin);
-								}
-							}
-							pubNode.publish(msg);
-							Thread.sleep(pRate);
-						} catch (NoValueException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if(dataP != null){
+							//Term[] terms = ((Term[])dataP);
+							//System.out.println("terms length:"+terms.length);
+							lin.setX((double)dataP.get(0));
+							lin.setY((double)dataP.get(1));
+							lin.setZ((double)dataP.get(2));
+							ang.setX((double)dataP.get(3));
+							ang.setY((double)dataP.get(4));
+							ang.setZ((double)dataP.get(5));
+							msg.setAngular(ang);
+							msg.setLinear(lin);
 						}
+						pubNode.publish(msg);
+						Thread.sleep(pRate);
 					}
 				});
 			}
@@ -126,20 +110,20 @@ public class PublisherObject extends AbstractNodeMain{
 					protected void loop() throws InterruptedException {
 						nav_msgs.Odometry msg = pubNode.newMessage();
 						if(dataP != null){
-						Term[] terms = ((Term[])dataP);
-						String str = ((StringTerm)terms[1]).getString();
-						String[] params = str.split("(,)|( ,)");
+						//Term[] terms = ((Term[])dataP);
+						//String str = ((StringTerm)terms[1]).getString();
+						//String[] params = str.split("(,)|( ,)");
 						PoseWithCovariance posec = msg.getPose();
 						Pose pose = posec.getPose();
 						Point pos = pose.getPosition();
 						Quaternion ori = pose.getOrientation();
-						pos.setX(Double.valueOf(params[0]));
-						pos.setY(Double.valueOf(params[1]));
-						pos.setZ(Double.valueOf(params[2]));
-						ori.setW(Double.valueOf(params[3]));
-						ori.setX(Double.valueOf(params[4]));
-						ori.setY(Double.valueOf(params[5]));
-						ori.setZ(Double.valueOf(params[6]));
+						pos.setX((double)dataP.get(0));
+						pos.setY((double)dataP.get(1));
+						pos.setZ((double)dataP.get(2));
+						ori.setW((double)dataP.get(3));
+						ori.setX((double)dataP.get(4));
+						ori.setY((double)dataP.get(5));
+						ori.setZ((double)dataP.get(6));
 						pose.setPosition(pos);
 						posec.setPose(pose);
 						msg.setPose(posec);
@@ -157,14 +141,7 @@ public class PublisherObject extends AbstractNodeMain{
 					protected void loop() throws InterruptedException {
 						std_msgs.Int8 msg = pubNode.newMessage();
 						if(dataP != null){
-						Term[] terms = ((Term[])dataP);
-						double value = 0;
-						try {
-							value = ((NumberTerm)terms[1]).solve();
-						} catch (NoValueException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						double value = (double)dataP.get(0);
 						msg.setData((byte)value);
 						}
 						pubNode.publish(msg);
@@ -180,14 +157,7 @@ public class PublisherObject extends AbstractNodeMain{
 					protected void loop() throws InterruptedException {
 						std_msgs.Int16 msg = pubNode.newMessage();
 						if(dataP != null){
-							Term[] terms = ((Term[])dataP);
-							double value = 0;
-							try {
-								value = ((NumberTerm)terms[1]).solve();
-							} catch (NoValueException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+							double value = (double)dataP.get(0);
 							msg.setData((short)value);
 						}
 							pubNode.publish(msg);
@@ -203,14 +173,7 @@ public class PublisherObject extends AbstractNodeMain{
 					protected void loop() throws InterruptedException {
 						std_msgs.Int32 msg = pubNode.newMessage();
 						if(dataP != null){
-							Term[] terms = ((Term[])dataP);
-							double value = 0;
-							try {
-								value = ((NumberTerm)terms[1]).solve();
-							} catch (NoValueException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+							double value = (double)dataP.get(0);;
 							msg.setData((int)value);
 						}
 							pubNode.publish(msg);
@@ -226,14 +189,7 @@ public class PublisherObject extends AbstractNodeMain{
 					protected void loop() throws InterruptedException {
 						std_msgs.Int64 msg = pubNode.newMessage();
 						if(dataP != null){
-						Term[] terms = ((Term[])dataP);
-						double value = 0;
-						try {
-							value = ((NumberTerm)terms[1]).solve();
-						} catch (NoValueException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						double value = (double)dataP.get(0);;
 						msg.setData((long)value);
 						}
 						pubNode.publish(msg);
@@ -249,14 +205,7 @@ public class PublisherObject extends AbstractNodeMain{
 					protected void loop() throws InterruptedException {
 						std_msgs.Float32 msg = pubNode.newMessage();
 						if(dataP != null){
-						Term[] terms = ((Term[])dataP);
-						double value = 0;
-						try {
-							value = ((NumberTerm)terms[1]).solve();
-						} catch (NoValueException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						double value = (double)dataP.get(0);
 						msg.setData((float)value);
 						}
 						pubNode.publish(msg);
@@ -272,14 +221,7 @@ public class PublisherObject extends AbstractNodeMain{
 					protected void loop() throws InterruptedException {
 						std_msgs.Float64 msg = pubNode.newMessage();
 						if(dataP != null){
-						Term[] terms = ((Term[])dataP);
-						double value = 0;
-						try {
-							value = ((NumberTerm)terms[1]).solve();
-						} catch (NoValueException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						double value = (double)dataP.get(0);
 						msg.setData((double)value);
 						}
 						pubNode.publish(msg);
@@ -288,7 +230,7 @@ public class PublisherObject extends AbstractNodeMain{
 				});
 			}
 			}
-		}
+		//}
 		//Thread.sleep(pRate);
 		rosconn.addToCheckList(nodeName);
 	}
