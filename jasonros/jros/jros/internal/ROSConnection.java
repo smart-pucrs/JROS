@@ -99,14 +99,15 @@ public class ROSConnection{
 	}
 	
 	
-	public boolean createSubNode(String nodeName) throws InterruptedException{
+	public boolean createSubNode(String nodeName, String action, String topicName, String messageType) throws InterruptedException{
 		try{
-			
-			subscriberNode = new JasonListener(ag,nodeName, subTopics, this);
-			nodeMainExecutor.execute(subscriberNode, nodeConfiguration);
+			//subscriberNode = new JasonListener(ag,nodeName, subTopics, this);
+			JROSNodeInfo jn = new JROSNodeInfo(ag, nodeName, "sub", topicName, messageType, null, null, 0);
+			JasonListener jl = new JasonListener(jn, action, this);
+			nodeMainExecutor.execute(jl, nodeConfiguration);
 			while(!nCheckList.contains(nodeName)) Thread.sleep(10);
 			nCheckList.remove(nodeName);
-			listenerList.add(subscriberNode);
+			listenerList.add(jl);
 			System.out.println("ROSConnection: subNode created.");
 			return true;
 		}catch(RuntimeException e){
@@ -139,7 +140,7 @@ public class ROSConnection{
 			jt.setTopicData(params);
 			return true;
 		}
-		actionNode.setNewAction(agName, action, terms);
+		actionNode.setNewAction(agName, action, params);
 		return true;
 	}
 	
@@ -194,23 +195,13 @@ public class ROSConnection{
 	*/
 	
 	public boolean subExists(){
-		return !(subscriberNode == null);
+		return !listenerList.isEmpty();
 	}
 	
 	private boolean pubExists(){
 		return !talkerList.isEmpty();
 	}
 	
-	public boolean pubExists(String topicName){
-		if(pubExists())
-			for(JasonTalker t : talkerList){
-				ArrayList<Object> l = t.getPubList();
-				for(Object o : l)
-					if(((DataClass)o).getTopicName().equals(topicName))
-						return true;
-			}
-		return false;
-	}
 	
 	public Agent getAg(){
 		return ag;
@@ -220,9 +211,9 @@ public class ROSConnection{
 		return aList;
 	}
 	
-	public JasonListener getListenerInstance(){
-		return subscriberNode;
-	}
+	//public JasonListener getListenerInstance(){
+	//	return subscriberNode;
+	//}
 	
 	public ArrayList<JasonTalker> getTalkerList(){
 		return talkerList;

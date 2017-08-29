@@ -36,24 +36,16 @@ public class ActionTalker extends AbstractNodeMain{
 		this.lastId = -1;
 	}
 	
-	public void setNewAction(String agName, String action, Term[] terms){
+	public void setNewAction(String agName, String action, ArrayList<Object> params){
 		this.id = rand.nextInt(Integer.MAX_VALUE);
 		this.agName = agName;
 		this.action = action;
-		for(int i = 1;i < terms.length;i++){
-			if(terms[i].isNumeric()){
-				double num = 0;
-				try {
-					num = ((NumberTerm)terms[i]).solve();
-				} catch (NoValueException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				parameters.add(String.valueOf(num));
-			}else
-				parameters.add(((StringTerm)terms[i]).getString());
+		for(Object o : params) {
+			if(o instanceof Double)
+				parameters.add(String.valueOf((double)o));
+			if(o instanceof String)
+				parameters.add((String)o);
 		}
-		//this.parameters = parameters;
 	}
 	
 	@Override

@@ -55,14 +55,15 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 					case "sub":
 					{
 						System.out.println("Criou sub!!!");
-						rc.addSubTopic(params[2], params[1]);
+						//rc.addSubTopic(params[2], params[1]);
+						rc.createSubNode(params[0]+"SubNode", params[0], params[2], params[1]);
 					}
 					break;
 					case "pub":
 					{
 						JasonTalker jt = rc.createPubNode(params[0]+"PubNode", params[2], params[1], Long.valueOf(params[5]));
 						rc.mapNode(params[0], jt);
-						rc.addSubTopic(params[2], params[1]);
+						//rc.addSubTopic(params[2], params[1]);
 					}
 					break;
 					default:
@@ -74,7 +75,7 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 				}
 			}
 			//System.out.println("JMethods aList size:"+aList.size());
-			rc.createConfigNodes();
+			//rc.createConfigNodes();
 			return true;
 		}
 		return false;
@@ -95,20 +96,21 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 		return rc.listenPerceptions();
 	}
 	
-	public static boolean sendAction(String ag, String action, Term[] terms) throws InterruptedException{
+	public static boolean sendAction(String ag, String action, ArrayList<Object> params) throws InterruptedException{
 		ROSConnection rc = agMap.get(ag);
-		return rc.sendAction(ag.toString(), action, terms);
+		return rc.sendAction(ag.toString(), action, params);
 	}
 	
-	public static boolean createSubNode(String ag, String nodeName) throws InterruptedException{
+	public static boolean createSubNode(String ag, String nodeName, String topicName,
+			String messageType) throws InterruptedException{
 		ROSConnection rc = agMap.get(ag);
-		return rc.createSubNode(nodeName);
+		return rc.createSubNode(nodeName, null, topicName, messageType);
 	}
 	
 	public static boolean createPubNode(String ag, String nodeName, String topicName,
 			String messageType, long pRate) throws InterruptedException{
 		ROSConnection rc = agMap.get(ag);
-		return rc.createPubNode(nodeName, pRate);
+		return rc.createPubNode(nodeName, topicName, messageType, pRate) != null;
 	}
 	
 	/*public static boolean addSubTopic(String ag, String topicName, String msgType){
