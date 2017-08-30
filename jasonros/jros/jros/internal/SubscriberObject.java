@@ -39,7 +39,7 @@ public class SubscriberObject extends AbstractNodeMain{
 		return topicName;
 	}
 	
-	public SubscriberData getLastStateObj(String topicName){
+	public SubscriberData getLastStateObj(){
 		//for(int i = subData.size()-1; i >= 0; i--){
 		if(!subData.isEmpty()){
 			SubscriberData sd = subData.get(subData.size()-1);
@@ -51,7 +51,7 @@ public class SubscriberObject extends AbstractNodeMain{
 		//return null;
 	}
 	
-	public Object getLastStateData(String topicName){
+	public Object getLastStateData(){
 		//for(int i = subData.size()-1; i >= 0; i--){
 		if(!subData.isEmpty()){	
 		SubscriberData sd = subData.get(subData.size()-1);
@@ -66,7 +66,7 @@ public class SubscriberObject extends AbstractNodeMain{
 		subData.clear();
 	}
 	
-	public SubscriberData getFirstStateObj(String topicName){
+	public SubscriberData getFirstStateObj(){
 		//for(int i = 0; i < subData.size(); i++){
 		if(!subData.isEmpty()){
 			SubscriberData dc = subData.get(0);
@@ -89,7 +89,7 @@ public class SubscriberObject extends AbstractNodeMain{
 		return null;
 	}
 	
-	public boolean searchExactState(String topicName, Object state){//<---------TODO:converter data
+	public boolean searchExactState(Object state){//<---------TODO:converter data
 		for(SubscriberData dc : subData){
 			if(dc.getTopicName().equals(topicName)){
 				Object data = dc.getData();
@@ -114,7 +114,7 @@ public class SubscriberObject extends AbstractNodeMain{
 		return false;
 	}
 	
-	public boolean searchLessThanState(String topicName, Object state){
+	public boolean searchLessThanState(Object state){
 		for(SubscriberData dc : subData)
 			if(dc.getTopicName().equals(topicName)){
 				Object data = dc.getData();
@@ -131,7 +131,7 @@ public class SubscriberObject extends AbstractNodeMain{
 		return false;
 	}
 	
-	public boolean searchBiggerThanState(String topicName, Object state){
+	public boolean searchBiggerThanState(Object state){
 		for(SubscriberData dc : subData)
 			if(dc.getTopicName().equals(topicName)){
 				Object data = dc.getData();

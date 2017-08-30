@@ -39,46 +39,46 @@ public class JasonListener extends AbstractNodeMain {
 		this.ag = nodeInfo.getAgent();
 	}
 	
-	public Object searchTopic(String topicName){
+	public Object getTopicData(){
 		/*for(SubscriberObject sub : subList){
 			if(sub.getTopicName().equals(topicName))
 				return sub.getLastStateData(topicName);
 		}*/
-		return subList.get(topicName).getLastStateData(topicName);
+		return subList.get(nodeInfo.getTopic()).getLastStateData();
 	}
 	
-	public boolean searchLT(String topicName, Object value){
+	public boolean searchLT(Object value){
 		/*for(SubscriberObject sub : subList){
 			if(sub.getTopicName().equals(topicName)){
 				return sub.searchLessThanState(topicName, value);
 			}
 		}
 		return false;*/
-		return subList.get(topicName).searchLessThanState(topicName,value);
+		return subList.get(nodeInfo.getTopic()).searchLessThanState(value);
 	}
 	
-	public void clearDataList(String topicName){
+	public void clearDataList(){
 		/*for(SubscriberObject sub : subList){
 			if(sub.getTopicName().equals(topicName)){
 				sub.clearSubDataList();
 				return;
 			}
 		}*/
-		subList.get(topicName).clearSubDataList();
+		subList.get(nodeInfo.getTopic()).clearSubDataList();
 		return;
 	}
 	
-	public boolean searchBT(String topicName, Object value){
+	public boolean searchBT(Object value){
 		/*for(SubscriberObject sub : subList){
 			if(sub.getTopicName().equals(topicName)){
 				return sub.searchBiggerThanState(topicName, value);
 			}
 		}
 		return false;*/
-		return subList.get(topicName).searchBiggerThanState(topicName, value);
+		return subList.get(nodeInfo.getTopic()).searchBiggerThanState(value);
 	}
 	
-	public boolean searchExact(String topicName, Object value){
+	public boolean searchExact(Object value){
 		/*for(SubscriberObject sub : subList){
 			if(sub.getTopicName().equals(topicName)){
 				return sub.searchExactState(topicName, value);
@@ -86,7 +86,11 @@ public class JasonListener extends AbstractNodeMain {
 		}
 		return false;*/
 		
-		return subList.get(topicName).searchExactState(topicName, value);
+		return subList.get(nodeInfo.getTopic()).searchExactState(value);
+	}
+	
+	public String getNodeName(){
+		return nodeName;
 	}
 	
 	@Override

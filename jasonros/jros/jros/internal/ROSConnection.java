@@ -26,7 +26,7 @@ public class ROSConnection{
 	private PerceptionListener perceptNode;
 	private ConfirmationListener confirmNode;
 	private Agent ag;
-	private List<String[]> aList;
+	//private List<String[]> aList;
 	private ArrayList<String> nCheckList = new ArrayList<String>();
 	private HashMap<String, Object> nodeMap = new HashMap<String, Object>();
 	//private ArrayList<Object> subTopics = new ArrayList<Object>();
@@ -42,12 +42,13 @@ public class ROSConnection{
 		this.ag = ag;
 	}
 	
-	public boolean rosConfig(String rosIP, String rosPort, List<String[]> aList) throws InterruptedException{
+	//public boolean rosConfig(String rosIP, String rosPort, List<String[]> aList) throws InterruptedException{
+	/*public boolean rosConfig(String rosIP, String rosPort) throws InterruptedException{
 		System.out.println("rosconfig <<<<<<<<<<<<<<<<<");
-		this.aList = aList;
+		//this.aList = aList;
 		//return false;
 		return rosConfig(rosIP, rosPort);
-	}
+	}*/
 	
 	/*public boolean createConfigNodes(){
 		//System.out.println("aList size:"+aList.size());
@@ -145,14 +146,9 @@ public class ROSConnection{
 	}
 	
 	public Object getDataByAction(String action){
-		String topic = "";
-		for(String[] p : aList)
-			if(p[0].equals(action)){
-				topic = p[2];
-				break;
-			}
-		for(JasonListener jl : listenerList){
-			Object o = jl.searchTopic(topic);
+		JasonListener jl = (JasonListener)nodeMap.get(action);
+		if(jl != null){
+			Object o = jl.getTopicData();
 			if(o != null)
 				return o;
 		}
@@ -207,17 +203,26 @@ public class ROSConnection{
 		return ag;
 	}
 	
-	public List<String[]> getActionList(){
-		return aList;
+
+	public JasonListener getListener(String nodeName){
+		for(JasonListener jl : listenerList){
+			if(jl.getNodeName().equals(nodeName))
+				return jl;
+		}
+		return null;
 	}
 	
-	//public JasonListener getListenerInstance(){
-	//	return subscriberNode;
-	//}
+	public JasonTalker getTalker(String nodeName){
+		for(JasonTalker jt : talkerList){
+			if(jt.getNodeName().equals(nodeName))
+				return jt;
+		}
+		return null;
+	}
 	
-	public ArrayList<JasonTalker> getTalkerList(){
+	/*public ArrayList<JasonTalker> getTalkerList(){
 		return talkerList;
-	}
+	}*/
 	
 	public void shutdown(){
 		nodeMainExecutor.shutdown();

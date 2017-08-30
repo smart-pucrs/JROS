@@ -1,5 +1,7 @@
 package jros;
 
+import java.util.ArrayList;
+
 import jason.asSemantics.DefaultInternalAction;
 import jason.asSemantics.TransitionSystem;
 import jason.asSemantics.Unifier;
@@ -11,16 +13,17 @@ public class setTopicData extends DefaultInternalAction{
 	@Override
 	public Object execute(TransitionSystem ts, Unifier un, Term[] terms) throws Exception {
 		String nodeName = ((StringTerm)terms[0]).getString();
-		String topicName = ((StringTerm)terms[1]).getString();
-		//Object data;
-		/*if(terms.length > 3){ data = terms;
-		return JMethods.setTopicData(ts.getUserAgArch().getAgName(), nodeName, topicName, data);
+		ArrayList<Object> params = new ArrayList<Object>();
+		for(int i = 1; i < terms.length;i++){
+			if(terms[i].isNumeric()){
+				params.add(((NumberTerm)terms[i]).solve());
+			}else if(terms[i].isString()){
+				params.add(((StringTerm)terms[i]).getString());
+				break;
+			}else{
+				params.add(((ObjectTerm)terms[i]).getObject());
+			}
 		}
-		else if(terms[2].isNumeric())
-			data = ((NumberTerm)terms[2]).solve();
-		else if(terms[2].isString())
-			data = ((StringTerm)terms[2]).getString();
-		else data = ((ObjectTerm)terms[2]).getObject();*/
-		return JMethods.setTopicData(ts.getUserAgArch().getAgName(), nodeName, topicName, terms);
+		return JMethods.setTopicData(ts.getUserAgArch().getAgName(), nodeName, params);
 	}
 }

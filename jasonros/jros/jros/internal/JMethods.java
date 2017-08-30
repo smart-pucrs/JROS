@@ -31,7 +31,7 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 	public static boolean rosConfig(String agName, Agent ag, String rosIP, String rosPort,String remoteAgName, String configFile) throws InterruptedException{
 		System.out.println("criou config file");
 		List<String> fList = null;
-	    List<String[]> aList = new ArrayList<String[]>();
+	    //List<String[]> aList = new ArrayList<String[]>();
 		ROSConnection rc = agMap.get(ag);
 		Path file = Paths.get(configFile);
 		try {
@@ -45,17 +45,16 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 			rc = new ROSConnection(ag,remoteAgName);
 			agMap.put(agName, rc);
 		}
-		if(rc.rosConfig(rosIP, rosPort,aList)){
+		//if(rc.rosConfig(rosIP, rosPort,aList)){
+		if(rc.rosConfig(rosIP, rosPort)){
 			for(String s : fList){
-				//System.out.println(s.charAt(0));
 				if(s.charAt(0) != '#' && !s.isEmpty()){
 					String[] params = s.split(" ");
-					aList.add(params);
+					//aList.add(params);
 					switch(params[4]){
 					case "sub":
 					{
 						System.out.println("Criou sub!!!");
-						//rc.addSubTopic(params[2], params[1]);
 						rc.createSubNode(params[0]+"SubNode", params[0], params[2], params[1]);
 					}
 					break;
@@ -63,7 +62,6 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 					{
 						JasonTalker jt = rc.createPubNode(params[0]+"PubNode", params[2], params[1], Long.valueOf(params[5]));
 						rc.mapNode(params[0], jt);
-						//rc.addSubTopic(params[2], params[1]);
 					}
 					break;
 					default:
@@ -74,22 +72,10 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 					}
 				}
 			}
-			//System.out.println("JMethods aList size:"+aList.size());
-			//rc.createConfigNodes();
 			return true;
 		}
 		return false;
 	}
-	
-	/*public static boolean addPubGenericTopic(String ag, String topicName, String msgType, String className, Unifier un, Term[] terms) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
-		ROSConnection rc = agMap.get(ag);
-		return rc.addPubGenericTopic(topicName, msgType, className, un, terms);
-	}
-	
-	public static boolean addSubGenericTopic(String ag, String topicName, String msgType, String className, Unifier un, Term[] terms) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
-		ROSConnection rc = agMap.get(ag);
-		return rc.addSubGenericTopic(topicName, msgType, className, un, terms);
-	}*/
 	
 	public static boolean listenPerceptions(String ag){
 		ROSConnection rc = agMap.get(ag);
@@ -113,73 +99,46 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 		return rc.createPubNode(nodeName, topicName, messageType, pRate) != null;
 	}
 	
-	/*public static boolean addSubTopic(String ag, String topicName, String msgType){
-		ROSConnection rc = agMap.get(ag);
-		return rc.addSubTopic(topicName, msgType);
+	public static boolean searchLT(String ag, String nodeName, Object value){
+		ROSConnection rc = agMap.get(ag);	
+		JasonListener jl = rc.getListener(nodeName);
+		if(jl != null)
+			return jl.searchLT(value);
+		return false;
 	}
 	
-	public static boolean addPubTopic(String ag, String topicName, String msgType, Object data){
+	public static boolean searchBT(String ag, String nodeName, Object value){
 		ROSConnection rc = agMap.get(ag);
-		return rc.addPubTopic(topicName, msgType, data);
-	}*/
-	
-	public static boolean searchLT(String ag, String topicName, Object value){
-		ROSConnection rc = agMap.get(ag);
-		if(rc.subExists()){
-			return rc.getListenerInstance().searchLT(topicName, value);
-		}else{
-			System.out.println("Subscriber node doesn't exists!");
-			return false;
-		}
+		JasonListener jl = rc.getListener(nodeName);
+		if(jl != null)
+			return jl.searchBT(value);
+		return false;
 	}
 	
-	public static boolean searchBT(String ag, String topicName, Object value){
+	public static boolean searchExact(String ag, String nodeName, Object value){
 		ROSConnection rc = agMap.get(ag);
-		if(rc.subExists()){
-			return rc.getListenerInstance().searchBT(topicName, value);
-		}else{
-			System.out.println("Subscriber node doesn't exists!");
-			return false;
-		}
+		JasonListener jl = rc.getListener(nodeName);
+		if(jl != null)
+			return jl.searchExact(value);
+		return false;
 	}
 	
-	public static boolean searchExact(String ag, String topicName, Object value){
+	public static boolean clearDataList(String ag, String nodeName){
 		ROSConnection rc = agMap.get(ag);
-		if(rc.subExists())
-			return rc.getListenerInstance().searchExact(topicName, value);
-		else{
-			System.out.println("Subscriber node doesn't exists!");
-			return false;
-		}
-	}
-	
-	public static boolean clearDataList(String ag, String topicName){
-		ROSConnection rc = agMap.get(ag);
-		if(rc.subExists()){
-			rc.getListenerInstance().clearDataList(topicName);
+		JasonListener jl = rc.getListener(nodeName);
+		if(jl != null){
+			jl.clearDataList();
 			return true;
 		}
 		return false;
 	}
 	
-	public static Object getTopicData(String ag, String topicName) throws InterruptedException{
+	public static Object getTopicData(String ag, String nodeName) throws InterruptedException{
 		ROSConnection rc = agMap.get(ag);
-		if(rc.subExists()){
-			//Object data = null;
-			Object data = rc.getListenerInstance().searchTopic(topicName);
-			//timeoutTimer(getTopicTimeout);
-//			while(data == null)
-//				data = rosconn.getListenerInstance().searchTopic(topicName);
-			/*if(timeout){
-				System.out.println("getTopicData: timeout!");
-				timeout = false;
-			}else timer.cancel();*/
-			if(data != null)
-				return data;
-		}else
-			System.out.println("Subscriber node doesn't exists!");
-			//return null;
-		return null;
+		JasonListener jl = rc.getListener(nodeName);
+		if(jl != null)
+			return jl.getTopicData();
+		return false;
 	}
 	
 	public static Object recvData(String ag, String action, Unifier un) throws InterruptedException{
@@ -189,19 +148,12 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 		
 	}
 	
-	public static boolean setTopicData(String ag, String nodeName, String topicName, Object data) throws InterruptedException{
+	public static boolean setTopicData(String ag, String nodeName, ArrayList<Object> params) throws InterruptedException{
 		ROSConnection rc = agMap.get(ag);
-		if(rc.pubExists(topicName)){
-		//rosconn.getTalkerInstance().setTopicData(topicName, msgType, data);
-		ArrayList<JasonTalker> l = rc.getTalkerList();
-		for(JasonTalker jt : l){//nodeName -> nodo que ira publicar o dado
-			if(jt.getNodeName().equals(nodeName)){
-				return jt.setTopicData(topicName, data);
-			
-			}
-		}
-		}
-		return false;//topico nao existe ou nodo nao existe
+		JasonTalker jt = rc.getTalker(nodeName);
+		if(jt != null)
+			return jt.setTopicData(params);
+		return false;
 	}
 	
 	public void closeROSConn(String ag){
