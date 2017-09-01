@@ -2,7 +2,7 @@ MAS jasonros {
 
 	infrastructure: Centralised
 	agents:
-		turtlebot_simple;
+	//	turtlebot_simple;
 	//agent jason_tb: turtlebot_cpplib.asl{
 	//	beliefs:turtlebot_name("jason_turtlebot_1")
 	//}
@@ -13,7 +13,7 @@ MAS jasonros {
 		//turtlebot_cpplib;
 		//jason_turtlebot_ #3;
 		//turtlebot2;
-		//turtlebot;
+		turtlebot;
 		//arobot;
 		//test;
 		//publisher_agent;

@@ -55,7 +55,8 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 					case "sub":
 					{
 						System.out.println("Criou sub!!!");
-						rc.createSubNode(params[0]+"SubNode", params[0], params[2], params[1]);
+						JasonListener jl = rc.createSubNode(params[0]+"SubNode", params[0], params[2], params[1]);
+						rc.mapNode(params[0], jl);
 					}
 					break;
 					case "pub":
@@ -90,7 +91,7 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 	public static boolean createSubNode(String ag, String nodeName, String topicName,
 			String messageType) throws InterruptedException{
 		ROSConnection rc = agMap.get(ag);
-		return rc.createSubNode(nodeName, null, topicName, messageType);
+		return rc.createSubNode(nodeName, null, topicName, messageType) != null;
 	}
 	
 	public static boolean createPubNode(String ag, String nodeName, String topicName,

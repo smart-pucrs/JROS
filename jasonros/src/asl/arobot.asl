@@ -18,8 +18,7 @@
 		
 +!stop
 	<- 	jros.sendAction("setVel",0,0,0,0,0,0);
-		jros.recvData("getVel",L); <--- Falhando.
-		.print("List:",L);
+		jros.recvData("getVel",L); 
 		.nth(0,L,0);
 		.nth(5,L,0);
 		+stopped.
@@ -59,8 +58,9 @@
 
 
 +!turtle
-	<-	M = [3.2,50,3,-90,1.6,-98,4.935,-91,4,-50,1];
-		!!rotate(170,15);
+	<-	.wait(1000);
+		M = [3.2,50,3,-90,1.6,-98,4.935,-91,4,-50,1];
+		!!rotate(165,15);
 		for(.member(X,M)){
 			if(rotate){
 				.wait({+posok});
