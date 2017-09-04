@@ -13,8 +13,8 @@ MAS jasonros {
 		//turtlebot_cpplib;
 		//jason_turtlebot_ #3;
 		//turtlebot2;
-		turtlebot;
-		//arobot;
+		//turtlebot;
+		arobot;
 		//test;
 		//publisher_agent;
 		//subscriber_agent;

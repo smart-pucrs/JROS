@@ -23,6 +23,11 @@ import jason.asSyntax.ASSyntax;
 import jason.asSyntax.Literal;
 import jason.asSyntax.Term;
 import jason.asSyntax.parser.ParseException;
+import jros.internal.Messages.geometry_msgs.Twist;
+import jros.internal.Messages.std_msgs.Float32;
+import jros.internal.Messages.std_msgs.Float64;
+import jros.internal.Messages.std_msgs.Int32;
+import jros.internal.Messages.std_msgs.Int64;
 
 
 public class SubscriberObject extends AbstractNodeMain{
@@ -31,9 +36,26 @@ public class SubscriberObject extends AbstractNodeMain{
 	private String action = null;
 	private Agent ag;
 	private Literal bel = null;
+	private SubscriberObject thisInstance = this;
 	private ArrayList<SubscriberData> subData = new ArrayList<SubscriberData>();
 	//private HashMap<SDataClass> subData = new HashMap<SDataClass>();
 	//private long timeStamp = 0;
+	
+	public String getAction(){
+		return action;
+	}
+	
+	public Agent getAgent(){
+		return ag;
+	}
+	
+	public Literal getBelief(){
+		return bel;
+	}
+	
+	public ArrayList<SubscriberData> getSubData(){
+		return subData;
+	}
 	
 	public String getTopicName(){
 		return topicName;
@@ -189,103 +211,22 @@ public class SubscriberObject extends AbstractNodeMain{
 			switch(msgType){
 			case "std_msgs/String":{
 				Subscriber<std_msgs.String> subNode = connectedNode.newSubscriber(topicName, msgType);
+				jros.internal.Messages.std_msgs.String jrosMsg = new jros.internal.Messages.std_msgs.String(thisInstance);
 				subNode.addMessageListener(new MessageListener<std_msgs.String>() {     
 					@Override
 					public void onNewMessage(std_msgs.String message) {
-						//System.out.println("Novo!!!!");
-						SubscriberData sd;
-						if(subData.isEmpty()){
-							sd = new SubscriberData(topicName, message.getData());
-							subData.add(sd);
-						}else{
-							Object lastObj = (Object)subData.get(subData.size()-1).getData();
-							if(!lastObj.equals(message.getData())){
-								sd = new SubscriberData(topicName, message.getData());
-								subData.add(sd);
-							}
-						}
-						if(bel != null && !ag.believes(bel, new Unifier())){
-							System.out.println("Jason Recv:"+bel.toString());
-							try {
-								ag.addBel(bel);
-							} catch (RevisionFailedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
+						jrosMsg.msgExec(message);
 					}
 				});
 			}
 			break;
 			case "geometry_msgs/Twist":{
+				Twist jrosMsg = new jros.internal.Messages.geometry_msgs.Twist(thisInstance);
 				Subscriber<geometry_msgs.Twist> subNode = connectedNode.newSubscriber(topicName, msgType);
 				subNode.addMessageListener(new MessageListener<geometry_msgs.Twist>() {     
 					@Override
 					public void onNewMessage(geometry_msgs.Twist message) {
-						SubscriberData dc;
-						List<Double> l = new ArrayList<Double>();
-						Vector3 ang = message.getAngular();
-						Vector3 lin = message.getLinear();
-						l.add(lin.getX());
-						l.add(lin.getY());
-						l.add(lin.getZ());
-						l.add(ang.getX());
-						l.add(ang.getY());
-						l.add(ang.getZ());
-						if(subData.isEmpty()){
-							dc = new SubscriberData(topicName, l);
-							subData.add(dc);
-						}else{
-							Object lastObj = (Object)subData.get(subData.size()-1).getData();
-							if(!lastObj.equals(l)){
-								dc = new SubscriberData(topicName, l);
-								subData.add(dc);
-							}
-						}
-						if(bel != null && !ag.believes(bel, new Unifier()))
-							try {
-								ag.addBel(bel);
-							} catch (RevisionFailedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-					}
-				});
-			}
-			break;
-			case "nav_msgs/Odometry":{
-				Subscriber<nav_msgs.Odometry> subNode = connectedNode.newSubscriber(topicName, msgType);
-				subNode.addMessageListener(new MessageListener<nav_msgs.Odometry>() {     
-					@Override
-					public void onNewMessage(nav_msgs.Odometry message) {
-						SubscriberData dc;
-						List<Double> l = new ArrayList<Double>();
-						Point pos = message.getPose().getPose().getPosition();
-						Quaternion ori = message.getPose().getPose().getOrientation();
-						l.add(pos.getX());
-						l.add(pos.getY());
-						l.add(pos.getZ());
-						l.add(ori.getW());
-						l.add(ori.getX());
-						l.add(ori.getY());
-						l.add(ori.getZ());
-						if(subData.isEmpty()){
-							dc = new SubscriberData(topicName, l);
-							subData.add(dc);
-						}else{
-							Object lastObj = (Object)subData.get(subData.size()-1).getData();
-							if(!lastObj.equals(l)){
-								dc = new SubscriberData(topicName, l);
-								subData.add(dc);
-							}
-						}
-						if(bel != null && !ag.believes(bel, new Unifier()))
-							try {
-								ag.addBel(bel);
-							} catch (RevisionFailedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+						jrosMsg.msgExec(message);
 					}
 				});
 			}
@@ -311,78 +252,45 @@ public class SubscriberObject extends AbstractNodeMain{
 			}
 			break;
 			case "std_msgs/Int32":{
+				Int32 jrosMsg = new jros.internal.Messages.std_msgs.Int32(thisInstance);
 				Subscriber<std_msgs.Int32> subNode = connectedNode.newSubscriber(topicName, msgType);
 				subNode.addMessageListener(new MessageListener<std_msgs.Int32>() {     
 					@Override
 					public void onNewMessage(std_msgs.Int32 message) {
-						//timeStamp++;
-						SubscriberData dc;
-						if(subData.isEmpty()){
-							dc = new SubscriberData(topicName, message.getData());
-							subData.add(dc);
-						}else{
-							Object lastObj = (Object)subData.get(subData.size()-1).getData();
-							if(!lastObj.equals(message.getData())){
-								dc = new SubscriberData(topicName, message.getData());
-								subData.add(dc);
-							}
-						}
-						if(bel != null && !ag.believes(bel, new Unifier()))
-							try {
-								ag.addBel(bel);
-							} catch (RevisionFailedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+						jrosMsg.msgExec(message);
 					}
 				});
-				//rosconn.addToCheckList(nodeName);
 			}
 			break;
 			case "std_msgs/Int64":{
+				Int64 jrosMsg = new jros.internal.Messages.std_msgs.Int64(thisInstance);
 				Subscriber<std_msgs.Int64> subNode = connectedNode.newSubscriber(topicName, msgType);
 				subNode.addMessageListener(new MessageListener<std_msgs.Int64>() {     
 					@Override
 					public void onNewMessage(std_msgs.Int64 message) {
-						//subData.put(topicName, message.getData());
+						jrosMsg.msgExec(message);
 					}
 				});
 			}
 			break;
 			case "std_msgs/Float32":{
+				Float32 jrosMsg = new jros.internal.Messages.std_msgs.Float32(thisInstance);
 				Subscriber<std_msgs.Float32> subNode = connectedNode.newSubscriber(topicName, msgType);
 				subNode.addMessageListener(new MessageListener<std_msgs.Float32>() {     
 					@Override
 					public void onNewMessage(std_msgs.Float32 message) {
-						//timeStamp++;
-						SubscriberData dc;
-						if(subData.isEmpty()){
-							dc = new SubscriberData(topicName, message.getData());
-							subData.add(dc);
-						}else{
-							Object lastObj = (Object)subData.get(subData.size()-1).getData();
-							if(!lastObj.equals(message.getData())){
-								dc = new SubscriberData(topicName, message.getData());
-								subData.add(dc);
-							}
-						}
-						if(bel != null && !ag.believes(bel, new Unifier()))
-							try {
-								ag.addBel(bel);
-							} catch (RevisionFailedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+						jrosMsg.msgExec(message);
 					}
 				});
 			}
 			break;
 			case "std_msgs/Float64":{
+				Float64 jrosMsg = new jros.internal.Messages.std_msgs.Float64(thisInstance);
 				Subscriber<std_msgs.Float64> subNode = connectedNode.newSubscriber(topicName, msgType);
 				subNode.addMessageListener(new MessageListener<std_msgs.Float64>() {     
 					@Override
 					public void onNewMessage(std_msgs.Float64 message) {
-						//subData.put(topicName, message.getData());
+						jrosMsg.msgExec(message);
 					}
 				});
 			}

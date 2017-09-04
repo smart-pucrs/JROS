@@ -91,6 +91,8 @@ public class ROSConnection{
 		}catch(RuntimeException e){
 			System.out.println("Connection error!");
 		}
+		
+		System.out.println("Connection error!");
 		return null;
 	}
 	

@@ -14,8 +14,8 @@ public class getTopicData extends DefaultInternalAction{
 	public Object execute(TransitionSystem ts, Unifier un, Term[] terms) throws Exception {
 		String topicName = ((StringTerm)terms[0]).getString();
 		Object data = JMethods.getTopicData(ts.getUserAgArch().getAgName(), topicName);
-		if (data == null){
-			System.out.println("getTopicData");
+		if (data == null || data instanceof Boolean){
+			//System.out.println("getTopicData");
 			return false;
 		}
 		if(data instanceof List){
