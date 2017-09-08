@@ -10,13 +10,13 @@ import jros.internal.PublisherObject;
 import jros.internal.SubscriberData;
 import jros.internal.SubscriberObject;
 
-public class Float32 {
+public class Int8 {
 	private SubscriberObject subObj;
 	private PublisherObject pubObj;
 	private ArrayList<SubscriberData> subData;
 	private ArrayList<Object> dataP;
 	
-	public Float32(Object dataObj){
+	public Int8(Object dataObj){
 		if(dataObj instanceof SubscriberObject){
 			this.subObj = (SubscriberObject)dataObj;
 			this.subData = this.subObj.getSubData();
@@ -29,7 +29,7 @@ public class Float32 {
 	}
 	
 	
-	public void msgExecSub(std_msgs.Float32 message){
+	public void msgExecSub(std_msgs.Int16 message){
 		SubscriberData dc;
 		if(subData.isEmpty()){
 			dc = new SubscriberData(subObj.getTopicName(), message.getData());
@@ -50,12 +50,12 @@ public class Float32 {
 			}
 	}
 	
-	public void msgExecPub(std_msgs.Float32 message, Publisher<std_msgs.Float32> pubNode) throws InterruptedException{
+	public void msgExecPub(std_msgs.Int8 message, Publisher<std_msgs.Int8> pubNode) throws InterruptedException{
 		if(dataP != null){
-		double value = (double)dataP.get(0);
-		message.setData((float)value);
+			double value = (double)dataP.get(0);;
+			message.setData((byte)value);
 		}
-		pubNode.publish(message);
+			pubNode.publish(message);
 		Thread.sleep(pubObj.getpRate());
 	}
 

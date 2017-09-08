@@ -1,6 +1,6 @@
 package jros.internal;
 
-
+ 
 import java.util.ArrayList;
 import java.util.HashMap;
 //import java.util.HashMap;
@@ -215,7 +215,7 @@ public class SubscriberObject extends AbstractNodeMain{
 				subNode.addMessageListener(new MessageListener<std_msgs.String>() {     
 					@Override
 					public void onNewMessage(std_msgs.String message) {
-						jrosMsg.msgExec(message);
+						jrosMsg.msgExecSub(message);
 					}
 				});
 			}
@@ -226,7 +226,7 @@ public class SubscriberObject extends AbstractNodeMain{
 				subNode.addMessageListener(new MessageListener<geometry_msgs.Twist>() {     
 					@Override
 					public void onNewMessage(geometry_msgs.Twist message) {
-						jrosMsg.msgExec(message);
+						jrosMsg.msgExecSub(message);
 					}
 				});
 			}
@@ -257,7 +257,7 @@ public class SubscriberObject extends AbstractNodeMain{
 				subNode.addMessageListener(new MessageListener<std_msgs.Int32>() {     
 					@Override
 					public void onNewMessage(std_msgs.Int32 message) {
-						jrosMsg.msgExec(message);
+						jrosMsg.msgExecSub(message);
 					}
 				});
 			}
@@ -268,7 +268,7 @@ public class SubscriberObject extends AbstractNodeMain{
 				subNode.addMessageListener(new MessageListener<std_msgs.Int64>() {     
 					@Override
 					public void onNewMessage(std_msgs.Int64 message) {
-						jrosMsg.msgExec(message);
+						jrosMsg.msgExecSub(message);
 					}
 				});
 			}
@@ -279,7 +279,7 @@ public class SubscriberObject extends AbstractNodeMain{
 				subNode.addMessageListener(new MessageListener<std_msgs.Float32>() {     
 					@Override
 					public void onNewMessage(std_msgs.Float32 message) {
-						jrosMsg.msgExec(message);
+						jrosMsg.msgExecSub(message);
 					}
 				});
 			}
@@ -290,7 +290,7 @@ public class SubscriberObject extends AbstractNodeMain{
 				subNode.addMessageListener(new MessageListener<std_msgs.Float64>() {     
 					@Override
 					public void onNewMessage(std_msgs.Float64 message) {
-						jrosMsg.msgExec(message);
+						jrosMsg.msgExecSub(message);
 					}
 				});
 			}

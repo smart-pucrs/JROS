@@ -16,7 +16,6 @@ public class JasonTalker extends AbstractNodeMain {
 	private JROSNodeInfo nodeInfo;
 	private PublisherObject po;
 	private String nodeName;
-	private long pRate;
 	private ROSConnection rosconn;
 	private Agent ag;
 	private String action;
@@ -26,7 +25,6 @@ public class JasonTalker extends AbstractNodeMain {
 		this.nodeName = nodeInfo.getNodeName();
 		this.rosconn = rosconn;
 		this.ag = nodeInfo.getAgent();
-		this.pRate = nodeInfo.getPRate();
 		this.action = null;
 	}
 	
@@ -56,7 +54,7 @@ public class JasonTalker extends AbstractNodeMain {
 	@Override
 	public void onStart(final ConnectedNode connectedNode) {	
 		try {
-		po = new PublisherObject(connectedNode, nodeName, nodeInfo, pRate, rosconn);
+		po = new PublisherObject(connectedNode, nodeName, nodeInfo, rosconn);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

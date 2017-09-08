@@ -17,12 +17,14 @@
 		!!connectto(IP, Port).
 		
 +!createNodes
-	<-	jros.createSubNode("mysnode","/testestr","std_msgs/String");
+	<-	//jros.createSubNode("mysnode","/testestr","std_msgs/String");
+		jros.createPubNode("mynode", "/testeint", "std_msgs/Int32", 500);
 		.wait(1000);
 		!!turtle.
 
 +!turtle
-	<-	jros.getTopicData("mysnode",S);
+	<-	//jros.getTopicData("mysnode",S);
+		jros.setTopicData("mynode", 123);
 		.print("String:",S).
 		
 -!turtle
