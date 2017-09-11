@@ -51,13 +51,12 @@ public class Int64 {
 	}
 	
 	public void msgExecPub(std_msgs.Int64 message, Publisher<std_msgs.Int64> pubNode) throws InterruptedException{
-		std_msgs.Int64 msg = pubNode.newMessage();
+		dataP = pubObj.getDataP();
 		if(dataP != null){
 		double value = (double)dataP.get(0);;
-		msg.setData((long)value);
+		message.setData((long)value);
 		}
-		pubNode.publish(msg);
-		Thread.sleep(pubObj.getpRate());
+		pubNode.publish(message);
 	}
 
 }

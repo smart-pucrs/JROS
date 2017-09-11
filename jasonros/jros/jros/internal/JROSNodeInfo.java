@@ -23,6 +23,7 @@ public class JROSNodeInfo{
 		this.jNode = jNode;
 		this.agent = agent;
 		this.params = params;
+		this.pRate = pRate;
 	}
 	public String getNodeName(){
 		return nodeName;

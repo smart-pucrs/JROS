@@ -1,4 +1,4 @@
-// Agent turtlebot in project jasonros
+// Agent turtlebot_cpplib in project jasonros
 
 /* Initial beliefs and rules */
 
@@ -6,19 +6,22 @@
 !connectto("127.0.0.1","11311").
 
 /* Plans */
-
-+!connectto(IP, Port)
-	<-	jros.config(IP,Port,"arobot","/home/iancalaca/jason/projects/JROS/jasonros/src/java/topics.jros");
-		//!createNodes.
++!connectto(IP, Port): .my_name(Me) & .term2string(Me,Mes)
+	<-	.print(Mes);
+		jros.config(IP,Port,Mes,"/home/iancalaca/jason/projects/JROS/jasonros/src/java/topics.jros");
 		!!turtle.
+		//!p2.
 -!connectto(IP, Port)
 	<-	.print("Connection error. Trying again...");
 		.wait(1000);
 		!!connectto(IP, Port).
 		
 +!stop
-	<- 	jros.sendAction("setVel",0,0,0,0,0,0);
-		jros.recvData("getVel",L);
+	<- 	.my_name(Me) & .term2string(Me,Mes);
+		.concat("setVel",Mes,S);
+		jros.sendAction(.term2string(S),0,0,0,0,0,0);
+		.concat("getVel",Mes,S2);
+		jros.recvData(.term2string(S2),L);
 		.nth(0,L,0);
 		.nth(5,L,0);
 		+stopped.
@@ -29,9 +32,11 @@
 	
 +!rotate(X,Y)
 	<- 	if(X < 0){
-			jros.sendAction("setVel", 0,0,0,0,0,math.abs(Y*2*math.pi/360));
+			.my_name(Me) & .term2string(Me,Mes);
+			.concat("setVel",Mes,S);
+			jros.sendAction(.term2string(S), 0,0,0,0,0,math.abs(Y*2*math.pi/360));
 		}else{
-			jros.sendAction("setVel", 0,0,0,0,0,-math.abs(Y*2*math.pi/360));
+			jros.sendAction(.term2string(S), 0,0,0,0,0,-math.abs(Y*2*math.pi/360));
 		}
 		.wait(math.abs(X/Y)*1000);
 		!!stop;

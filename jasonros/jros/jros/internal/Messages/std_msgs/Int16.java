@@ -51,12 +51,12 @@ public class Int16 {
 	}
 	
 	public void msgExecPub(std_msgs.Int16 message, Publisher<std_msgs.Int16> pubNode) throws InterruptedException{
+		dataP = pubObj.getDataP();
 		if(dataP != null){
 			double value = (double)dataP.get(0);;
 			message.setData((short)value);
 		}
 			pubNode.publish(message);
-		Thread.sleep(pubObj.getpRate());
 	}
 
 }

@@ -51,12 +51,12 @@ public class Float64 {
 	}
 	
 	public void msgExecPub(std_msgs.Float64 message, Publisher<std_msgs.Float64> pubNode) throws InterruptedException{
+		dataP = pubObj.getDataP();
 		if(dataP != null){
 		double value = (double)dataP.get(0);
 		message.setData((double)value);
 		}
 		pubNode.publish(message);
-		Thread.sleep(pubObj.getpRate());
 	}
 
 }

@@ -67,6 +67,7 @@ public class Twist {
 	public void msgExecPub(geometry_msgs.Twist message, Publisher<geometry_msgs.Twist> pubNode) throws InterruptedException{
 		Vector3 ang = message.getAngular();
 		Vector3 lin = message.getLinear();
+		dataP = pubObj.getDataP();
 		if(dataP != null){
 			//Term[] terms = ((Term[])dataP);
 			//System.out.println("terms length:"+terms.length);
@@ -80,7 +81,6 @@ public class Twist {
 			message.setLinear(lin);
 		}
 		pubNode.publish(message);
-		Thread.sleep(pubObj.getpRate());
 	}
 
 }

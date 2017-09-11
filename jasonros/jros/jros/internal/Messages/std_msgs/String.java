@@ -60,11 +60,11 @@ public class String {
 	}
 	
 	public void msgExecPub(std_msgs.String message, Publisher<std_msgs.String> pubNode) throws InterruptedException{
+		dataP = pubObj.getDataP();
 		if(dataP != null){
 			message.setData((java.lang.String)dataP.get(0));
 		}
 		pubNode.publish(message);
-		Thread.sleep(pubObj.getpRate());
 	}
 
 }

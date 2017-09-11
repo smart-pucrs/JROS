@@ -51,12 +51,12 @@ public class Int8 {
 	}
 	
 	public void msgExecPub(std_msgs.Int8 message, Publisher<std_msgs.Int8> pubNode) throws InterruptedException{
+		dataP = pubObj.getDataP();
 		if(dataP != null){
 			double value = (double)dataP.get(0);;
 			message.setData((byte)value);
 		}
 			pubNode.publish(message);
-		Thread.sleep(pubObj.getpRate());
 	}
 
 }

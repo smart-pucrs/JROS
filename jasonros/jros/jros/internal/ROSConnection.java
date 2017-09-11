@@ -127,7 +127,6 @@ public class ROSConnection{
 	public Object getDataByAction(String action){
 		JasonListener jl = (JasonListener)nodeMap.get(action);
 		if(jl != null){
-			System.out.println("getDataByAction: Found!!");
 			Object o = jl.getTopicData();
 			if(o != null)
 				return o;

@@ -79,6 +79,7 @@ public class PublisherObject extends AbstractNodeMain{
 					protected void loop() throws InterruptedException {
 						std_msgs.String msg = pubNode.newMessage();
 						jrosMsg.msgExecPub(msg, pubNode);
+						Thread.sleep(jn.getPRate());
 					}
 				});
 			}
@@ -93,6 +94,7 @@ public class PublisherObject extends AbstractNodeMain{
 					protected void loop() throws InterruptedException {
 						geometry_msgs.Twist msg = pubNode.newMessage();
 						jrosMsg.msgExecPub(msg, pubNode);
+						Thread.sleep(jn.getPRate());
 					}
 				});
 			}
@@ -105,6 +107,7 @@ public class PublisherObject extends AbstractNodeMain{
 					protected void loop() throws InterruptedException {
 						std_msgs.Int8 message = pubNode.newMessage();
 						jrosMsg.msgExecPub(message, pubNode);
+						Thread.sleep(jn.getPRate());
 					}
 				});
 			}
@@ -117,18 +120,21 @@ public class PublisherObject extends AbstractNodeMain{
 					protected void loop() throws InterruptedException {
 						std_msgs.Int16 message = pubNode.newMessage();
 						jrosMsg.msgExecPub(message, pubNode);
+						Thread.sleep(jn.getPRate());
 					}
 				});
 			}
 			break;
 			case "std_msgs/Int32":{
 				Publisher<std_msgs.Int32> pubNode = connectedNode.newPublisher(topicName, msgType);
+				pubNode.setLatchMode(true);
 				jros.internal.Messages.std_msgs.Int32 jrosMsg = new jros.internal.Messages.std_msgs.Int32(thisInstance);
 				connectedNode.executeCancellableLoop(new CancellableLoop() {
 					@Override
 					protected void loop() throws InterruptedException {
 						std_msgs.Int32 message = pubNode.newMessage();
 						jrosMsg.msgExecPub(message, pubNode);
+						Thread.sleep(jn.getPRate());
 					}
 				});
 			}
@@ -141,6 +147,7 @@ public class PublisherObject extends AbstractNodeMain{
 					protected void loop() throws InterruptedException {
 						std_msgs.Int64 message = pubNode.newMessage();
 						jrosMsg.msgExecPub(message, pubNode);
+						Thread.sleep(jn.getPRate());
 					}
 				});
 			}
@@ -153,6 +160,7 @@ public class PublisherObject extends AbstractNodeMain{
 					protected void loop() throws InterruptedException {
 						std_msgs.Float32 msg = pubNode.newMessage();
 						jrosMsg.msgExecPub(msg, pubNode);
+						Thread.sleep(jn.getPRate());
 					}
 				});
 			}
@@ -165,6 +173,7 @@ public class PublisherObject extends AbstractNodeMain{
 					protected void loop() throws InterruptedException {
 						std_msgs.Float64 message = pubNode.newMessage();
 						jrosMsg.msgExecPub(message, pubNode);
+						Thread.sleep(jn.getPRate());
 					}
 				});
 			}

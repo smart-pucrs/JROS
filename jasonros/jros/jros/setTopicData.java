@@ -19,7 +19,7 @@ public class setTopicData extends DefaultInternalAction{
 				params.add(((NumberTerm)terms[i]).solve());
 			}else if(terms[i].isString()){
 				params.add(((StringTerm)terms[i]).getString());
-				break;
+				//break;
 			}else{
 				params.add(((ObjectTerm)terms[i]).getObject());
 			}

@@ -24,7 +24,6 @@ public class Int32 {
 		
 		if(dataObj instanceof PublisherObject){
 			this.pubObj = (PublisherObject)dataObj;
-			this.dataP = this.pubObj.getDataP();
 		}
 	}
 	
@@ -51,12 +50,12 @@ public class Int32 {
 	}
 	
 	public void msgExecPub(std_msgs.Int32 message, Publisher<std_msgs.Int32> pubNode) throws InterruptedException{
+		dataP = pubObj.getDataP();
 		if(dataP != null){
-			double value = (double)dataP.get(0);;
+			double value = (double)dataP.get(0);
 			message.setData((int)value);
 		}
 			pubNode.publish(message);
-		Thread.sleep(pubObj.getpRate());
 	}
 
 }

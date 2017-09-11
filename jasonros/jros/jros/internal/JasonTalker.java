@@ -19,6 +19,7 @@ public class JasonTalker extends AbstractNodeMain {
 	private ROSConnection rosconn;
 	private Agent ag;
 	private String action;
+	//private long pRate;
 	
 	public JasonTalker(JROSNodeInfo nodeInfo, ROSConnection rosconn){
 		this.nodeInfo = nodeInfo;
