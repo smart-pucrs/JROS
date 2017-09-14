@@ -48,28 +48,21 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 		//if(rc.rosConfig(rosIP, rosPort,aList)){
 		if(rc.rosConfig(rosIP, rosPort)){
 			for(String s : fList){
-				if(s.charAt(0) != '#' && !s.isEmpty()){
-					String[] params = s.split(" ");
-					//aList.add(params);
-					switch(params[4]){
-					case "sub":
-					{
+				Parser p = new Parser(s, ag);
+				if(p.isValidLine()){
+					if(p.isSubscriber()){
 						System.out.println("Criou sub!!!");
-						JasonListener jl = rc.createSubNode(params[0]+"SubNode", params[0], params[2], params[1]);
-						rc.mapNode(params[0], jl);
-					}
-					break;
-					case "pub":
-					{
-						JasonTalker jt = rc.createPubNode(params[0]+"PubNode", params[2], params[1], Long.valueOf(params[5]));
-						rc.mapNode(params[0], jt);
-					}
-					break;
-					default:
-					{
+						JasonListener jl = rc.createSubNode(p.nodeName(), p.actionName(), p.topicName(), 
+								p.msgType());
+						rc.mapNode(p.actionName(), jl);
+					}	
+					else if(p.isPublisher()){
+						JasonTalker jt = rc.createPubNode(p.nodeName(), p.topicName(), p.msgType(), 
+								p.publishRate());
+						rc.mapNode(p.actionName(), jt);
+					}else{
 						System.out.println("Error: Node type missing!");
 						return false;
-					}
 					}
 				}
 			}
