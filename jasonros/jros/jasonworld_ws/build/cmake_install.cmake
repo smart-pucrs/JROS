@@ -117,6 +117,7 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/iancalaca/jason/projects/JROS/jasonros/jros/jasonworld_ws/build/gtest/cmake_install.cmake")
+  include("/home/iancalaca/jason/projects/JROS/jasonros/jros/jasonworld_ws/build/jasonworld_gazebo/cmake_install.cmake")
 
 endif()
 

@@ -7,7 +7,4 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/iancalaca/jason/projects/JROS/jasonros/jros/jasonworld_ws/devel:$CMAKE_PREFIX_PATH"
 export PWD="/home/iancalaca/jason/projects/JROS/jasonros/jros/jasonworld_ws/build"
-export ROSLISP_PACKAGE_DIRECTORIES="/home/iancalaca/jason/projects/JROS/jasonros/jros/jasonworld_ws/devel/share/common-lisp"
-export ROS_PACKAGE_PATH="/home/iancalaca/jason/projects/JROS/jasonros/jros/jasonworld_ws/src:$ROS_PACKAGE_PATH"
