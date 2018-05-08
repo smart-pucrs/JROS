@@ -13,3 +13,5 @@ getVel geometry_msgs/Twist /{$AG_NAME}/cmd_vel_mux/input/teleop message sub
 #getVel geometry_msgs/Twist /jason_turtlebot_2/cmd_vel_mux/input/teleop message sub
 #setVel geometry_msgs/Twist /jason_turtlebot_3/cmd_vel_mux/input/teleop message pub 500
 #getVel geometry_msgs/Twist /jason_turtlebot_3/cmd_vel_mux/input/teleop message sub
+talk std_msgs/String /jason/topic message pub 1000
+listen std_msgs/String /jason/topic message sub

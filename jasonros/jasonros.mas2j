@@ -2,23 +2,8 @@ MAS jasonros {
 
 	infrastructure: Centralised
 	agents:
-		time #3;
-	//	turtlebot_simple;
-	//agent jason_tb: turtlebot_cpplib.asl{
-	//	beliefs:turtlebot_name("jason_turtlebot_1")
-	//}
-	//	turtlebot_cpplib_1{ 
-	//		beliefs:turtlebot_name("jason_turtlebot_1")
-	//	};
-	//	turtlebot_cpplib_0;
-		//turtlebot_cpplib;
-		//jason_turtlebot_ #3;
-		//turtlebot2;
-		//turtlebot;
-	//	arobot;
-		//test;
-		//publisher_agent;
-		//subscriber_agent;
+		talker;
+		listener;
 
 	aslSourcePath:
 		"src/asl";

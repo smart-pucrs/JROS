@@ -29,9 +29,7 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 	}
 	
 	public static boolean rosConfig(String agName, Agent ag, String rosIP, String rosPort,String remoteAgName, String configFile) throws InterruptedException{
-		System.out.println("criou config file");
 		List<String> fList = null;
-	    //List<String[]> aList = new ArrayList<String[]>();
 		ROSConnection rc = agMap.get(ag);
 		Path file = Paths.get(configFile);
 		try {
@@ -51,7 +49,6 @@ private static ConcurrentHashMap<String,ROSConnection> agMap = new ConcurrentHas
 				Parser p = new Parser(s, ag);
 				if(p.isValidLine()){
 					if(p.isSubscriber()){
-						System.out.println("Criou sub!!!");
 						JasonListener jl = rc.createSubNode(p.nodeName(), p.actionName(), p.topicName(), 
 								p.msgType());
 						rc.mapNode(p.actionName(), jl);

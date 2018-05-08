@@ -18,7 +18,10 @@ public class config extends DefaultInternalAction{
 			return JMethods.rosConfig(ts.getUserAgArch().getAgName(), ts.getAg(), rosIP, rosPort,remoteAgName);
 		}else if(terms.length == 4){
 			String remoteAgName = ((StringTerm)terms[2]).getString();
-			String configFile = ((StringTerm)terms[3]).getString();
+			int index = ts.getAg().getASLSrc().lastIndexOf('/');
+			String dir = ts.getAg().getASLSrc().substring(0, index)+"/";
+			System.out.println("dir:"+dir);
+			String configFile = dir + ((StringTerm)terms[3]).getString();
 			System.out.println(ts.getUserAgArch().getAgName()+"<-----");
 			return JMethods.rosConfig(ts.getUserAgArch().getAgName(), ts.getAg(), rosIP, rosPort,remoteAgName, configFile);
 		}else{
