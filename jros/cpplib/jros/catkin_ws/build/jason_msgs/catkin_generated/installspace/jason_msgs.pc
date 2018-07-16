@@ -1,8 +1,0 @@
-prefix=/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/install
-
-Name: jason_msgs
-Description: Description of jason_msgs
-Version: 0.0.0
-Cflags: -I/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/install/include
-Libs: -L/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/install/lib 
-Requires: message_runtime

@@ -1,8 +1,0 @@
-prefix=/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/install
-
-Name: jroslib
-Description: Description of jroslib
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/install/lib 
-Requires: jason_msgs

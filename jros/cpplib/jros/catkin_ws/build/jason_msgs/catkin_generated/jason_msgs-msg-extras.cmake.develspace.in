@@ -1,2 +1,0 @@
-set(jason_msgs_MESSAGE_FILES "/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/src/jason_msgs/msg/action.msg;/home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/src/jason_msgs/msg/perception.msg")
-set(jason_msgs_SERVICE_FILES "")

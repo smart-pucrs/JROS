@@ -1,1 +1,0 @@
-/usr/bin/c++      CMakeFiles/arobot.dir/src/arobot.cpp.o  -o /home/iancalaca/jason/projects/JROS/jasonros/jros/cpplib/jros/catkin_ws/devel/lib/jros_cpp/arobot -rdynamic -lsrc/jros.cpp.o 

@@ -1,2 +1,0 @@
-jasonworld_gazebo
--DCATKIN_DEVEL_PREFIX=/home/iancalaca/jason/projects/JROS/jasonros/jros/jasonworld_ws/devel -DCMAKE_INSTALL_PREFIX=/home/iancalaca/jason/projects/JROS/jasonros/jros/jasonworld_ws/install -G Unix Makefiles

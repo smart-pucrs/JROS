@@ -1,8 +1,0 @@
-prefix=/home/iancalaca/jason/projects/JROS/jasonros/jros/jasonworld_ws/install
-
-Name: jasonworld_gazebo
-Description: Description of jasonworld_gazebo
-Version: 2.2.2
-Cflags: 
-Libs: -L/home/iancalaca/jason/projects/JROS/jasonros/jros/jasonworld_ws/install/lib 
-Requires: 
